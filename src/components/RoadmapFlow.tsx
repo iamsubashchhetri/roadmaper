@@ -29,9 +29,20 @@ const RoadmapFlow: React.FC = () => {
   const { currentRoadmap, setSelectedTopic, setSelectedTopicForNotes } =
     useRoadmapStore();
   const [selectedTopic, setSelectedTopicState] = useState<Node | null>(null); // Added state to track selected node
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  
+  // Add window resize listener to update layout based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Update nodes and edges when currentRoadmap changes
   useEffect(() => {
@@ -250,10 +261,12 @@ const RoadmapFlow: React.FC = () => {
           fitView
           minZoom={0.1}
           maxZoom={1.5}
-          defaultZoom={0.8}
+          defaultZoom={0.7}
           zoomOnScroll={true}
           zoomOnPinch={true}
           panOnScroll={true}
+          // Use vertical layout for mobile and horizontal for desktop
+          direction={isMobile ? 'TB' : 'LR'}
         >
           <Background color="#aaa" gap={16} />
           <Controls 
