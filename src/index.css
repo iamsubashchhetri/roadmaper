@@ -200,6 +200,30 @@ body {
   animation: float-medium 4s ease-in-out infinite;
 }
 
+/* Stats hover animations */
+@keyframes stat-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.stat-card:hover {
+  animation: stat-pulse 2s ease-in-out infinite;
+}
+
+/* Light beam effect for stats */
+@keyframes light-beam {
+  0% { opacity: 0; transform: rotate(0deg); }
+  20% { opacity: 0.1; }
+  30% { opacity: 0.3; }
+  40% { opacity: 0.1; }
+  100% { opacity: 0; transform: rotate(360deg); }
+}
+
+.stats-container:hover .light-beam {
+  animation: light-beam 4s linear infinite;
+}
+
 }
 
 .topic-detail .prose blockquote {

@@ -198,6 +198,104 @@ const RoadmapFlow: React.FC = () => {
               skill with clear steps from beginner to expert.
             </p>
           </div>
+
+          {/* Community Statistics Section */}
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-indigo-100/50 dark:border-indigo-800/50 shadow-lg max-w-4xl mx-auto mt-10">
+            <div className="text-center mb-6">
+              <h3 className="text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 dark:from-indigo-400 dark:via-purple-400 dark:to-blue-400">
+                Join the Community
+              </h3>
+              <p className="text-gray-700 dark:text-gray-300 mt-2">
+                roadmap.sh is the 7th most starred project on GitHub and is visited by hundreds of thousands of developers every month.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+              {/* GitHub Stars */}
+              <div className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-900/40 dark:to-blue-900/40 p-5 rounded-xl border border-indigo-100 dark:border-indigo-800/50 relative overflow-hidden group hover:shadow-md transition-all duration-300">
+                <div className="absolute -right-10 -top-10 w-24 h-24 rounded-full bg-blue-500/10 dark:bg-blue-500/20 z-0"></div>
+                <div className="absolute -right-6 -bottom-6 w-16 h-16 rounded-full bg-indigo-500/10 dark:bg-indigo-500/20 z-0"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">Rank 7th</h4>
+                    <span className="text-xs bg-indigo-100 dark:bg-indigo-800 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded-full">out of 28M!</span>
+                  </div>
+                  
+                  <div className="mt-3">
+                    <p className="text-3xl md:text-4xl font-bold text-indigo-700 dark:text-indigo-400">309K</p>
+                    <p className="text-gray-700 dark:text-gray-300 font-medium mt-1">GitHub Stars</p>
+                  </div>
+                  
+                  <div className="mt-4">
+                    <a href="#" className="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors group-hover:underline">
+                      Star us on GitHub
+                      <svg className="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </a>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Help us reach #1</p>
+                    <p className="text-xs text-indigo-500 dark:text-indigo-400 mt-1">+90k every month</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Registered Users */}
+              <div className="bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/40 dark:to-indigo-900/40 p-5 rounded-xl border border-purple-100 dark:border-purple-800/50 relative overflow-hidden group hover:shadow-md transition-all duration-300">
+                <div className="absolute -left-10 -top-10 w-24 h-24 rounded-full bg-purple-500/10 dark:bg-purple-500/20 z-0"></div>
+                <div className="absolute -right-6 -bottom-6 w-16 h-16 rounded-full bg-indigo-500/10 dark:bg-indigo-500/20 z-0"></div>
+                
+                <div className="relative z-10">
+                  <div className="mb-2">
+                    <h4 className="text-lg font-semibold text-purple-700 dark:text-purple-300">Registered Users</h4>
+                  </div>
+                  
+                  <div className="mt-3">
+                    <p className="text-3xl md:text-4xl font-bold text-purple-700 dark:text-purple-400">+1.5M</p>
+                    <p className="text-gray-700 dark:text-gray-300 font-medium mt-1">Developers</p>
+                  </div>
+                  
+                  <div className="mt-4">
+                    <a href="#" className="inline-flex items-center text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors group-hover:underline">
+                      Register yourself
+                      <svg className="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </a>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Commit to your growth</p>
+                    <p className="text-xs text-purple-500 dark:text-purple-400 mt-1">+2k every month</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Discord Members */}
+              <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/40 dark:to-purple-900/40 p-5 rounded-xl border border-blue-100 dark:border-blue-800/50 relative overflow-hidden group hover:shadow-md transition-all duration-300">
+                <div className="absolute -right-10 -top-10 w-24 h-24 rounded-full bg-blue-500/10 dark:bg-blue-500/20 z-0"></div>
+                <div className="absolute -left-6 -bottom-6 w-16 h-16 rounded-full bg-purple-500/10 dark:bg-purple-500/20 z-0"></div>
+                
+                <div className="relative z-10">
+                  <div className="mb-2">
+                    <h4 className="text-lg font-semibold text-blue-700 dark:text-blue-300">Discord Members</h4>
+                  </div>
+                  
+                  <div className="mt-3">
+                    <p className="text-3xl md:text-4xl font-bold text-blue-700 dark:text-blue-400">34K</p>
+                    <p className="text-gray-700 dark:text-gray-300 font-medium mt-1">Community Members</p>
+                  </div>
+                  
+                  <div className="mt-4">
+                    <a href="#" className="inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors group-hover:underline">
+                      Join on Discord
+                      <svg className="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </a>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Join the community</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       
     );
