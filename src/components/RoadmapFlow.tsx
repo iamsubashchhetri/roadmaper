@@ -11,29 +11,61 @@ import ReactFlow, {
   addEdge,
   Connection,
   ConnectionMode,
+  Handle,
+  Position,
+  NodeProps,
+  BackgroundVariant,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { useRoadmapStore } from "../store/roadmapStore";
-import CustomNode from "./CustomNode";
 import { topicsData } from "../data/roadmaps";
 import { Topic } from "../types";
+
+// Custom node component for better information display and vertical layout
+const CustomNode = ({ data, isConnectable, type }: NodeProps) => {
+  const isInput = type === 'input';
+  const isOutput = type === 'output';
+
+  return (
+    <div style={{ backgroundColor: type === 'input' ? '#C7EBDF' : (type === 'output' ? '#E4D8FD' : '#fff'), padding: '1rem', borderRadius: '8px', border: '1px solid #ccc', marginBottom: '1rem' }}>
+      {!isInput && (
+        <Handle
+          type="target"
+          position={Position.Top}
+          isConnectable={isConnectable}
+          style={{ backgroundColor: '#6366F1' }}
+        />
+      )}
+      <div style={{ textAlign: 'center' }}>
+        <h3 style={{ marginBottom: '0.5rem', color: '#3B82F6' }}>{data.label}</h3>
+        {data.description && <p>{data.description}</p>}
+      </div>
+      {!isOutput && (
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          isConnectable={isConnectable}
+          style={{ backgroundColor: '#6366F1' }}
+        />
+      )}
+    </div>
+  );
+};
 
 const nodeTypes: NodeTypes = {
   default: CustomNode,
   input: CustomNode,
   output: CustomNode,
-  process: CustomNode, // Add the missing 'process' node type
 };
 
 const RoadmapFlow: React.FC = () => {
   const { currentRoadmap, setSelectedTopic, setSelectedTopicForNotes } =
     useRoadmapStore();
-  const [selectedTopic, setSelectedTopicState] = useState<Node | null>(null); // Added state to track selected node
+  const [selectedTopic, setSelectedTopicState] = useState<Node | null>(null);
 
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
-  // Update nodes and edges when currentRoadmap changes
   useEffect(() => {
     if (currentRoadmap) {
       setNodes(currentRoadmap.nodes);
@@ -49,9 +81,8 @@ const RoadmapFlow: React.FC = () => {
   const onNodeClick = useCallback(
     (event: React.MouseEvent, node: Node) => {
       if (node.data && node.data.label) {
-        // Only update if selecting a different node
         if (!selectedTopic || selectedTopic.id !== node.id) {
-          setSelectedTopicState(node); // Update the state to track the selected node
+          setSelectedTopicState(node);
           setSelectedTopic(node);
           setSelectedTopicForNotes(node.data.label);
         }
@@ -64,7 +95,6 @@ const RoadmapFlow: React.FC = () => {
     return (
       <div className="flex items-center justify-center h-full bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-indigo-950 dark:to-gray-800 p-3 sm:p-4 md:p-8 bg-pattern">
         <div className="w-full max-w-4xl text-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl border border-blue-100/50 dark:border-indigo-800/50 transition-all duration-300">
-          {/* Main title at the top center */}
           <div className="w-full text-center mb-8">
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent animate-gradient-x tracking-tight">
               Map your plans
@@ -73,7 +103,6 @@ const RoadmapFlow: React.FC = () => {
           </div>
 
           <div className="relative w-full h-64 md:h-80 overflow-hidden mb-10 md:mb-12">
-            {/* Central design element */}
             <div className="absolute top-1/2 left-[50%] transform -translate-x-1/2 -translate-y-1/2">
               <div className="relative w-20 h-20 md:w-32 md:h-32 cursor-pointer transition-transform duration-300 hover:scale-110 floating-element">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 opacity-90 animate-pulse-slow"></div>
@@ -108,7 +137,6 @@ const RoadmapFlow: React.FC = () => {
               </div>
             </div>
 
-            {/* Floating elements - Mobile responsive */}
             <div className="absolute left-[5%] md:left-[12%] top-[15%] animate-float-slow floating-element">
               <div className="relative w-16 h-16 md:w-24 md:h-24">
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 opacity-70 blur"></div>
@@ -218,7 +246,6 @@ const RoadmapFlow: React.FC = () => {
           nodeTypes={nodeTypes}
           connectionMode={ConnectionMode.Loose}
           proOptions={{ hideAttribution: true }}
-          attributionPosition="bottom-right"
           fitView
           minZoom={0.1}
           maxZoom={1.5}
@@ -226,17 +253,12 @@ const RoadmapFlow: React.FC = () => {
           zoomOnScroll={true}
           zoomOnPinch={true}
           panOnScroll={true}
+          style={{ direction: 'column' }}
         >
-          <Background color="#aaa" gap={16} />
-          <Controls 
-            showInteractive={false}
-            className="react-flow__controls-mobile"
-          />
+          <Background color="#aaa" gap={24} variant={BackgroundVariant.Lines} />
+          <Controls showInteractive={false} className="react-flow__controls-mobile" />
           <MiniMap
-            nodeStrokeColor={(n) => {
-              if (n.id === selectedTopic?.id) return '#6366F1';
-              return '#555';
-            }}
+            nodeStrokeColor={(n) => (n.id === selectedTopic?.id ? '#6366F1' : '#555')}
             nodeColor={(n) => {
               if (n.id === selectedTopic?.id) return '#818CF8';
               if (n.type === 'input') return '#C7EBDF';

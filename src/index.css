@@ -127,6 +127,93 @@ body {
   background-size: 100px 100px;
 }
 
+
+/* Custom styles for ReactFlow nodes and edges */
+.react-flow__node {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 250px;
+  padding: 12px;
+}
+
+.react-flow__node:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.react-flow__node-default {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.react-flow__node-input {
+  font-weight: 700;
+}
+
+.react-flow__node-output {
+  font-weight: 700;
+}
+
+.react-flow__handle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #6366F1;
+}
+
+.react-flow__handle-top {
+  top: -5px;
+}
+
+.react-flow__handle-bottom {
+  bottom: -5px;
+}
+
+.react-flow__edge-path {
+  stroke-width: 2;
+}
+
+.react-flow__edge.animated path {
+  stroke-dasharray: 5;
+  animation: flowAnimation 2s linear infinite;
+}
+
+.react-flow__controls {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.dark-flow .react-flow__controls-button {
+  background-color: #1F2937;
+  color: white;
+  border-color: #374151;
+}
+
+.light-flow .react-flow__controls-button {
+  background-color: white;
+  border-color: #E5E7EB;
+}
+
+@keyframes flowAnimation {
+  from {
+    stroke-dashoffset: 10;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Custom node styling */
+.node-label {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.node-description {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
 .dark .bg-pattern {
   background-image: 
     radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.05) 2%, transparent 0%), 
