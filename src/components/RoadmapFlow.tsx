@@ -65,7 +65,7 @@ const RoadmapFlow: React.FC = () => {
           {/* Main title at the top center */}
           <div className="w-full text-center mb-8">
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent animate-gradient-x tracking-tight">
-              AI Roadmap Generator
+             Map your plans
             </h2>
             <div className="h-1 w-32 md:w-48 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mt-4"></div>
           </div>
