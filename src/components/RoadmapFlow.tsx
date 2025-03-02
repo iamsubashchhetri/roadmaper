@@ -189,34 +189,6 @@ const RoadmapFlow: React.FC = () => {
               </div>
             </div>
 
-            <div className="absolute right-[5%] md:right-[9%] bottom-[8%] md:bottom-[5%] animate-float-slow floating-element">
-              <div className="relative w-18 h-18 md:w-24 md:h-24">
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 opacity-70 blur"></div>
-                <div className="absolute inset-3.5 rounded-xl bg-white dark:bg-gray-800 backdrop-blur-sm flex items-center justify-center">
-                  <svg
-                    className="w-9 h-9 md:w-12 md:h-12 text-blue-500"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.25 19.25H9.375C8.87772 19.25 8.40081 19.0525 8.04917 18.7008C7.69754 18.3492 7.5 17.8723 7.5 17.375V13.75H6.625C6.32663 13.75 6.04048 13.6315 5.8295 13.4205C5.61853 13.2095 5.5 12.9234 5.5 12.625V10.375C5.5 10.0766 5.61853 9.79048 5.8295 9.5795C6.04048 9.36853 6.32663 9.25 6.625 9.25H7.5V6.625C7.5 6.32663 7.61853 6.04048 7.8295 5.8295C8.04048 5.61853 8.32663 5.5 8.625 5.5H10.875C11.1734 5.5 11.4595 5.61853 11.6705 5.8295C11.8815 6.04048 12 6.32663 12 6.625V9.25H14.4588C14.6784 9.24992 14.8957 9.29616 15.0935 9.38518C15.2913 9.4742 15.4645 9.60355 15.6 9.7625L16.4963 10.8787C16.6455 11.0588 16.7463 11.2763 16.7889 11.5097C16.8315 11.7432 16.8146 11.9847 16.7398 12.2087C16.665 12.4328 16.5349 12.6312 16.3627 12.7851C16.1904 12.939 15.9817 13.0429 15.7575 13.0862L12.7538 13.75H11.25V19.25Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M18.5 7.5V17.5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
           </div>
 
           <div className="text-center mt-8 mb-6 md:mb-8 px-4">
