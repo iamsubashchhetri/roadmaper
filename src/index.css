@@ -132,6 +132,39 @@ body {
     radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.05) 2%, transparent 0%), 
     radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.05) 2%, transparent 0%);
   background-size: 100px 100px;
+
+/* Tree layout specific styles */
+.tree-layout .react-flow__edge path {
+  stroke-width: 2.5;
+  stroke: #6366F1;
+}
+
+.tree-layout .react-flow__edge.animated path {
+  stroke-dasharray: 5;
+  animation: dashdraw 0.5s linear infinite;
+}
+
+@keyframes dashdraw {
+  from {
+    stroke-dashoffset: 10;
+  }
+}
+
+.react-flow__edge.selected path {
+  stroke: #4F46E5;
+  stroke-width: 3;
+}
+
+.react-flow__node.selected {
+  box-shadow: 0 0 0 2px #4F46E5;
+}
+
+/* Improve the tree branch connections */
+.react-flow__edge-path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 }
 
 /* Enhance Floating Elements */

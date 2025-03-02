@@ -1,43 +1,74 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
 
-const CustomNode = memo(({ data, selected }: NodeProps) => {
-  // Define node type colors
-  const getNodeStyle = () => {
-    const baseStyle = 'px-3 py-2 md:px-5 md:py-4 rounded-lg shadow-md border-2 transition-all duration-300 max-w-xs min-w-[140px] md:min-w-[180px] m-1 text-sm md:text-base';
-
-    if (selected) {
-      return `${baseStyle} bg-blue-50 border-blue-500 dark:bg-blue-900 dark:border-blue-400 animate-pulse-slow`;
-    }
-
-    switch (data.type) {
-      case 'input':
-        return `${baseStyle} bg-green-50 border-green-500 dark:bg-green-900 dark:border-green-400 animate-float`;
-      case 'output':
-        return `${baseStyle} bg-purple-50 border-purple-500 dark:bg-purple-900 dark:border-purple-400 animate-float`;
-      default:
-        return `${baseStyle} bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-600`;
-    }
-  };
+const CustomNode: React.FC<NodeProps> = ({ data, isConnectable, selected, sourcePosition, targetPosition }) => {
+  // Use the dynamically passed positions or fall back to top/bottom for tree structure
+  const sourcePos = sourcePosition || Position.Bottom;
+  const targetPos = targetPosition || Position.Top;
 
   return (
-    <div className={getNodeStyle()}>
-      <Handle type="target" position={Position.Top} className="w-3 h-3 bg-blue-500" />
-
-      <div className="text-center">
-        <div className="font-semibold text-gray-900 dark:text-white mb-1">{data.label}</div>
-        {data.description && (
-          <div className="text-xs text-gray-600 dark:text-gray-300 line-clamp-2">
-            {data.description}
-          </div>
-        )}
+    <div
+      className={`custom-node ${data.type || 'default-node'} ${selected ? 'selected-node' : ''}`}
+      style={{
+        backgroundColor: selected ? '#F5F3FF' : 'white',
+        width: '180px',
+        padding: '12px',
+        borderRadius: '8px',
+        border: selected ? '1px solid #818CF8' : '1px solid #E2E8F0',
+        boxShadow: selected ? '0 3px 10px rgba(99, 102, 241, 0.2)' : '0 2px 5px rgba(0, 0, 0, 0.1)',
+        transition: 'all 0.2s ease',
+        transform: selected ? 'translateY(-2px)' : 'none',
+      }}
+    >
+      <Handle
+        type="target"
+        position={targetPos}
+        style={{ 
+          backgroundColor: '#6366F1', 
+          width: '8px', 
+          height: '8px', 
+          [targetPos === Position.Top ? 'top' : 'bottom']: '-4px',
+          [targetPos === Position.Left ? 'left' : 'right']: targetPos === Position.Left || targetPos === Position.Right ? '-4px' : 'auto',
+        }}
+        isConnectable={isConnectable}
+      />
+      <div style={{ textAlign: 'center' }}>
+        <h3 style={{ 
+          fontSize: '14px', 
+          fontWeight: 'bold', 
+          marginBottom: '0.5rem', 
+          color: selected ? '#4F46E5' : '#3B82F6', 
+          overflow: 'hidden', 
+          textOverflow: 'ellipsis' 
+        }}>
+          {data.label}
+        </h3>
+        <p style={{ 
+          fontSize: '12px', 
+          color: selected ? '#4B5563' : '#6B7280', 
+          overflow: 'hidden', 
+          textOverflow: 'ellipsis', 
+          display: '-webkit-box', 
+          WebkitLineClamp: 2, 
+          WebkitBoxOrient: 'vertical' 
+        }}>
+          {data.description}
+        </p>
       </div>
-
-      <Handle type="source" position={Position.Bottom} className="w-3 h-3 bg-blue-500" />
+      <Handle
+        type="source"
+        position={sourcePos}
+        style={{ 
+          backgroundColor: '#6366F1', 
+          width: '8px', 
+          height: '8px',
+          [sourcePos === Position.Bottom ? 'bottom' : 'top']: sourcePos === Position.Bottom || sourcePos === Position.Top ? '-4px' : 'auto',
+          [sourcePos === Position.Left ? 'left' : 'right']: sourcePos === Position.Left || sourcePos === Position.Right ? '-4px' : 'auto',
+        }}
+        isConnectable={isConnectable}
+      />
     </div>
   );
-});
-
-CustomNode.displayName = 'CustomNode';
+};
 
 export default CustomNode;

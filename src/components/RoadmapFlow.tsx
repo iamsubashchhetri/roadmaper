@@ -11,18 +11,76 @@ import ReactFlow, {
   addEdge,
   Connection,
   ConnectionMode,
+  Position,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { useRoadmapStore } from "../store/roadmapStore";
 import CustomNode from "./CustomNode";
 import { topicsData } from "../data/roadmaps";
 import { Topic } from "../types";
+import dagre from 'dagre';
 
 const nodeTypes: NodeTypes = {
   default: CustomNode,
   input: CustomNode,
   output: CustomNode,
   process: CustomNode, // Add the missing 'process' node type
+};
+
+// This helper function organizes nodes in a tree layout
+const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'TB') => {
+  const dagreGraph = new dagre.graphlib.Graph();
+  dagreGraph.setDefaultEdgeLabel(() => ({}));
+  
+  // Use TB (top to bottom) for vertical layout (tree)
+  dagreGraph.setGraph({ rankdir: direction, ranksep: 80, nodesep: 50, edgesep: 80, marginx: 20, marginy: 20 });
+  
+  // Add nodes to dagre graph
+  nodes.forEach((node) => {
+    dagreGraph.setNode(node.id, { width: 180, height: 80 });
+  });
+  
+  // Add edges to dagre graph
+  edges.forEach((edge) => {
+    dagreGraph.setEdge(edge.source, edge.target);
+  });
+  
+  // Calculate positions
+  dagre.layout(dagreGraph);
+  
+  // Get positions from dagre
+  const layoutedNodes = nodes.map((node) => {
+    const nodeWithPosition = dagreGraph.node(node.id);
+    
+    // Set source and target handles based on tree direction
+    let sourcePosition: Position, targetPosition: Position;
+    
+    if (direction === 'TB') {
+      sourcePosition = Position.Bottom;
+      targetPosition = Position.Top;
+    } else if (direction === 'BT') {
+      sourcePosition = Position.Top;
+      targetPosition = Position.Bottom;
+    } else if (direction === 'LR') {
+      sourcePosition = Position.Right;
+      targetPosition = Position.Left;
+    } else if (direction === 'RL') {
+      sourcePosition = Position.Left;
+      targetPosition = Position.Right;
+    }
+    
+    return {
+      ...node,
+      sourcePosition,
+      targetPosition,
+      position: {
+        x: nodeWithPosition.x - 90, // Center node horizontally
+        y: nodeWithPosition.y - 40, // Center node vertically
+      },
+    };
+  });
+  
+  return { nodes: layoutedNodes, edges };
 };
 
 const RoadmapFlow: React.FC = () => {
@@ -36,8 +94,14 @@ const RoadmapFlow: React.FC = () => {
   // Update nodes and edges when currentRoadmap changes
   useEffect(() => {
     if (currentRoadmap) {
-      setNodes(currentRoadmap.nodes);
-      setEdges(currentRoadmap.edges);
+      // Apply tree layout to the roadmap nodes and edges
+      const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+        currentRoadmap.nodes, 
+        currentRoadmap.edges
+      );
+      
+      setNodes(layoutedNodes);
+      setEdges(layoutedEdges);
     }
   }, [currentRoadmap, setNodes, setEdges]);
 
@@ -388,12 +452,20 @@ const RoadmapFlow: React.FC = () => {
           fitView
           minZoom={0.1}
           maxZoom={1.5}
-          defaultZoom={0.8}
+          defaultZoom={0.6}
           zoomOnScroll={true}
           zoomOnPinch={true}
           panOnScroll={true}
+          defaultEdgeOptions={{
+            animated: true,
+            style: { stroke: '#6366F1', strokeWidth: 2 },
+          }}
+          fitViewOptions={{
+            padding: 0.2,
+            includeHiddenNodes: false,
+          }}
         >
-          <Background color="#aaa" gap={16} />
+          <Background color="#aaa" gap={16} variant="dots" />
           <Controls
             showInteractive={false}
             className="react-flow__controls-mobile"
