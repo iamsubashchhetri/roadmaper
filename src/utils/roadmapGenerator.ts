@@ -316,3 +316,70 @@ In a production environment, this would be a comprehensive explanation generated
 
 The content would be tailored to the specific role and level of expertise, providing valuable insights and guidance for the learner's journey.`;
 };
+
+
+interface Topic {
+  id: number;
+  title: string;
+  description: string;
+}
+
+interface Node {
+  id: string;
+  type: string;
+  data: { label: string; description: string };
+  position: { x: number; y: number };
+}
+
+interface Edge {
+  id: string;
+  source: string;
+  target: string;
+  animated?: boolean;
+  style?: any;
+  type?: string;
+}
+
+export const generateRoadmapLayout = (topics: Topic[]): { nodes: Node[], edges: Edge[] } => {
+  const nodes: Node[] = [];
+  const edges: Edge[] = [];
+
+  // Calculate positions for nodes (vertical layout with proper spacing)
+  const startPositionX = 250;
+  const startPositionY = 50;
+  const nodeHeight = 100; // Height of each node
+  const verticalSpacing = 80; // Space between nodes
+  const totalNodeSpace = nodeHeight + verticalSpacing; // Total vertical space per node
+
+  topics.forEach((topic, index) => {
+    // Create node
+    const node: Node = {
+      id: topic.id.toString(),
+      type: index === 0 ? 'input' : (index === topics.length - 1 ? 'output' : 'default'),
+      data: { 
+        label: topic.title,
+        description: topic.description
+      },
+      position: { 
+        x: startPositionX, 
+        y: startPositionY + (index * totalNodeSpace)
+      }
+    };
+
+    nodes.push(node);
+
+    // Create edge
+    if (index > 0) {
+      edges.push({
+        id: `e${topics[index-1].id}-${topic.id}`,
+        source: topics[index-1].id.toString(),
+        target: topic.id.toString(),
+        animated: index === topics.length - 1,
+        style: { stroke: '#6366F1', strokeWidth: 2 },
+        type: 'smoothstep' // Use smoothstep for a nicer flow appearance
+      });
+    }
+  });
+
+  return { nodes, edges };
+};

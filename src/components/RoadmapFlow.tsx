@@ -25,27 +25,72 @@ import { Topic } from "../types";
 const CustomNode = ({ data, isConnectable, type }: NodeProps) => {
   const isInput = type === 'input';
   const isOutput = type === 'output';
+  
+  // Color mapping based on node type
+  const bgColor = type === 'input' 
+    ? 'rgb(199, 235, 223)' 
+    : (type === 'output' 
+      ? 'rgb(228, 216, 253)' 
+      : 'rgb(255, 255, 255)');
+  
+  const darkBgColor = type === 'input'
+    ? 'rgb(25, 97, 78, 0.3)'
+    : (type === 'output'
+      ? 'rgb(95, 55, 179, 0.3)'
+      : 'rgb(30, 41, 59, 0.8)');
 
   return (
-    <div style={{ backgroundColor: type === 'input' ? '#C7EBDF' : (type === 'output' ? '#E4D8FD' : '#fff'), padding: '1rem', borderRadius: '8px', border: '1px solid #ccc', marginBottom: '1rem' }}>
+    <div 
+      className={`custom-node ${type}-node`}
+      style={{ 
+        backgroundColor: bgColor,
+        width: '180px',
+        padding: '12px',
+        borderRadius: '8px',
+        border: `1px solid ${type === 'input' ? '#9BE0C8' : (type === 'output' ? '#C8B4F5' : '#e2e8f0')}`,
+        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+        transition: 'all 0.2s ease'
+      }}
+    >
       {!isInput && (
         <Handle
           type="target"
           position={Position.Top}
           isConnectable={isConnectable}
-          style={{ backgroundColor: '#6366F1' }}
+          style={{ backgroundColor: '#6366F1', width: '8px', height: '8px', top: '-4px' }}
         />
       )}
       <div style={{ textAlign: 'center' }}>
-        <h3 style={{ marginBottom: '0.5rem', color: '#3B82F6' }}>{data.label}</h3>
-        {data.description && <p>{data.description}</p>}
+        <h3 style={{ 
+          fontSize: '14px', 
+          fontWeight: 'bold',
+          marginBottom: '0.5rem', 
+          color: '#3B82F6',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
+        }}>
+          {data.label}
+        </h3>
+        {data.description && (
+          <p style={{ 
+            fontSize: '12px', 
+            color: '#6B7280',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical'
+          }}>
+            {data.description}
+          </p>
+        )}
       </div>
       {!isOutput && (
         <Handle
           type="source"
           position={Position.Bottom}
           isConnectable={isConnectable}
-          style={{ backgroundColor: '#6366F1' }}
+          style={{ backgroundColor: '#6366F1', width: '8px', height: '8px', bottom: '-4px' }}
         />
       )}
     </div>
@@ -247,16 +292,35 @@ const RoadmapFlow: React.FC = () => {
           connectionMode={ConnectionMode.Loose}
           proOptions={{ hideAttribution: true }}
           fitView
+          fitViewOptions={{ 
+            padding: 0.5, 
+            maxZoom: 1 
+          }}
           minZoom={0.1}
           maxZoom={1.5}
-          defaultZoom={0.8}
+          defaultZoom={0.7}
           zoomOnScroll={true}
           zoomOnPinch={true}
           panOnScroll={true}
-          style={{ direction: 'column' }}
+          defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
+          style={{ 
+            backgroundColor: 'var(--bg-color, #f8fafc)',
+            height: '100%' 
+          }}
+          snapToGrid={true}
+          snapGrid={[10, 10]}
         >
-          <Background color="#aaa" gap={24} variant={BackgroundVariant.Lines} />
-          <Controls showInteractive={false} className="react-flow__controls-mobile" />
+          <Background 
+            color="#aaa" 
+            gap={24} 
+            variant={BackgroundVariant.Dots} 
+            size={1}
+          />
+          <Controls 
+            showInteractive={false} 
+            className="react-flow__controls-mobile" 
+            position="bottom-right"
+          />
           <MiniMap
             nodeStrokeColor={(n) => (n.id === selectedTopic?.id ? '#6366F1' : '#555')}
             nodeColor={(n) => {
@@ -266,6 +330,8 @@ const RoadmapFlow: React.FC = () => {
               return '#fff';
             }}
             className="hidden md:block"
+            zoomable
+            pannable
           />
         </ReactFlow>
       ) : null}

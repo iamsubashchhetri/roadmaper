@@ -905,3 +905,65 @@ button:focus {
   border-color: #475569;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
+
+/* Vertical flow layout styling */
+.react-flow__node {
+  max-width: 180px;
+  transition: all 0.3s ease;
+}
+
+.react-flow__node:hover {
+  z-index: 10;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.react-flow__edge-path {
+  stroke-width: 2;
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke-width: 3;
+}
+
+.react-flow__edge.animated .react-flow__edge-path {
+  stroke-dasharray: 5;
+  animation: flowAnimation 2s linear infinite;
+}
+
+.custom-node {
+  font-family: 'Inter', sans-serif;
+  word-wrap: break-word;
+}
+
+.input-node {
+  box-shadow: 0 2px 15px rgba(25, 97, 78, 0.2);
+}
+
+.output-node {
+  box-shadow: 0 2px 15px rgba(95, 55, 179, 0.2);
+}
+
+.dark .input-node {
+  background-color: rgba(25, 97, 78, 0.3) !important;
+  border-color: rgba(25, 97, 78, 0.5) !important;
+}
+
+.dark .output-node {
+  background-color: rgba(95, 55, 179, 0.3) !important;
+  border-color: rgba(95, 55, 179, 0.5) !important;
+}
+
+.dark .react-flow__node-default {
+  background-color: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(51, 65, 85, 0.8) !important;
+}
+
+.dark .custom-node h3 {
+  color: #93c5fd !important;
+}
+
+.dark .custom-node p {
+  color: #cbd5e1 !important;
+}
