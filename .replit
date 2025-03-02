@@ -1,0 +1,19 @@
+modules = ["nodejs-20", "web"]
+run = "npm run dev"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "npm run dev"]
+
+[[ports]]
+localPort = 5173
+externalPort = 80
+<<<<<<< HEAD
+
+[[ports]]
+localPort = 5174
+externalPort = 3000
+=======
+>>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)

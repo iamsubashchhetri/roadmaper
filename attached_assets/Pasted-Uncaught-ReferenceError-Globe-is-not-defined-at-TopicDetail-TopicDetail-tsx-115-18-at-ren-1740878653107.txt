@@ -1,0 +1,83 @@
+Uncaught ReferenceError: Globe is not defined
+    at TopicDetail (TopicDetail.tsx:115:18)
+    at renderWithHooks (chunk-ZMB5PWZ4.js?v=a6ac8e7c:11546:26)
+    at updateFunctionComponent (chunk-ZMB5PWZ4.js?v=a6ac8e7c:14580:28)
+    at beginWork (chunk-ZMB5PWZ4.js?v=a6ac8e7c:15922:22)
+    at HTMLUnknownElement.callCallback2 (chunk-ZMB5PWZ4.js?v=a6ac8e7c:3672:22)
+    at Object.invokeGuardedCallbackDev (chunk-ZMB5PWZ4.js?v=a6ac8e7c:3697:24)
+    at invokeGuardedCallback (chunk-ZMB5PWZ4.js?v=a6ac8e7c:3731:39)
+    at beginWork$1 (chunk-ZMB5PWZ4.js?v=a6ac8e7c:19763:15)
+    at performUnitOfWork (chunk-ZMB5PWZ4.js?v=a6ac8e7c:19196:20)
+    at workLoopSync (chunk-ZMB5PWZ4.js?v=a6ac8e7c:19135:13)
+TopicDetail @ TopicDetail.tsx:115
+renderWithHooks @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:11546
+updateFunctionComponent @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:14580
+beginWork @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:15922
+callCallback2 @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:3672
+invokeGuardedCallbackDev @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:3697
+invokeGuardedCallback @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:3731
+beginWork$1 @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:19763
+performUnitOfWork @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:19196
+workLoopSync @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:19135
+renderRootSync @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:19114
+performSyncWorkOnRoot @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:18872
+flushSyncCallbacks @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:9117
+(anonymous) @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:18625Understand this errorAI
+TopicDetail.tsx:115 Uncaught ReferenceError: Globe is not defined
+    at TopicDetail (TopicDetail.tsx:115:18)
+    at renderWithHooks (chunk-ZMB5PWZ4.js?v=a6ac8e7c:11546:26)
+    at updateFunctionComponent (chunk-ZMB5PWZ4.js?v=a6ac8e7c:14580:28)
+    at beginWork (chunk-ZMB5PWZ4.js?v=a6ac8e7c:15922:22)
+    at HTMLUnknownElement.callCallback2 (chunk-ZMB5PWZ4.js?v=a6ac8e7c:3672:22)
+    at Object.invokeGuardedCallbackDev (chunk-ZMB5PWZ4.js?v=a6ac8e7c:3697:24)
+    at invokeGuardedCallback (chunk-ZMB5PWZ4.js?v=a6ac8e7c:3731:39)
+    at beginWork$1 (chunk-ZMB5PWZ4.js?v=a6ac8e7c:19763:15)
+    at performUnitOfWork (chunk-ZMB5PWZ4.js?v=a6ac8e7c:19196:20)
+    at workLoopSync (chunk-ZMB5PWZ4.js?v=a6ac8e7c:19135:13)
+TopicDetail @ TopicDetail.tsx:115
+renderWithHooks @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:11546
+updateFunctionComponent @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:14580
+beginWork @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:15922
+callCallback2 @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:3672
+invokeGuardedCallbackDev @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:3697
+invokeGuardedCallback @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:3731
+beginWork$1 @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:19763
+performUnitOfWork @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:19196
+workLoopSync @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:19135
+renderRootSync @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:19114
+recoverFromConcurrentError @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:18734
+performSyncWorkOnRoot @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:18877
+flushSyncCallbacks @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:9117
+(anonymous) @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:18625Understand this errorAI
+chunk-ZMB5PWZ4.js?v=a6ac8e7c:14030 The above error occurred in the <TopicDetail> component:
+
+    at TopicDetail (https://5dd920c5-73a2-40b2-a000-11d5d491eb66-00-dibbkbqy88zo.spock.replit.dev/src/components/TopicDetail.tsx:24:71)
+    at div
+    at App (https://5dd920c5-73a2-40b2-a000-11d5d491eb66-00-dibbkbqy88zo.spock.replit.dev/src/App.tsx:26:61)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+logCapturedError @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:14030
+update.callback @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:14050
+callCallback @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:11246
+commitUpdateQueue @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:11263
+commitLayoutEffectOnFiber @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:17091
+commitLayoutMountEffects_complete @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:17978
+commitLayoutEffects_begin @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:17967
+commitLayoutEffects @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:17918
+commitRootImpl @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:19351
+commitRoot @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:19275
+performSyncWorkOnRoot @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:18893
+flushSyncCallbacks @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:9117
+(anonymous) @ chunk-ZMB5PWZ4.js?v=a6ac8e7c:18625Understand this errorAI
+chunk-ZMB5PWZ4.js?v=a6ac8e7c:9127 Uncaught ReferenceError: Globe is not defined
+    at TopicDetail (TopicDetail.tsx:115:18)
+    at renderWithHooks (chunk-ZMB5PWZ4.js?v=a6ac8e7c:11546:26)
+    at updateFunctionComponent (chunk-ZMB5PWZ4.js?v=a6ac8e7c:14580:28)
+    at beginWork (chunk-ZMB5PWZ4.js?v=a6ac8e7c:15922:22)
+    at beginWork$1 (chunk-ZMB5PWZ4.js?v=a6ac8e7c:19751:22)
+    at performUnitOfWork (chunk-ZMB5PWZ4.js?v=a6ac8e7c:19196:20)
+    at workLoopSync (chunk-ZMB5PWZ4.js?v=a6ac8e7c:19135:13)
+    at renderRootSync (chunk-ZMB5PWZ4.js?v=a6ac8e7c:19114:15)
+    at recoverFromConcurrentError (chunk-ZMB5PWZ4.js?v=a6ac8e7c:18734:28)
+    at performSyncWorkOnRoot (chunk-ZMB5PWZ4.js?v=a6ac8e7c:18877:28)

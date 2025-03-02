@@ -1,0 +1,687 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base theme styles */
+body {
+  @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+/* Apply animations */
+.roadmaps-container > div {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.topic-detail {
+  animation: slideUp 0.4s ease-out forwards;
+}
+
+/* Dark mode improvements for React Flow */
+.dark .react-flow__node {
+  @apply bg-gray-800 text-white border-gray-700;
+}
+
+.dark .react-flow__edge-path {
+  @apply stroke-gray-400;
+}
+
+.dark .react-flow__attribution {
+  @apply bg-gray-800 text-gray-300;
+}
+
+/* Topic detail styling */
+.topic-detail .prose {
+  @apply max-w-none;
+}
+
+.topic-detail .prose h1 {
+  @apply text-2xl font-bold mt-6 mb-4 text-indigo-600 dark:text-indigo-400;
+}
+
+.topic-detail .prose h2 {
+  @apply text-xl font-semibold mt-5 mb-3 text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-2;
+}
+
+.topic-detail .prose h3 {
+  @apply text-lg font-medium mt-4 mb-2 text-gray-800 dark:text-gray-200;
+}
+
+.topic-detail .prose p {
+  @apply my-3 text-gray-700 dark:text-gray-300 leading-relaxed;
+}
+
+.topic-detail .prose ul, .topic-detail .prose ol {
+  @apply my-4 pl-6 text-gray-700 dark:text-gray-300;
+}
+
+.topic-detail .prose li {
+  @apply my-2;
+}
+
+.topic-detail .prose code {
+  @apply bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+.topic-detail .prose pre {
+  @apply bg-gray-100 dark:bg-gray-700 p-4 rounded-md overflow-x-auto my-5 border border-gray-200 dark:border-gray-600;
+}
+
+.topic-detail .prose blockquote {
+  @apply border-l-4 border-indigo-300 dark:border-indigo-600 pl-4 italic text-gray-600 dark:text-gray-400 my-4 bg-gray-50 dark:bg-gray-800 py-2 pr-2 rounded-r;
+}
+
+.topic-detail .prose a {
+  @apply text-blue-600 dark:text-blue-400 hover:underline;
+}
+
+.topic-detail .prose table {
+  @apply w-full border-collapse my-4;
+}
+
+.topic-detail .prose th {
+  @apply bg-gray-100 dark:bg-gray-700 text-left p-2 font-semibold border border-gray-300 dark:border-gray-600;
+}
+
+.topic-detail .prose td {
+  @apply border border-gray-300 dark:border-gray-600 p-2;
+}
+
+/* UI Components */
+.language-selector {
+  @apply fixed top-4 right-4 z-10;
+}
+
+/* React Flow Node Styling */
+.react-flow__node {
+  @apply shadow-md transition-all duration-300 ease-in-out;
+}
+
+.react-flow__node:hover {
+  @apply shadow-lg transform scale-105 z-10;
+}
+
+.react-flow__node-input {
+  @apply bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 border-green-500;
+}
+
+.react-flow__node-output {
+  @apply bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 border-blue-500;
+}
+
+.react-flow__node-default {
+  @apply bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600;
+}
+
+.react-flow__handle {
+  @apply w-3 h-3 bg-indigo-500 border-2 border-white dark:border-gray-800;
+}
+
+.roadmap-container {
+  @apply w-full h-[70vh] bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700;
+}
+
+/* Button styling */
+button:focus {
+  @apply outline-none ring-2 ring-indigo-500 ring-opacity-50;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full hover:bg-gray-400 dark:hover:bg-gray-500;
+}
+
+/* Custom styles for roadmap visualization */
+.react-flow__node {
+  transition: all 0.3s ease;
+}
+
+.react-flow__node:hover {
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+/* Style for edges */
+.react-flow__edge-path {
+  stroke-width: 2;
+}
+
+.react-flow__edge {
+  transition: stroke-width 0.3s ease;
+}
+
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke-width: 3;
+}
+
+/* Add custom styles for markdown content */
+.markdown-content {
+  line-height: 1.7;
+  color: #374151;
+}
+
+.dark .markdown-content {
+  color: #e5e7eb;
+}
+
+.markdown-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  color: #1f2937;
+}
+
+.dark .markdown-content h1 {
+  color: #f9fafb;
+  border-bottom-color: #374151;
+}
+
+.markdown-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.dark .markdown-content h2 {
+  color: #f9fafb;
+}
+
+.markdown-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #1f2937;
+}
+
+.dark .markdown-content h3 {
+  color: #f9fafb;
+}
+
+.markdown-content p {
+  margin-bottom: 1.2rem;
+}
+
+.markdown-content ul, .markdown-content ol {
+  margin-bottom: 1.2rem;
+  padding-left: 1.8rem;
+}
+
+.markdown-content ul {
+  list-style-type: disc;
+}
+
+.markdown-content ol {
+  list-style-type: decimal;
+}
+
+.markdown-content li {
+  margin-bottom: 0.6rem;
+}
+
+.markdown-content a {
+  color: #6366f1;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.markdown-content a:hover {
+  color: #4f46e5;
+}
+
+.dark .markdown-content a {
+  color: #818cf8;
+}
+
+.dark .markdown-content a:hover {
+  color: #a5b4fc;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid #9ca3af;
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 1.2rem;
+  font-style: italic;
+  color: #6b7280;
+}
+
+.dark .markdown-content blockquote {
+  border-left-color: #6b7280;
+  color: #9ca3af;
+}
+
+.markdown-content pre {
+  background-color: #f3f4f6;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1.2rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.dark .markdown-content pre {
+  background-color: #1f2937;
+}
+
+.markdown-content code {
+  background-color: #f3f4f6;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.dark .markdown-content code {
+  background-color: #1f2937;
+}
+
+.markdown-content table {
+  width: 100%;
+  margin-bottom: 1.2rem;
+  border-collapse: collapse;
+}
+
+.markdown-content table th,
+.markdown-content table td {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.dark .markdown-content table th,
+.dark .markdown-content table td {
+  border-color: #374151;
+}
+
+.markdown-content table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+
+.dark .markdown-content table th {
+  background-color: #1f2937;
+}
+
+.markdown-content hr {
+  border: 0;
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 2rem 0;
+}
+
+.dark .markdown-content hr {
+  background-color: #374151;
+}
+
+/* Markdown content styling */
+.prose pre {
+  background-color: #f1f5f9;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid #e2e8f0;
+}
+
+.dark .prose pre {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+.prose code {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.dark .prose code {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced markdown styling */
+.prose {
+  max-width: 75ch;
+  color: #374151;
+  line-height: 1.8;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.dark .prose {
+  color: #e5e7eb;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: #111827;
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.8em;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4 {
+  color: #f9fafb;
+}
+
+/* Topic notes styling */
+.topic-notes {
+  transition: all 0.3s ease;
+  overflow-y: auto;
+  max-height: 800px;
+  border-radius: 0.5rem;
+}
+
+.topic-notes .markdown-content {
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dark .topic-notes .markdown-content {
+  background-color: #1f2937;
+  border-color: #374151;
+}
+
+/* AI Notes styling */
+.prose h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .prose h1 {
+  border-color: #374151;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  margin-top: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.prose ul, .prose ol {
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+}
+
+.prose ul li, .prose ol li {
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.prose blockquote {
+  border-left: 4px solid #6366f1;
+  padding-left: 1rem;
+  margin-left: 0;
+  color: #4b5563;
+  font-style: italic;
+}
+
+.dark .prose blockquote {
+  color: #9ca3af;
+  border-color: #4f46e5;
+}
+
+.prose p {
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.prose th, .prose td {
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.dark .prose th, .dark .prose td {
+  border-color: #374151;
+}
+
+.prose th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+}
+
+.dark .prose th {
+  background-color: #1f2937;
+}
+
+.dark .topic-notes .markdown-content {
+  background-color: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.prose h1 {
+  color: #1e40af;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #dbeafe;
+  background: linear-gradient(90deg, #1e40af, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.dark .prose h1 {
+  background: linear-gradient(90deg, #60a5fa, #93c5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  border-bottom-color: #1e3a8a;
+}
+
+.prose h2 {
+  color: #2563eb;
+  font-size: 1.6rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  border-left: 4px solid #3b82f6;
+  padding-left: 0.75rem;
+}
+
+.dark .prose h2 {
+  color: #93c5fd;
+  border-left-color: #60a5fa;
+}
+
+.prose h3 {
+  font-size: 1.25em;
+}
+
+.prose h4 {
+  font-size: 1em;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.prose ul, .prose ol {
+  padding-left: 1.5em;
+  margin: 1.5em 0;
+}
+
+.prose li {
+  margin: 0.5em 0;
+}
+
+.prose blockquote {
+  border-left: 4px solid #bfdbfe;
+  padding-left: 1rem;
+  font-style: italic;
+  margin: 1rem 0;
+  color: #4b5563;
+}
+
+.dark .prose blockquote {
+  border-left-color: #1e40af;
+  color: #9ca3af;
+}
+
+.prose strong {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.dark .prose strong {
+  color: #60a5fa;
+}
+
+
+.prose a {
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.dark .prose a {
+  color: #3b82f6;
+}
+
+.prose a:hover {
+  text-decoration: none;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+}
+
+.prose th, .prose td {
+  padding: 0.75em;
+  border: 1px solid #e5e7eb;
+}
+
+.dark .prose th, .dark .prose td {
+  border-color: #374151;
+}
+
+.prose th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+
+.dark .prose th {
+  background-color: #1f2937;
+}
+
+/* Better controls styling */
+.react-flow__controls {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.react-flow__controls-button {
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  width: 24px;
+  height: 24px;
+}
+
+.dark .react-flow__controls-button {
+  background-color: #1f2937;
+  border-bottom: 1px solid #374151;
+}
+
+.react-flow__minimap {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.react-flow__node-custom {
+  padding: 12px;
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid #e0e7ff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.react-flow__node-custom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  border-color: #c7d2fe;
+}
+
+.dark .react-flow__node-custom {
+  background-color: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dark .react-flow__node-custom:hover {
+  border-color: #475569;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
