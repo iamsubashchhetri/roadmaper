@@ -21,17 +21,13 @@ import { Topic } from '../types';
 const nodeTypes: NodeTypes = {
   default: CustomNode,
   input: CustomNode,
-<<<<<<< HEAD
   output: CustomNode,
-  process: CustomNode  // Add the missing 'process' node type
-=======
-  output: CustomNode
->>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)
+  process: CustomNode  // Add the 'process' node type
 };
 
 const RoadmapFlow: React.FC = () => {
   const { currentRoadmap, setSelectedTopic } = useRoadmapStore();
-  
+
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
@@ -50,10 +46,10 @@ const RoadmapFlow: React.FC = () => {
 
   const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
     const label = node.data.label;
-    
+
     // Check if we have predefined content for this topic
     const topicData = topicsData[label as keyof typeof topicsData];
-    
+
     if (topicData) {
       const topic: Topic = {
         id: topicData.id,
