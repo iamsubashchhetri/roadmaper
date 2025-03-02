@@ -4,7 +4,7 @@ import { Handle, Position, NodeProps } from 'reactflow';
 const CustomNode = memo(({ data, selected }: NodeProps) => {
   // Define node type colors
   const getNodeStyle = () => {
-    const baseStyle = 'px-5 py-4 rounded-lg shadow-md border-2 transition-all duration-300 max-w-xs min-w-[180px] m-1';
+    const baseStyle = 'px-3 py-2 md:px-5 md:py-4 rounded-lg shadow-md border-2 transition-all duration-300 max-w-xs min-w-[140px] md:min-w-[180px] m-1 text-sm md:text-base';
 
     if (selected) {
       return `${baseStyle} bg-blue-50 border-blue-500 dark:bg-blue-900 dark:border-blue-400 animate-pulse-slow`;

@@ -234,22 +234,47 @@ const RoadmapFlow: React.FC = () => {
   }
 
   return (
-    <div className="h-full w-full">
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onNodeClick={onNodeClick}
-        nodeTypes={nodeTypes}
-        connectionMode={ConnectionMode.Loose}
-        fitView
-      >
-        <Background />
-        <Controls />
-        <MiniMap />
-      </ReactFlow>
+    <div className="roadmap-container h-[50vh] md:h-[70vh]">
+      {currentRoadmap ? (
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onNodeClick={onNodeClick}
+          nodeTypes={nodeTypes}
+          connectionMode={ConnectionMode.Loose}
+          proOptions={{ hideAttribution: true }}
+          attributionPosition="bottom-right"
+          fitView
+          minZoom={0.1}
+          maxZoom={1.5}
+          defaultZoom={0.8}
+          zoomOnScroll={true}
+          zoomOnPinch={true}
+          panOnScroll={true}
+        >
+          <Background color="#aaa" gap={16} />
+          <Controls 
+            showInteractive={false}
+            className="react-flow__controls-mobile"
+          />
+          <MiniMap
+            nodeStrokeColor={(n) => {
+              if (n.id === selectedTopic?.id) return '#6366F1';
+              return '#555';
+            }}
+            nodeColor={(n) => {
+              if (n.id === selectedTopic?.id) return '#818CF8';
+              if (n.type === 'input') return '#C7EBDF';
+              if (n.type === 'output') return '#E4D8FD';
+              return '#fff';
+            }}
+            className="hidden md:block"
+          />
+        </ReactFlow>
+      ) : null}
     </div>
   );
 };

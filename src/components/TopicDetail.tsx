@@ -129,15 +129,19 @@ const TopicDetail: React.FC = () => {
         {/* AI-Generated Notes section with language selector */}
         {selectedTopic && selectedTopic.data && selectedTopic.data.label && (
           <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow p-6 border border-gray-100 dark:border-gray-700">
-            <div className="flex items-center justify-between mb-4 border-b pb-3 border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-4 border-b pb-3 border-gray-200 dark:border-gray-700 gap-4">
+              <h3 className="text-lg md:text-xl font-semibold text-gray-800 dark:text-white text-center md:text-left w-full">
                 AI-Generated Learning Notes for: {selectedTopic.data.label || 'No Topic Selected'}
               </h3>
-              <div className="relative">
-                <select 
-                  value={language} 
-                  onChange={(e) => handleLanguageChange(e.target.value as Language)} 
-                  className="appearance-none px-4 py-2 pl-4 pr-10 rounded-md text-gray-700 bg-gray-100 border border-gray-300 hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition-colors"
+              <div className="flex items-center space-x-2 md:space-x-3">
+                <label htmlFor="language-select" className="text-sm md:text-base text-gray-700 dark:text-gray-300 font-medium">
+                  Language:
+                </label>
+                <select
+                  id="language-select"
+                  value={language}
+                  onChange={(e) => handleLanguageChange(e.target.value as Language)}
+                  className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-1 md:py-2 px-2 md:px-3 text-sm md:text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 >
                   {languages.map((lang) => (
                     <option key={lang.key} value={lang.key}>
@@ -145,11 +149,6 @@ const TopicDetail: React.FC = () => {
                     </option>
                   ))}
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                  </svg>
-                </div>
               </div>
             </div>
 

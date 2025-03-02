@@ -759,6 +759,35 @@ button:focus {
   border-bottom: 1px solid #374151;
 }
 
+/* Mobile optimizations for ReactFlow */
+@media (max-width: 768px) {
+  .react-flow__controls {
+    bottom: 10px;
+    right: 10px;
+    transform: scale(0.85);
+  }
+  
+  .react-flow__controls-mobile {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .react-flow__node {
+    font-size: 0.8rem;
+    padding: 6px !important;
+  }
+  
+  .react-flow__edge-path {
+    stroke-width: 1.5;
+  }
+  
+  .roadmap-container {
+    margin: 0 -1rem;
+    width: calc(100% + 2rem);
+    border-radius: 0;
+  }
+}
+
 .react-flow__minimap {
   border-radius: 8px;
   overflow: hidden;
