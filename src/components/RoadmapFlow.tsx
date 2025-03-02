@@ -59,8 +59,8 @@ const RoadmapFlow: React.FC = () => {
 
   if (!currentRoadmap) {
     return (
-      <div className="flex items-center justify-center h-full bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4 md:p-8">
-        <div className="w-full max-w-3xl text-center bg-white dark:bg-gray-800 p-5 md:p-8 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700">
+      <div className="flex items-center justify-center h-full bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-3 sm:p-4 md:p-8">
+        <div className="w-full max-w-3xl text-center bg-white dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
 
           <div className="relative w-full h-64 md:h-72 overflow-hidden my-4 md:my-6">
             {/* Central design element */}
@@ -127,12 +127,9 @@ const RoadmapFlow: React.FC = () => {
               </div>
             </div>
 
-            {/* Responsive connecting lines */}
-            <div className="hidden md:block absolute bottom-1/3 right-1/4 w-1/4 h-0.5 bg-gradient-to-r from-purple-500/40 to-pink-500/40 animate-pulse-slow rounded-full"></div>
-
-            {/* Mobile-only smaller connecting lines */}
-            <div className="md:hidden absolute top-1/3 left-1/3 w-1/3 h-0.5 bg-gradient-to-r from-blue-500/40 to-purple-500/40 animate-pulse-slow rounded-full"></div>
-            <div className="md:hidden absolute bottom-1/3 right-1/3 w-1/3 h-0.5 bg-gradient-to-r from-purple-500/40 to-pink-500/40 animate-pulse-slow rounded-full"></div>
+            {/* Improved mobile-responsive connecting lines */}
+            <div className="absolute top-1/3 left-1/4 md:left-1/3 w-1/3 md:w-1/4 h-0.5 bg-gradient-to-r from-blue-500/40 to-purple-500/40 animate-pulse-slow rounded-full transform -rotate-12 md:rotate-0"></div>
+            <div className="absolute bottom-1/3 right-1/4 md:right-1/3 w-1/3 md:w-1/4 h-0.5 bg-gradient-to-r from-purple-500/40 to-pink-500/40 animate-pulse-slow rounded-full transform rotate-12 md:rotate-0"></div>
           </div>
 
           <div className="text-center mt-4 mb-6 md:mb-8 px-4">
