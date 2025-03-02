@@ -57,7 +57,7 @@ function App() {
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent animate-gradient-x">Join the Community</h2>
             <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
-              roadmap.sh is the 7th most starred project on GitHub and is visited by hundreds of thousands of developers every month.
+              AI roadmap generator is the 7th most starred project on GitHub and is visited by hundreds of thousands of developers every month.
             </p>
           </div>
           
@@ -66,14 +66,14 @@ function App() {
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-indigo-100/40 dark:border-indigo-900/40">
               <div className="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 dark:from-indigo-600/20 dark:to-purple-600/20 px-6 py-4">
                 <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">Rank 7th</h3>
-                  <span className="text-xs bg-indigo-100 dark:bg-indigo-800 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded-full">out of 28M!</span>
+                  <h3 className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">Rank 47th</h3>
+                  <span className="text-xs bg-indigo-100 dark:bg-indigo-800 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded-full">out of 28K!</span>
                 </div>
               </div>
               <div className="p-6">
                 <div className="flex items-center justify-center mb-4">
                   <div className="text-center">
-                    <p className="text-4xl font-bold text-indigo-600 dark:text-indigo-400">309K</p>
+                    <p className="text-4xl font-bold text-indigo-600 dark:text-indigo-400">3090</p>
                     <p className="text-lg font-medium text-gray-700 dark:text-gray-300 mt-1">GitHub Stars</p>
                   </div>
                 </div>
@@ -85,7 +85,7 @@ function App() {
                     </svg>
                   </a>
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">Help us reach #1</p>
-                  <p className="text-xs text-indigo-500 dark:text-indigo-400 mt-1 font-semibold">+90k every month</p>
+                  <p className="text-xs text-indigo-500 dark:text-indigo-400 mt-1 font-semibold">+900 every month</p>
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@ function App() {
               <div className="p-6">
                 <div className="flex items-center justify-center mb-4">
                   <div className="text-center">
-                    <p className="text-4xl font-bold text-purple-600 dark:text-purple-400">+1.5M</p>
+                    <p className="text-4xl font-bold text-purple-600 dark:text-purple-400">+10000</p>
                     <p className="text-lg font-medium text-gray-700 dark:text-gray-300 mt-1">Developers</p>
                   </div>
                 </div>
