@@ -4,10 +4,10 @@ const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyApHWVU-ozOd
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
 export const languageInstructions: Record<Language, string> = {
-  english: 'Provide the content in English',
-  nepali: 'Write 70% of the content in Nepali and 30% in English to ensure readability. Include English translations for technical terms.',
-  spanish: 'Write 70% of the content in Spanish and 30% in English to ensure readability. Include English translations for technical terms.',
-  french: 'Write 70% of the content in French and 30% in English to ensure readability. Include English translations for technical terms.'
+  english: 'Provide the content entirely in English',
+  nepali: 'Create a truly integrated bilingual learning experience by naturally mixing Nepali and English throughout the content. Do not create separate sections for each language. Instead, weave both languages together, with approximately 60% Nepali and 40% English. Include English terms for all technical concepts and code examples, but explain concepts in a flowing mix of both languages. This natural language mix will help Nepali-speaking developers learn in a more intuitive way.',
+  spanish: 'Create a truly integrated bilingual learning experience by naturally mixing Spanish and English throughout the content. Do not create separate sections for each language. Instead, weave both languages together, with approximately 60% Spanish and 40% English. Include English terms for all technical concepts and code examples, but explain concepts in a flowing mix of both languages. This natural language mix will help Spanish-speaking developers learn in a more intuitive way.',
+  french: 'Create a truly integrated bilingual learning experience by naturally mixing French and English throughout the content. Do not create separate sections for each language. Instead, weave both languages together, with approximately 60% French and 40% English. Include English terms for all technical concepts and code examples, but explain concepts in a flowing mix of both languages. This natural language mix will help French-speaking developers learn in a more intuitive way.'
 };
 
 export const generateNotesWithGemini = async (topic: string, language: Language): Promise<string> => {
@@ -21,17 +21,17 @@ export const generateNotesWithGemini = async (topic: string, language: Language)
 
   console.log("Generating notes for cleaned topic:", cleanedTopic);
 
-  const prompt = `Generate comprehensive learning notes for the topic: "${cleanedTopic}" in ${language}.
+  const prompt = `Generate comprehensive, in-depth learning notes for the topic: "${cleanedTopic}" in ${language}.
   ${languageInstructions[language]}
 
-  Format the notes with the following structure:
-    1. Topic introduction and its importance in the field
-    2. Key concepts and fundamentals
-    3. Prerequisites or related topics that should be understood first
-    4. Practical applications or examples
-    5. Advanced concepts (if applicable)
-    6. Resources for further learning
-    7. Mention common challenges and how to overcome them
+Format the notes with the following structure:
+    1. Topic introduction and its importance in the field (150-200 words)
+    2. Key concepts and fundamentals (300-400 words with clear explanations)
+    3. Prerequisites or related topics that should be understood first (with brief explanation of how they connect)
+    4. Practical applications with 4-6 detailed code examples (ensure examples are properly formatted with markdown code blocks and include thorough comments explaining each part)
+    5. Advanced concepts with real-world scenarios (300-400 words)
+    6. Resources for further learning (specific books, courses, documentation, projects, and GitHub repositories)
+    7. Common challenges with detailed solutions and workarounds (150-200 words)
     8. End with a summary of key takeaways and next steps for learning
 
   Important notes:
@@ -39,7 +39,12 @@ export const generateNotesWithGemini = async (topic: string, language: Language)
     - The selected topic is: "${cleanedTopic}" - focus ONLY on this exact topic in depth
     - If the topic appears generic or unclear, focus on the most relevant interpretation in programming/tech context
     - The notes will be displayed directly in the application, so ensure they're well-formatted with markdown
-    - Include at least 500-800 words of content to ensure comprehensive coverage
+    - Include at least 1500-2000 words of content to ensure comprehensive coverage
+    - Provide detailed code examples that are practical, realistic, and directly applicable to real development scenarios
+    - Include diagrams or visual explanations using ASCII art or markdown tables where appropriate
+    - Make sure examples show both basic and advanced usage patterns
+    - Include best practices, common pitfalls to avoid, and optimization techniques
+    - When applicable, mention differences between versions/frameworks/approaches
     - Each time this prompt is called, generate UNIQUE content specific to this topic
 
   Generate completely new content for this specific request timestamp: ${Date.now()}`;

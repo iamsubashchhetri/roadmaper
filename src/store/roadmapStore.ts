@@ -64,12 +64,17 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
   },
 
   setSelectedTopic: (topic: Topic | null) => {
-    console.warn('Topic missing data property:', topic);
+    // Ensure topic has proper data structure before setting
+    if (topic && !topic.data) {
+      // Add data structure if missing
       topic = {
         ...topic,
-        data: { label: topic.id }
+        data: {
+          label: topic.id || "Unknown Topic",
+          description: ""
+        }
       };
-    
+    }
     set({ selectedTopic: topic });
   },
 
