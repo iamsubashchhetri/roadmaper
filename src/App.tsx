@@ -46,64 +46,72 @@ function App() {
       <TopicDetail />
 
       {/* Community Section */}
-      <section className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-indigo-950 dark:to-gray-800 py-12 px-4 sm:px-6 lg:px-8 border-t border-blue-100 dark:border-gray-700">
+      <section className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-indigo-950 dark:to-gray-800 py-16 px-4 sm:px-6 lg:px-8 border-t border-blue-100 dark:border-gray-700">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10">
-            <div className="inline-block mb-4">
-              <svg className="w-12 h-12 text-indigo-600 dark:text-indigo-400 mx-auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 3L1 9L12 15L21 10.09V17.5C21 19.5 19.5 21 17.5 21H6.5C4.5 21 3 19.5 3 17.5V10.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M15.5 5C15.5 5 17 6.5 17 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+          <div className="flex flex-col md:flex-row items-center mb-12">
+            <div className="md:w-1/3 mb-8 md:mb-0 flex justify-center">
+              <div className="relative w-36 h-36 md:w-48 md:h-48">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 opacity-20 blur-xl animate-pulse-slow"></div>
+                <div className="absolute inset-1 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center">
+                  <svg className="w-20 h-20 md:w-28 md:h-28 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3L1 9L12 15L21 10.09V17.5C21 19.5 19.5 21 17.5 21H6.5C4.5 21 3 19.5 3 17.5V10.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M15.5 5C15.5 5 17 6.5 17 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M8 12h8M12 16V8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent animate-gradient-x">Join the Community</h2>
-            <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
-              roadmap.sh is the 7th most starred project on GitHub and is visited by hundreds of thousands of developers every month.
-            </p>
+            <div className="md:w-2/3 text-center md:text-left md:pl-10">
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent animate-gradient-x">Join the Community</h2>
+              <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto md:mx-0 leading-relaxed">
+                AI roadmap generator is the 7th most starred project on GitHub and is visited by hundreds of thousands of developers every month.
+              </p>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 community-cards-container">
             {/* GitHub Stars Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-indigo-100/40 dark:border-indigo-900/40">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-indigo-100/40 dark:border-indigo-900/40 community-card-animated">
               <div className="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 dark:from-indigo-600/20 dark:to-purple-600/20 px-6 py-4">
                 <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">Rank 7th</h3>
-                  <span className="text-xs bg-indigo-100 dark:bg-indigo-800 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded-full">out of 28M!</span>
+                  <h3 className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">Rank 47th</h3>
+                  <span className="text-xs bg-indigo-100 dark:bg-indigo-800 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded-full">out of 28K!</span>
                 </div>
               </div>
               <div className="p-6">
                 <div className="flex items-center justify-center mb-4">
                   <div className="text-center">
-                    <p className="text-4xl font-bold text-indigo-600 dark:text-indigo-400">309K</p>
+                    <p className="text-4xl font-bold text-indigo-600 dark:text-indigo-400 stat-number">3090</p>
                     <p className="text-lg font-medium text-gray-700 dark:text-gray-300 mt-1">GitHub Stars</p>
                   </div>
                 </div>
                 <div className="text-center">
-                  <a href="#" className="inline-flex items-center justify-center text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 px-4 py-2 rounded-full transition-colors duration-300 mb-2 w-full">
+                  <a href="#" className="inline-flex items-center justify-center text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 px-4 py-2 rounded-full transition-colors duration-300 mb-2 w-full community-btn">
                     Star us on GitHub
                     <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </a>
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">Help us reach #1</p>
-                  <p className="text-xs text-indigo-500 dark:text-indigo-400 mt-1 font-semibold">+90k every month</p>
+                  <p className="text-xs text-indigo-500 dark:text-indigo-400 mt-1 font-semibold">+900 every month</p>
                 </div>
               </div>
             </div>
 
             {/* Registered Users Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-purple-100/40 dark:border-purple-900/40">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-purple-100/40 dark:border-purple-900/40 community-card-animated">
               <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 dark:from-purple-600/20 dark:to-blue-600/20 px-6 py-4">
                 <h3 className="text-lg font-semibold text-purple-700 dark:text-purple-300">Registered Users</h3>
               </div>
               <div className="p-6">
                 <div className="flex items-center justify-center mb-4">
                   <div className="text-center">
-                    <p className="text-4xl font-bold text-purple-600 dark:text-purple-400">+1.5M</p>
+                    <p className="text-4xl font-bold text-purple-600 dark:text-purple-400 stat-number">+10000</p>
                     <p className="text-lg font-medium text-gray-700 dark:text-gray-300 mt-1">Developers</p>
                   </div>
                 </div>
                 <div className="text-center">
-                  <a href="#" className="inline-flex items-center justify-center text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 px-4 py-2 rounded-full transition-colors duration-300 mb-2 w-full">
+                  <a href="#" className="inline-flex items-center justify-center text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 px-4 py-2 rounded-full transition-colors duration-300 mb-2 w-full community-btn">
                     Register yourself
                     <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -116,19 +124,19 @@ function App() {
             </div>
 
             {/* Discord Members Card */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-blue-100/40 dark:border-blue-900/40">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-blue-100/40 dark:border-blue-900/40 community-card-animated">
               <div className="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 dark:from-blue-600/20 dark:to-indigo-600/20 px-6 py-4">
                 <h3 className="text-lg font-semibold text-blue-700 dark:text-blue-300">Discord Members</h3>
               </div>
               <div className="p-6">
                 <div className="flex items-center justify-center mb-4">
                   <div className="text-center">
-                    <p className="text-4xl font-bold text-blue-600 dark:text-blue-400">34K</p>
+                    <p className="text-4xl font-bold text-blue-600 dark:text-blue-400 stat-number">34K</p>
                     <p className="text-lg font-medium text-gray-700 dark:text-gray-300 mt-1">Community Members</p>
                   </div>
                 </div>
                 <div className="text-center">
-                  <a href="#" className="inline-flex items-center justify-center text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 px-4 py-2 rounded-full transition-colors duration-300 mb-2 w-full">
+                  <a href="#" className="inline-flex items-center justify-center text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 px-4 py-2 rounded-full transition-colors duration-300 mb-2 w-full community-btn">
                     Join on Discord
                     <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
