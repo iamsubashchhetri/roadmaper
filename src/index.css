@@ -397,6 +397,67 @@ button:focus {
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
   transition: color 0.2s;
+
+/* Community section styling */
+.community-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.community-card {
+  transition: all 0.3s ease;
+}
+
+.community-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Card animation */
+@keyframes card-pulse {
+  0% { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+  50% { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+  100% { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+}
+
+.community-card-animated {
+  animation: card-pulse 3s ease-in-out infinite;
+}
+
+/* Improved button hover effects */
+.community-btn {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.community-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.community-btn:hover::after {
+  transform: translateX(0);
+}
+
+/* Stats counter animation */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-number {
+  display: inline-block;
+  animation: count-up 1s ease-out forwards;
+}
+
 }
 
 .markdown-content a:hover {
