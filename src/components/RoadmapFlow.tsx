@@ -11,11 +11,12 @@ import ReactFlow, {
   addEdge,
   Connection,
   ConnectionMode,
+  Position,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { useRoadmapStore } from "../store/roadmapStore";
 import CustomNode from "./CustomNode";
-import { topicsData } from "../data/roadmaps";
+import dagre from "dagre";
 import { Topic } from "../types";
 
 const nodeTypes: NodeTypes = {
@@ -23,6 +24,47 @@ const nodeTypes: NodeTypes = {
   input: CustomNode,
   output: CustomNode,
   process: CustomNode, // Add the missing 'process' node type
+};
+
+// This helper creates a tree layout using dagre
+const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'TB') => {
+  const dagreGraph = new dagre.graphlib.Graph();
+  dagreGraph.setDefaultEdgeLabel(() => ({}));
+  dagreGraph.setGraph({ rankdir: direction });
+
+  // Set node dimensions
+  nodes.forEach((node) => {
+    dagreGraph.setNode(node.id, { width: 180, height: 80 });
+  });
+
+  // Set edges
+  edges.forEach((edge) => {
+    dagreGraph.setEdge(edge.source, edge.target);
+  });
+
+  // Calculate layout
+  dagre.layout(dagreGraph);
+
+  // Get positioned nodes
+  const layoutedNodes = nodes.map((node) => {
+    const nodeWithPosition = dagreGraph.node(node.id);
+    
+    // Update source and target handles based on the direction
+    let sourcePosition = Position.Bottom;
+    let targetPosition = Position.Top;
+
+    return {
+      ...node,
+      sourcePosition,
+      targetPosition,
+      position: {
+        x: nodeWithPosition.x - 90, // Center the node
+        y: nodeWithPosition.y - 40,
+      },
+    };
+  });
+
+  return { nodes: layoutedNodes, edges };
 };
 
 const RoadmapFlow: React.FC = () => {
@@ -36,8 +78,15 @@ const RoadmapFlow: React.FC = () => {
   // Update nodes and edges when currentRoadmap changes
   useEffect(() => {
     if (currentRoadmap) {
-      setNodes(currentRoadmap.nodes);
-      setEdges(currentRoadmap.edges);
+      // Apply tree layout to the nodes
+      const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+        currentRoadmap.nodes,
+        currentRoadmap.edges,
+        'TB' // TB = top to bottom (vertical tree)
+      );
+      
+      setNodes(layoutedNodes);
+      setEdges(layoutedEdges);
     }
   }, [currentRoadmap, setNodes, setEdges]);
 
@@ -392,23 +441,38 @@ const RoadmapFlow: React.FC = () => {
           zoomOnScroll={true}
           zoomOnPinch={true}
           panOnScroll={true}
+          defaultEdgeOptions={{
+            type: 'smoothstep',
+            style: { strokeWidth: 2 },
+            animated: false,
+          }}
         >
-          <Background color="#aaa" gap={16} />
+          <Background 
+            color="#cbd5e1" 
+            gap={16} 
+            size={1} 
+            variant="dots"
+            className="dark:bg-gray-900"
+          />
           <Controls
             showInteractive={false}
             className="react-flow__controls-mobile"
+            position="bottom-right"
           />
           <MiniMap
             nodeStrokeColor={(n) => {
               if (n.id === selectedTopic?.id) return "#6366F1";
-              return "#555";
+              if (n.type === "input") return "#22c55e";
+              if (n.type === "output") return "#3b82f6";
+              return "#8b5cf6";
             }}
             nodeColor={(n) => {
               if (n.id === selectedTopic?.id) return "#818CF8";
-              if (n.type === "input") return "#C7EBDF";
-              if (n.type === "output") return "#E4D8FD";
-              return "#fff";
+              if (n.type === "input") return "#dcfce7";
+              if (n.type === "output") return "#dbeafe";
+              return "#ede9fe";
             }}
+            maskColor="rgba(240, 240, 240, 0.4)"
             className="hidden md:block"
           />
         </ReactFlow>
