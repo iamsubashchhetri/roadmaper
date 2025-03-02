@@ -9,7 +9,7 @@ const Header: React.FC = () => {
     <header className="flex justify-between items-center p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
       <div className="flex items-center">
         <h1 className="text-xl font-bold text-gray-800 dark:text-white">
-          Tech Roadmap Generator
+         AI Roadmap Generator
         </h1>
       </div>
 
