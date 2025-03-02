@@ -96,6 +96,24 @@ body {
 
 .topic-detail .prose pre {
   @apply bg-gray-100 dark:bg-gray-700 p-4 rounded-md overflow-x-auto my-5 border border-gray-200 dark:border-gray-600;
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 8s ease infinite;
+}
+
 }
 
 .topic-detail .prose blockquote {

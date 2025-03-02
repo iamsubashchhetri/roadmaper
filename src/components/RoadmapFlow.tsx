@@ -129,16 +129,15 @@ const RoadmapFlow: React.FC = () => {
 
             {/* Responsive connecting lines */}
             <div className="hidden md:block absolute bottom-1/3 right-1/4 w-1/4 h-0.5 bg-gradient-to-r from-purple-500/40 to-pink-500/40 animate-pulse-slow rounded-full"></div>
-            <div className="hidden md:block absolute top-2/3 left-1/3 w-1/4 h-0.5 bg-gradient-to-r from-emerald-500/40 to-cyan-500/40 animate-pulse-slow rounded-full"></div>
 
             {/* Mobile-only smaller connecting lines */}
             <div className="md:hidden absolute top-1/3 left-1/3 w-1/3 h-0.5 bg-gradient-to-r from-blue-500/40 to-purple-500/40 animate-pulse-slow rounded-full"></div>
             <div className="md:hidden absolute bottom-1/3 right-1/3 w-1/3 h-0.5 bg-gradient-to-r from-purple-500/40 to-pink-500/40 animate-pulse-slow rounded-full"></div>
           </div>
 
-          <div className="text-center mt-2 mb-4 md:mb-6">
-            <h3 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2">Select or Create a Learning Path</h3>
-            <p className="text-sm md:text-base text-gray-600 dark:text-gray-300">
+          <div className="text-center mt-4 mb-6 md:mb-8 px-4">
+            <h3 className="text-2xl md:text-3xl font-extrabold mb-3 bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-x">Select or Create a Learning Path</h3>
+            <p className="text-base md:text-lg text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 font-medium max-w-xl mx-auto">
               Explore AI-generated roadmaps that guide you through any tech skill
               with clear steps from beginner to expert.
             </p>
