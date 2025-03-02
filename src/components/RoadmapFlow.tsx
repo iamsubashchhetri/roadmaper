@@ -77,11 +77,11 @@ const RoadmapFlow: React.FC = () => {
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 opacity-90 animate-pulse-slow"></div>
                 <div className="absolute inset-1 rounded-full bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm flex items-center justify-center hover:shadow-lg hover:shadow-blue-200 dark:hover:shadow-indigo-900 transition-all duration-300">
                   <div className="text-center">
-                    <svg className="w-10 h-10 md:w-14 md:h-14 mx-auto text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-8 h-8 md:w-14 md:h-14 mx-auto text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M9 16.5H15M19.5 12C19.5 13.3132 19.2362 14.6136 18.7388 15.8268C18.2413 17.0401 17.5215 18.1425 16.6213 19.0607C15.7212 19.9789 14.6378 20.7142 13.4393 21.2239C12.2408 21.7335 10.9562 22 9.65625 22C8.3563 22 7.07174 21.7335 5.87326 21.2239C4.67478 20.7142 3.59136 19.9789 2.69121 19.0607C1.79107 18.1425 1.07132 17.0401 0.573853 15.8268C0.0763791 14.6136 -0.1875 13.3132 -0.1875 12C-0.1875 9.34784 0.852623 6.8043 2.69121 4.93934C4.52979 3.07437 7.02826 2 9.65625 2C12.2842 2 14.7827 3.07437 16.6213 4.93934C18.4599 6.8043 19.5 9.34784 19.5 12Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       <path d="M17.5 2L10 12L7 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                    <p className="text-blue-600 dark:text-blue-400 text-sm md:text-base mt-2 font-medium">Learning Paths</p>
+                    <p className="text-blue-600 dark:text-blue-400 text-xs md:text-base mb-0 mt-1 md:mt-2 font-medium">Learning Paths</p>
                   </div>
                 </div>
               </div>
