@@ -28,7 +28,7 @@ const RoadmapSelector: React.FC = () => {
     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
       <div className="mb-6">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-3">AI Learning Path Creator</h2>
+          <h2 className="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mb-3">AI Roadmap Generator</h2>
           <p className="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Generate comprehensive, AI-powered learning roadmaps for any role or subject. 
             Discover a structured path from beginner to expert with detailed guidance for each step.
