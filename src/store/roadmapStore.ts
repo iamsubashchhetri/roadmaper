@@ -64,20 +64,12 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
   },
 
   setSelectedTopic: (topic: Topic | null) => {
-<<<<<<< HEAD
-    // Ensure topic has proper data structure before setting
-    if (topic && !topic.data) {
-      // Add data structure if missing
+    console.warn('Topic missing data property:', topic);
       topic = {
         ...topic,
-        data: {
-          label: topic.id || "Unknown Topic",
-          description: ""
-        }
+        data: { label: topic.id }
       };
-    }
-=======
->>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)
+    
     set({ selectedTopic: topic });
   },
 
