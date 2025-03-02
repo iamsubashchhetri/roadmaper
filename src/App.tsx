@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { ReactFlowProvider } from 'reactflow';
 import { useRoadmapStore } from './store/roadmapStore';
 import Header from './components/Header';
 import RoadmapSelector from './components/RoadmapSelector';
@@ -39,9 +38,7 @@ function App() {
 
         <div className="flex-1 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg h-[calc(100vh-8rem)] overflow-hidden border border-gray-100 dark:border-gray-700">
-            <ReactFlowProvider>
-              <RoadmapFlow />
-            </ReactFlowProvider>
+            <RoadmapFlow />
           </div>
         </div>
       </main>
