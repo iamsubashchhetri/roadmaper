@@ -14,7 +14,6 @@ const TopicDetail: React.FC = () => {
   const [error, setError] = useState<string | null>(null); // Added error state
 
   useEffect(() => {
-<<<<<<< HEAD
     const fetchContent = async () => {
       setIsLoading(true);
       setError(null);
@@ -87,30 +86,6 @@ const TopicDetail: React.FC = () => {
     };
 
     fetchContent();
-=======
-    if (selectedTopic) {
-      setIsLoading(true);
-      fetchTopicContent(selectedTopic, language)
-        .then((updatedTopic) => {
-          setContent(updatedTopic.content || null);
-          // Add null checking for data
-          if (updatedTopic && updatedTopic.data && updatedTopic.data.label) {
-            generateAiNotes(updatedTopic.data.label);
-          } else {
-            console.warn("Topic data structure is incomplete", updatedTopic);
-            setAiNotes("Unable to generate notes - topic data is incomplete");
-          }
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching topic content:", error);
-          setIsLoading(false);
-        });
-    } else {
-      setContent(null);
-      setAiNotes(null);
-    }
->>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)
   }, [selectedTopic, language, fetchTopicContent]);
 
   const generateAiNotes = async (topicLabel: string | undefined) => {
@@ -122,35 +97,26 @@ const TopicDetail: React.FC = () => {
 
     setIsGeneratingAiNotes(true);
     setError(null);
-<<<<<<< HEAD
     setAiNotes(null); // Clear previous notes to ensure user sees new content
-=======
->>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)
 
     try {
       // Import the generateNotesWithGemini function from geminiService
       const { generateNotesWithGemini } = await import('../services/geminiService');
 
-<<<<<<< HEAD
       // Add a random string to ensure we're not getting cached results
       const uniqueId = Math.random().toString(36).substring(2, 15);
 
       console.log(`Generating AI notes for topic: ${topicLabel} (${uniqueId})`);
 
-=======
->>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)
       const aiGeneratedNotes = await generateNotesWithGemini(
         topicLabel,
         language
       );
-<<<<<<< HEAD
 
       if (!aiGeneratedNotes || aiGeneratedNotes.trim() === '') {
         throw new Error('Received empty notes from AI service');
       }
 
-=======
->>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)
       setAiNotes(aiGeneratedNotes);
     } catch (error) {
       console.error("Error generating AI notes:", error);
@@ -179,7 +145,6 @@ const TopicDetail: React.FC = () => {
     return null;
   }
 
-<<<<<<< HEAD
   // Extract topic name even if data property is missing
   const topicName = selectedTopic 
     ? (selectedTopic.data?.label || selectedTopic.id || "Unknown Topic") 
@@ -189,12 +154,6 @@ const TopicDetail: React.FC = () => {
     <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
         {topicName}
-=======
-  return (
-    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
-        {selectedTopic?.data?.label || "No Topic Selected"}
->>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)
       </h2>
 
       <div className="topic-notes">
