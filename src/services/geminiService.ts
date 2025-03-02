@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)
 import { Roadmap, RoadmapGenerationRequest, Topic, Language } from '../types';
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyApHWVU-ozOdkE-zllCXuBR_m9kioHK5Wg';
@@ -20,7 +16,6 @@ export const generateNotesWithGemini = async (topic: string, language: Language)
     return "# Error\n\nAPI key is missing. Please set the VITE_GEMINI_API_KEY environment variable.";
   }
 
-<<<<<<< HEAD
   // Clean the topic string to remove any ID prefixes like "topic-1234567890"
   const cleanedTopic = topic.replace(/^topic-\d+\s*/, '').trim();
 
@@ -48,18 +43,6 @@ export const generateNotesWithGemini = async (topic: string, language: Language)
     - Each time this prompt is called, generate UNIQUE content specific to this topic
 
   Generate completely new content for this specific request timestamp: ${Date.now()}`;
-=======
-  const prompt = `Generate comprehensive learning notes about "${topic}" in ${language} language.
-  The notes should:
-    1. Begin with a clear title and introduction that explains what "${topic}" is and why it's important
-    2. Use proper headings and subheadings (using markdown # syntax) to organize the content
-    3. Include bullet points and numbered lists for key points and steps
-    4. Provide code examples where applicable, properly formatted in markdown code blocks
-    5. Explain complex concepts with simple analogies or examples
-    6. Include practical applications or real-world use cases
-    7. Mention common challenges and how to overcome them
-    8. End with a summary of key takeaways and next steps for learning`;
->>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)
 
   const url = `${GEMINI_API_URL}?key=${GEMINI_API_KEY}`;
 
@@ -69,16 +52,12 @@ export const generateNotesWithGemini = async (topic: string, language: Language)
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-<<<<<<< HEAD
         generationConfig: { 
           temperature: 0.9,  // Slightly higher for more creativity
           topK: 40,          // Increase variety of responses
           topP: 0.95,        // Slightly reduced for more focused results
           maxOutputTokens: 4096 // Ensure we get substantial content
         }
-=======
-        generationConfig: { temperature: 0.7, topK: 32, topP: 1 }
->>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)
       })
     });
 
@@ -215,8 +194,4 @@ export const generateRoadmapWithGemini = async ({ role }: RoadmapGenerationReque
     console.error('Error calling Gemini API:', error);
     return getDefaultRoadmap(role);
   }
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 694d15a (Assistant checkpoint: Fix Gemini API key and Globe component issues)
