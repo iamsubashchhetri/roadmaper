@@ -775,8 +775,6 @@ button:focus {
   .react-flow__node {
     font-size: 0.8rem;
     padding: 6px !important;
-    width: 85% !important;
-    margin: 0 auto;
   }
   
   .react-flow__edge-path {
@@ -787,17 +785,6 @@ button:focus {
     margin: 0 -1rem;
     width: calc(100% + 2rem);
     border-radius: 0;
-    height: 60vh !important;
-  }
-  
-  /* Styles for vertical flowchart */
-  .react-flow[data-direction="TB"] .react-flow__node {
-    margin-bottom: 16px;
-    text-align: center;
-  }
-  
-  .react-flow[data-direction="TB"] .react-flow__edge-path {
-    stroke-dasharray: 5;
   }
 }
 
