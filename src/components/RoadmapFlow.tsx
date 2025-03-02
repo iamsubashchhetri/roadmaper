@@ -127,10 +127,7 @@ const RoadmapFlow: React.FC = () => {
               </div>
             </div>
 
-            {/* Improved mobile-responsive connecting lines */}
-            <div className="absolute top-1/3 left-1/4 md:left-1/3 w-1/3 md:w-1/4 h-0.5 bg-gradient-to-r from-blue-500/40 to-purple-500/40 animate-pulse-slow rounded-full transform -rotate-12 md:rotate-0"></div>
-
-          </div>
+            </div>
 
           <div className="text-center mt-4 mb-6 md:mb-8 px-4">
             <h3 className="text-2xl md:text-3xl font-extrabold mb-3 bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient-x">Select or Create a Learning Path</h3>
