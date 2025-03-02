@@ -84,7 +84,7 @@ const RoadmapFlow: React.FC = () => {
               <div className="relative w-16 h-16 md:w-24 md:h-24">
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 opacity-70 blur"></div>
                 <div className="absolute inset-0.5 rounded-xl bg-white dark:bg-gray-800 backdrop-blur-sm flex items-center justify-center">
-                  <svg className="w-8 h-8 md:w-12 md:h-12 text-blue-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="w-8 h-8 md:w-10 md:h-12 text-blue-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 6.25278V19.2528M12 6.25278C10.8321 5.47686 9.24649 5 7.5 5C5.75351 5 4.16789 5.47686 3 6.25278V19.2528C4.16789 18.4769 5.75351 18 7.5 18C9.24649 18 10.8321 18.4769 12 19.2528M12 6.25278C13.1679 5.47686 14.7535 5 16.5 5C18.2465 5 19.8321 5.47686 21 6.25278V19.2528C19.8321 18.4769 18.2465 18 16.5 18C14.7535 18 13.1679 18.4769 12 19.2528" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
@@ -95,7 +95,7 @@ const RoadmapFlow: React.FC = () => {
               <div className="relative w-14 h-14 md:w-20 md:h-20">
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 opacity-70 blur"></div>
                 <div className="absolute inset-0.5 rounded-xl bg-white dark:bg-gray-800 backdrop-blur-sm flex items-center justify-center">
-                  <svg className="w-7 h-7 md:w-10 md:h-10 text-purple-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="w-7 h-4 md:w-10 md:h-10 text-purple-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20.25 6.75H3.75C3.33579 6.75 3 7.08579 3 7.5V18C3 18.4142 3.33579 18.75 3.75 18.75H20.25C20.6642 18.75 21 18.4142 21 18V7.5C21 7.08579 20.6642 6.75 20.25 6.75Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M7.5 11.25L10.5 14.25L16.5 8.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M8.15997 6.75V3.75C8.15997 3.55109 8.23902 3.36032 8.37967 3.21967C8.52032 3.07902 8.71107 3 8.90997 3H15.09C15.2889 3 15.4796 3.07902 15.6203 3.21967C15.7609 3.36032 15.84 3.55109 15.84 3.75V6.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -129,7 +129,7 @@ const RoadmapFlow: React.FC = () => {
 
             {/* Improved mobile-responsive connecting lines */}
             <div className="absolute top-1/3 left-1/4 md:left-1/3 w-1/3 md:w-1/4 h-0.5 bg-gradient-to-r from-blue-500/40 to-purple-500/40 animate-pulse-slow rounded-full transform -rotate-12 md:rotate-0"></div>
-            <div className="absolute bottom-1/3 right-1/4 md:right-1/3 w-1/3 md:w-1/4 h-0.5 bg-gradient-to-r from-purple-500/40 to-pink-500/40 animate-pulse-slow rounded-full transform rotate-12 md:rotate-0"></div>
+           
           </div>
 
           <div className="text-center mt-4 mb-6 md:mb-8 px-4">
