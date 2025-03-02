@@ -62,7 +62,7 @@ const RoadmapFlow: React.FC = () => {
 
   if (!currentRoadmap) {
     return (
-      <div className="flex items-center justify-center h-full bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-indigo-950 dark:to-gray-800 p-3 sm:p-4 md:p-8 bg-pattern transition-all duration-300">
+    
         <div className="w-full max-w-4xl text-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl border border-blue-100/50 dark:border-indigo-800/50">
           {/* Main title at the top center */}
           <div className="w-full text-center mb-8">
@@ -199,7 +199,7 @@ const RoadmapFlow: React.FC = () => {
             </p>
           </div>
         </div>
-      </div>
+      
     );
   }
 
