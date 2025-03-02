@@ -128,53 +128,91 @@ body {
 }
 
 
-/* Custom styles for ReactFlow nodes and edges */
+/* Custom styles for ReactFlow nodes and edges - improved for flowchart */
 .react-flow__node {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: 250px;
-  padding: 12px;
+  transition: all 0.3s ease;
+  width: auto;
+  max-width: 180px;
+  min-width: 120px;
+  padding: 10px;
+  border-width: 2px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .react-flow__node:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  z-index: 10;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+  z-index: 20;
+  transform: translateY(-2px) scale(1.02);
 }
 
 .react-flow__node-default {
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 500;
+  border: 2px solid #e5e7eb;
+  background-color: #fff;
 }
 
 .react-flow__node-input {
-  font-weight: 700;
+  font-weight: 600;
+  border-color: #10b981;
+  background-color: #ecfdf5;
 }
 
 .react-flow__node-output {
-  font-weight: 700;
+  font-weight: 600;
+  border-color: #8b5cf6;
+  background-color: #f5f3ff;
+}
+
+.dark .react-flow__node-default {
+  background-color: #1f2937;
+  border-color: #374151;
+}
+
+.dark .react-flow__node-input {
+  background-color: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+}
+
+.dark .react-flow__node-output {
+  background-color: rgba(139, 92, 246, 0.2);
+  border-color: #8b5cf6;
 }
 
 .react-flow__handle {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background-color: #6366F1;
+  border: 2px solid white;
+}
+
+.dark .react-flow__handle {
+  border-color: #1f2937;
 }
 
 .react-flow__handle-top {
-  top: -5px;
+  top: -4px;
 }
 
 .react-flow__handle-bottom {
-  bottom: -5px;
+  bottom: -4px;
 }
 
 .react-flow__edge-path {
   stroke-width: 2;
+  stroke: #6366F1;
 }
 
 .react-flow__edge.animated path {
   stroke-dasharray: 5;
-  animation: flowAnimation 2s linear infinite;
+  animation: flowAnimation 1.5s linear infinite;
+}
+
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke-width: 3;
+  stroke: #4f46e5;
 }
 
 .react-flow__controls {
@@ -212,58 +250,6 @@ body {
 .node-description {
   font-size: 14px;
   opacity: 0.8;
-}
-
-/* Add gradient animation for nodes */
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.react-flow__node:hover {
-  transform: translateY(-3px) scale(1.05);
-  z-index: 20;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.react-flow__handle:hover {
-  transform: scale(1.2);
-  cursor: pointer;
-}
-
-/* Pulse animation for selected nodes */
-@keyframes pulse-slow {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 2s ease-in-out infinite;
-}
-
-/* Float animation for special nodes */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
 }
 
 .dark .bg-pattern {
