@@ -62,8 +62,8 @@ const RoadmapFlow: React.FC = () => {
 
   if (!currentRoadmap) {
     return (
-      <div className="flex items-center justify-center h-full bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-indigo-950 dark:to-gray-800 p-3 sm:p-4 md:p-8 bg-pattern">
-        <div className="w-full max-w-4xl text-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl border border-blue-100/50 dark:border-indigo-800/50 transition-all duration-300">
+      <div className="flex items-center justify-center h-full bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-indigo-950 dark:to-gray-800 p-3 sm:p-4 md:p-8 bg-pattern transition-all duration-300">
+        <div className="w-full max-w-4xl text-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl border border-blue-100/50 dark:border-indigo-800/50">
           {/* Main title at the top center */}
           <div className="w-full text-center mb-8">
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent animate-gradient-x tracking-tight">
@@ -77,33 +77,31 @@ const RoadmapFlow: React.FC = () => {
             <div className="absolute top-1/2 left-[50%] transform -translate-x-1/2 -translate-y-1/2">
               <div className="relative w-20 h-20 md:w-32 md:h-32 cursor-pointer transition-transform duration-300 hover:scale-110 floating-element">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 opacity-90 animate-pulse-slow"></div>
-                <div className="absolute inset-1 rounded-full bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm flex items-center justify-center hover:shadow-lg hover:shadow-blue-200 dark:hover:shadow-indigo-900 transition-all duration-300 animate-float">
-                  <div className="text-center">
-                    <svg
-                      className="w-8 h-8 md:w-14 md:h-14 mx-auto text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 animate-rotate"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M9 16.5H15M19.5 12C19.5 13.3132 19.2362 14.6136 18.7388 15.8268C18.2413 17.0401 17.5215 18.1425 16.6213 19.0607C15.7212 19.9789 14.6378 20.7142 13.4393 21.2239C12.2408 21.7335 10.9562 22 9.65625 22C8.3563 22 7.07174 21.7335 5.87326 21.2239C4.67478 20.7142 3.59136 19.9789 2.69121 19.0607C1.79107 18.1425 1.07132 17.0401 0.573853 15.8268C0.0763791 14.6136 -0.1875 13.3132 -0.1875 12C-0.1875 9.34784 0.852623 6.8043 2.69121 4.93934C4.52979 3.07437 7.02826 2 9.65625 2C12.2842 2 14.7827 3.07437 16.6213 4.93934C18.4599 6.8043 19.5 9.34784 19.5 12Z"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M17.5 2L10 12L7 8"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <p className="text-blue-600 dark:text-blue-400 text-xs md:text-base mb-0 mt-1 md:mt-2 font-medium">
-                      Learning Paths
-                    </p>
-                  </div>
+                <div className="absolute inset-1 rounded-full bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm flex items-center justify-center hover:shadow-lg hover:shadow-blue-200 dark:hover:shadow-indigo-900 transition-all duration-300 animate-float text-center">
+                  <svg
+                    className="w-8 h-8 md:w-14 md:h-14 mx-auto text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 animate-rotate"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 16.5H15M19.5 12C19.5 13.3132 19.2362 14.6136 18.7388 15.8268C18.2413 17.0401 17.5215 18.1425 16.6213 19.0607C15.7212 19.9789 14.6378 20.7142 13.4393 21.2239C12.2408 21.7335 10.9562 22 9.65625 22C8.3563 22 7.07174 21.7335 5.87326 21.2239C4.67478 20.7142 3.59136 19.9789 2.69121 19.0607C1.79107 18.1425 1.07132 17.0401 0.573853 15.8268C0.0763791 14.6136 -0.1875 13.3132 -0.1875 12C-0.1875 9.34784 0.852623 6.8043 2.69121 4.93934C4.52979 3.07437 7.02826 2 9.65625 2C12.2842 2 14.7827 3.07437 16.6213 4.93934C18.4599 6.8043 19.5 9.34784 19.5 12Z"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M17.5 2L10 12L7 8"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <p className="text-blue-600 dark:text-blue-400 text-xs md:text-base mb-0 mt-1 md:mt-2 font-medium">
+                    Learning Paths
+                  </p>
                 </div>
               </div>
             </div>
