@@ -18,24 +18,38 @@ const Header: React.FC = () => {
             className="mr-2"
           >
             <rect width="40" height="40" rx="8" fill="url(#gradient)" />
+            {/* Brain shape */}
             <path 
-              d="M10 20C10 14.477 14.477 10 20 10C25.523 10 30 14.477 30 20C30 25.523 25.523 30 20 30" 
-              stroke="white" 
-              strokeWidth="2.5" 
-              strokeLinecap="round"
-            />
-            <circle cx="30" cy="30" r="3" fill="white" />
-            <circle cx="20" cy="20" r="3" fill="white" />
-            <circle cx="10" cy="10" r="3" fill="white" />
-            <path 
-              d="M10 10L20 20L30 30" 
+              d="M20 10C15 10 12 13 12 17C12 20 14 22 14 24C14 26 12 28 12 30C12 32 14 34 18 34C22 34 24 30 24 28C24 26 22 24 22 22C22 20 24 18 24 16C24 12 23 10 20 10Z" 
               stroke="white" 
               strokeWidth="1.5" 
               strokeLinecap="round"
             />
+            {/* Neural network nodes */}
+            <circle cx="20" cy="14" r="2" fill="white" />
+            <circle cx="16" cy="18" r="2" fill="white" />
+            <circle cx="24" cy="18" r="2" fill="white" />
+            <circle cx="18" cy="22" r="2" fill="white" />
+            <circle cx="22" cy="26" r="2" fill="white" />
+            <circle cx="20" cy="30" r="2" fill="white" />
+            
+            {/* Neural network connections */}
+            <path d="M20 16L16 18" stroke="white" strokeWidth="0.75" />
+            <path d="M20 16L24 18" stroke="white" strokeWidth="0.75" />
+            <path d="M16 20L18 22" stroke="white" strokeWidth="0.75" />
+            <path d="M24 20L18 22" stroke="white" strokeWidth="0.75" />
+            <path d="M18 24L22 26" stroke="white" strokeWidth="0.75" />
+            <path d="M22 28L20 30" stroke="white" strokeWidth="0.75" />
+            
+            {/* Sparks of intelligence */}
+            <path d="M30 13L32 11" stroke="white" strokeWidth="1" strokeLinecap="round" />
+            <path d="M28 16L31 15" stroke="white" strokeWidth="1" strokeLinecap="round" />
+            <path d="M29 19L32 20" stroke="white" strokeWidth="1" strokeLinecap="round" />
+            
             <defs>
               <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
                 <stop stopColor="#3B82F6" />
+                <stop offset="0.5" stopColor="#6366F1" />
                 <stop offset="1" stopColor="#8B5CF6" />
               </linearGradient>
             </defs>
