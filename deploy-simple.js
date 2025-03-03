@@ -1,6 +1,6 @@
 
-const { execSync } = require('child_process');
-const fs = require('fs');
+import { execSync } from 'child_process';
+import fs from 'fs';
 
 // Check if .firebaserc exists, if not create it
 if (!fs.existsSync('.firebaserc')) {
