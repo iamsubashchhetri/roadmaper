@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { useRoadmapStore } from '../store/roadmapStore';
 import { MapPin, Code, Zap, BookOpen } from 'lucide-react';
-import { useAuth } from '../store/authContext';
-
-import { generateRoadmap } from '../utils/roadmapGenerator';
 
 const RoadmapSelector: React.FC = () => {
-  const { roadmaps, currentRoadmap, setCurrentRoadmap, deleteRoadmap } = useRoadmapStore();
-  const { currentUser } = useAuth();
+  const { roadmaps, generateRoadmap, currentRoadmap, setCurrentRoadmap } = useRoadmapStore();
   const [role, setRole] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -24,16 +20,8 @@ const RoadmapSelector: React.FC = () => {
     }
   };
 
-  const handleRoadmapClick = (roadmapId: string) => {
-    setCurrentRoadmap(roadmapId);
-  };
-
-  const handleDeleteRoadmap = async (roadmapId: string) => {
-    if (!currentUser) return;
-
-    if (window.confirm('Are you sure you want to delete this roadmap?')) {
-      await deleteRoadmap(roadmapId, currentUser.uid);
-    }
+  const handleRoadmapClick = (id: string) => {
+    setCurrentRoadmap(id);
   };
 
   return (
@@ -93,18 +81,14 @@ const RoadmapSelector: React.FC = () => {
             {roadmaps.map((roadmap) => (
               <div
                 key={roadmap.id}
-                className={`p-4 rounded-md cursor-pointer transition-all flex justify-between
+                onClick={() => handleRoadmapClick(roadmap.id)}
+                className={`p-4 rounded-md cursor-pointer transition-all
                   ${currentRoadmap?.id === roadmap.id 
                     ? 'bg-indigo-100 dark:bg-indigo-900/30 border-l-4 border-indigo-500 shadow-md' 
                     : 'bg-gray-100 dark:bg-gray-700/50 hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-md'}`}
               >
-                <div onClick={() => handleRoadmapClick(roadmap.id)}>
-                  <div className="font-medium text-gray-900 dark:text-white">{roadmap.title}</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">{roadmap.description}</div>
-                </div>
-                {currentUser && (
-                  <button onClick={() => handleDeleteRoadmap(roadmap.id)} className="text-red-500 hover:text-red-700">Delete</button>
-                )}
+                <div className="font-medium text-gray-900 dark:text-white">{roadmap.title}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">{roadmap.description}</div>
               </div>
             ))}
           </div>
