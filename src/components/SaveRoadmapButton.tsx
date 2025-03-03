@@ -75,7 +75,13 @@ const SaveRoadmapButton: React.FC<SaveRoadmapButtonProps> = ({ roadmapId }) => {
 
     } catch (error) {
       console.error('Error saving roadmap:', error);
-      alert(`Failed to save roadmap: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      
+      // Specific handling for permission errors
+      if (error.code === 'permission-denied') {
+        alert('Failed to save roadmap: Firebase permission denied. Your Firestore rules need to be deployed.\nRun: npx firebase deploy --only firestore:rules');
+      } else {
+        alert(`Failed to save roadmap: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
     } finally {
       setIsLoading(false);
     }
