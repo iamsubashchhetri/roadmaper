@@ -7,5 +7,16 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if true;
     }
+    
+    // Use these more restrictive rules when ready for production:
+    // match /users/{userId} {
+    //   allow read, write: if request.auth != null && request.auth.uid == userId;
+    // }
+    
+    // match /roadmaps/{roadmapId} {
+    //   allow read: if request.auth != null;
+    //   allow write: if request.auth != null && request.auth.uid == resource.data.createdBy || 
+    //                 request.auth != null && request.resource.data.createdBy == request.auth.uid;
+    // }
   }
 }

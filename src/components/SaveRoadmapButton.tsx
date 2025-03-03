@@ -29,18 +29,17 @@ const SaveRoadmapButton: React.FC<SaveRoadmapButtonProps> = ({ roadmapId }) => {
 
     setIsLoading(true);
     try {
-      // Create the collections and documents with proper structure
-      const roadmapsRef = doc(db, 'roadmaps', roadmapId);
-      
+      // First create the roadmap document
+      const roadmapRef = doc(db, 'roadmaps', roadmapId);
+
       // Save the roadmap content first
-      await setDoc(roadmapsRef, {
+      await setDoc(roadmapRef, {
         ...currentRoadmap,
         createdBy: currentUser.uid,
-        createdAt: Timestamp.now(),
         updatedAt: Timestamp.now()
-      }, { merge: true });
-      
-      // Now save the reference to the user
+      });
+
+      // Then save the user reference
       const userRef = doc(db, 'users', currentUser.uid);
       // Check if user document exists
       const userDoc = await getDoc(userRef);
@@ -73,7 +72,7 @@ const SaveRoadmapButton: React.FC<SaveRoadmapButtonProps> = ({ roadmapId }) => {
 
       // Update the store
       useRoadmapStore.getState().loadUserRoadmaps(currentUser.uid);
-      
+
     } catch (error) {
       console.error('Error saving roadmap:', error);
       alert(`Failed to save roadmap: ${error instanceof Error ? error.message : 'Unknown error'}`);

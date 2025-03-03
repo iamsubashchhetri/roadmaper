@@ -1,41 +1,23 @@
-
 const fs = require('fs');
-const https = require('https');
 
-// Function to make HTTPS requests
-function makeRequest(options, data = null) {
-  return new Promise((resolve, reject) => {
-    const req = https.request(options, (res) => {
-      let responseData = '';
-      res.on('data', (chunk) => {
-        responseData += chunk;
-      });
-      res.on('end', () => {
-        resolve({ 
-          statusCode: res.statusCode,
-          headers: res.headers,
-          body: responseData 
-        });
-      });
-    });
+function main() {
+  console.log('Reading Firestore rules...');
+  try {
+    const rules = fs.readFileSync('firestore.rules', 'utf8');
+    console.log('Firestore rules found:');
+    console.log('-------------------');
+    console.log(rules);
+    console.log('-------------------');
 
-    req.on('error', (err) => {
-      reject(err);
-    });
-
-    if (data) {
-      req.write(data);
-    }
-    req.end();
-  });
+    console.log('\nIMPORTANT: To fix permission errors, you need to deploy these rules to Firebase.');
+    console.log('You can do this by:');
+    console.log('1. Install Firebase CLI using npm: npm install -g firebase-tools');
+    console.log('2. Login to Firebase: firebase login');
+    console.log('3. Deploy rules: firebase deploy --only firestore:rules');
+    console.log('\nOr, for temporary development, you can uncomment the development rule in firestore.rules that allows all access.');
+  } catch (error) {
+    console.error('Error reading rules file:', error);
+  }
 }
 
-async function main() {
-  console.log('Reading Firestore rules file...');
-  const rules = fs.readFileSync('firestore.rules', 'utf8');
-  console.log('Firestore rules:', rules);
-  console.log('These rules will allow all read/write operations in development.');
-  console.log('Remember to update them before going to production!');
-}
-
-main().catch(console.error);
+main();
