@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { useRoadmapStore } from '../store/roadmapStore';
-import { MapPin, Code, Zap, BookOpen } from 'lucide-react';
+import { MapPin, Code, Zap, BookOpen, Trash2 } from 'lucide-react';
+import { useAuth } from '../store/authContext';
+
+import { generateRoadmap, deleteRoadmap, loadRoadmap } from '../utils/roadmapGenerator'; // Added necessary imports
+
 
 const RoadmapSelector: React.FC = () => {
-  const { roadmaps, generateRoadmap, currentRoadmap, setCurrentRoadmap } = useRoadmapStore();
+  const { roadmaps, generateRoadmap, currentRoadmap, setCurrentRoadmap, savedRoadmaps, deleteRoadmap: deleteSavedRoadmap } = useRoadmapStore(); // Added savedRoadmaps and adjusted deleteRoadmap
+  const { currentUser } = useAuth(); // Added currentUser
   const [role, setRole] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -22,6 +27,31 @@ const RoadmapSelector: React.FC = () => {
 
   const handleRoadmapClick = (id: string) => {
     setCurrentRoadmap(id);
+  };
+
+  const handleSavedRoadmapClick = async (id: string) => {
+    try {
+      // First set current roadmap to null to trigger loading state
+      setCurrentRoadmap(null);
+
+      // Then load the roadmap
+      await loadRoadmap(id);
+    } catch (error) {
+      console.error('Error loading saved roadmap:', error);
+    }
+  };
+
+  const handleDeleteSavedRoadmap = async (id: string) => {
+    if (!currentUser) return;
+
+    if (window.confirm('Are you sure you want to delete this saved roadmap?')) {
+      try {
+        await deleteSavedRoadmap(id, currentUser.uid); // Use the correct delete function from the store
+      } catch (error) {
+        console.error('Error deleting saved roadmap:', error);
+        alert('Failed to delete roadmap: ' + (error instanceof Error ? error.message : 'Unknown error'));
+      }
+    }
   };
 
   return (
@@ -89,6 +119,46 @@ const RoadmapSelector: React.FC = () => {
               >
                 <div className="font-medium text-gray-900 dark:text-white">{roadmap.title}</div>
                 <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">{roadmap.description}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {savedRoadmaps && savedRoadmaps.length > 0 && (
+        <div>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3 flex items-center">
+            <BookOpen className="mr-2 h-5 w-5 text-indigo-500" />
+            Saved Roadmaps
+          </h3>
+          <div className="space-y-3 max-h-48 overflow-y-auto pr-2 roadmaps-container">
+            {savedRoadmaps.map((roadmap: any) => (
+              <div
+                key={roadmap.id}
+                className={`p-4 rounded-md transition-all relative
+                  ${currentRoadmap?.id === roadmap.id 
+                    ? 'bg-indigo-100 dark:bg-indigo-900/30 border-l-4 border-indigo-500 shadow-md' 
+                    : 'bg-gray-100 dark:bg-gray-700/50 hover:bg-gray-200 dark:hover:bg-gray-700 hover:shadow-md'}`}
+              >
+                <div 
+                  className="cursor-pointer"
+                  onClick={() => handleSavedRoadmapClick(roadmap.id)}
+                >
+                  <div className="font-medium text-gray-900 dark:text-white">{roadmap.title}</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    Saved on {roadmap.savedAt?.toDate().toLocaleDateString()}
+                  </div>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteSavedRoadmap(roadmap.id);
+                  }}
+                  className="absolute top-2 right-2 p-1 text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors"
+                  title="Delete saved roadmap"
+                >
+                  <Trash2 size={16} />
+                </button>
               </div>
             ))}
           </div>

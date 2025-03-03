@@ -40,6 +40,7 @@ interface RoadmapStore {
   loadUserRoadmaps: (userId: string) => Promise<void>;
   loadSearchHistory: (userId: string) => Promise<void>;
   saveSearch: (query: string, userId: string, searchParams?: {role?: string}) => Promise<void>; // Added searchParams
+  deleteRoadmap: (roadmapId: string, userId: string) => Promise<void>; // Added deleteRoadmap
 }
 
 import { saveRoadmap as saveRoadmapToFirebase, saveSearch as saveSearchToFirebase, getUserData } from '../services/firebase';
@@ -234,4 +235,39 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
     }
     return { isDarkMode: newDarkMode };
   }),
+  deleteRoadmap: async (roadmapId: string, userId: string) => {
+    if (!userId) return;
+
+    try {
+      const userRef = doc(db, 'users', userId);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const savedRoadmaps = userData.savedRoadmaps || [];
+
+        // Filter out the roadmap to delete
+        const updatedRoadmaps = savedRoadmaps.filter(
+          (roadmap: any) => roadmap.id !== roadmapId
+        );
+
+        // Update the user document
+        await updateDoc(userRef, {
+          savedRoadmaps: updatedRoadmaps
+        });
+
+        // If the current roadmap is the one being deleted, clear it
+        const { currentRoadmap } = get();
+        if (currentRoadmap && currentRoadmap.id === roadmapId) {
+          set({ currentRoadmap: null });
+        }
+
+        // Update the local state
+        useRoadmapStore.getState().loadUserRoadmaps(userId);
+      }
+    } catch (error) {
+      console.error('Error deleting roadmap:', error);
+      throw error;
+    }
+  },
 }));
