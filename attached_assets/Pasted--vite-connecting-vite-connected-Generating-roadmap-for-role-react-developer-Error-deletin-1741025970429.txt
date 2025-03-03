@@ -1,0 +1,18 @@
+[vite] connecting...
+[vite] connected.
+Generating roadmap for role: react developer
+Error deleting roadmap: 
+ReferenceError {}
+
+Error deleting saved roadmap: 
+ReferenceError {}
+message: "doc is not defined"
+stack: "ReferenceError: doc is not defined↵ at deleteRoadmap (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/src/store/roadmapStore.ts:172:23)↵ at handleDeleteSavedRoadmap (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/src/components/RoadmapSelector.tsx:54:15)↵ at onClick (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/src/components/RoadmapSelector.tsx:266:21)↵ at HTMLUnknownElement.callCallback2 (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/chunk-QT63QQJV.js?v=fe2d7892:3674:22)↵ at Object.invokeGuardedCallbackDev (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/chunk-QT63QQJV.js?v=fe2d7892:3699:24)↵ at invokeGuardedCallback (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/chunk-QT63QQJV.js?v=fe2d7892:3733:39)↵ at invokeGuardedCallbackAndCatchFirstError (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/chunk-QT63QQJV.js?v=fe2d7892:3736:33)↵ at executeDispatch (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/chunk-QT63QQJV.js?v=fe2d7892:7014:11)↵ at processDispatchQueueItemsInOrder (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/chunk-QT63QQJV.js?v=fe2d7892:7034:15)↵ at processDispatchQueue (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/chunk-QT63QQJV.js?v=fe2d7892:7043:13)"
+get stack: ƒ ()
+set stack: ƒ ()
+[[Prototype]]: Object
+
+at t.value (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
