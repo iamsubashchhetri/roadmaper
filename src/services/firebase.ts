@@ -80,9 +80,21 @@ export const saveSearch = async (userId: string, searchQuery: string) => {
 
 export const saveRoadmap = async (userId: string, roadmap: any) => {
   try {
-    await updateDoc(doc(db, 'users', userId), {
-      savedRoadmaps: arrayUnion({...roadmap, savedAt: new Date()})
-    });
+    const userRef = doc(db, 'users', userId);
+    const userSnapshot = await getDoc(userRef);
+    
+    if (userSnapshot.exists()) {
+      // Update existing user document
+      await updateDoc(userRef, {
+        savedRoadmaps: arrayUnion({...roadmap, savedAt: new Date()})
+      });
+    } else {
+      // Create new user document if it doesn't exist yet
+      await setDoc(userRef, {
+        savedRoadmaps: [{...roadmap, savedAt: new Date()}],
+        createdAt: new Date()
+      });
+    }
   } catch (error) {
     console.error("Error saving roadmap", error);
     throw error;
