@@ -110,3 +110,97 @@ const geminiService = {
 };
 
 export { TopicDetail, RoadmapSelector, geminiService };
+
+
+export interface User {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL: string | null;
+}
+
+export interface Topic {
+  id: string;
+  label: string;
+  parent?: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  description: string;
+  prerequisites?: string[];
+  resources?: Resource[];
+  estimated_hours?: number;
+  status?: 'not-started' | 'in-progress' | 'completed';
+  notes?: string;
+  aiNotes?: string;
+  position?: {
+    x: number;
+    y: number;
+  };
+  data?: {
+    [key: string]: any;
+  };
+}
+
+export interface Resource {
+  title: string;
+  url: string;
+  type: 'article' | 'video' | 'course' | 'book' | 'documentation' | 'other';
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  free?: boolean;
+  description?: string;
+}
+
+export interface Roadmap {
+  id: string;
+  title: string;
+  description: string;
+  language?: string;
+  topics: Topic[];
+  edges: Edge[];
+  createdAt: Date;
+  updatedAt: Date;
+  createdBy?: string;
+  public?: boolean;
+  tags?: string[];
+}
+
+export interface Edge {
+  id: string;
+  source: string;
+  target: string;
+  animated?: boolean;
+  style?: object;
+  label?: string;
+  type?: string;
+}
+
+export interface AuthContextProps {
+  user: User | null;
+  loading: boolean;
+  error: Error | null;
+  signIn: () => Promise<void>;
+  signOut: () => Promise<void>;
+}
+
+export interface AuthProviderProps {
+  children: React.ReactNode;
+}
+
+export interface RoadmapNode {
+  id: string;
+  type: string;
+  data: {
+    label: string;
+    description?: string;
+    difficulty?: string;
+    topic: Topic;
+  };
+  position: {
+    x: number;
+    y: number;
+  };
+}
+
+export interface LanguageConfig {
+  language: string;
+  systemPrompt: string;
+}

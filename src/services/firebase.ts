@@ -1,8 +1,7 @@
-
 // Import the Firebase services
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, signInWithPopup, signOut, GoogleAuthProvider, User } from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc, getDoc, updateDoc, arrayUnion, query, where, getDocs } from 'firebase/firestore';
+import { getAuth, signInWithPopup, signOut, GoogleAuthProvider } from 'firebase/auth';
+import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -18,65 +17,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+// Initialize Google provider
 const googleProvider = new GoogleAuthProvider();
 
 // Authentication functions
 export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
-    const user = result.user;
-    
-    // Create user document if it doesn't exist
-    const userDoc = await getDoc(doc(db, 'users', user.uid));
-    if (!userDoc.exists()) {
-      await setDoc(doc(db, 'users', user.uid), {
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        createdAt: new Date(),
-        savedRoadmaps: [],
-        searchHistory: []
-      });
-    }
-    
-    return user;
-  } catch (error) {
-    console.error("Error signing in with Google", error);
-    throw error;
-  }
-};
 
-export const logOut = async () => {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    console.error("Error signing out", error);
-    throw error;
-  }
-};
-const googleProvider = new GoogleAuthProvider();
-
-// Authentication functions
-export const signInWithGoogle = async () => {
-  try {
-    const result = await signInWithPopup(auth, googleProvider);
-    const user = result.user;
-    
     // Check if this is a new user
+    const user = result.user;
     const userDoc = await getDoc(doc(db, 'users', user.uid));
+
+    // If user doesn't exist, create a new document
     if (!userDoc.exists()) {
-      // Create a new user document
       await setDoc(doc(db, 'users', user.uid), {
         uid: user.uid,
-        email: user.email,
         displayName: user.displayName,
+        email: user.email,
         photoURL: user.photoURL,
         createdAt: new Date(),
-        searchHistory: [],
-        savedRoadmaps: []
+        roadmaps: []
       });
     }
-    
+
     return user;
   } catch (error) {
     console.error("Error signing in with Google", error);
@@ -123,6 +88,18 @@ export const getUserData = async (userId: string) => {
     return null;
   } catch (error) {
     console.error("Error getting user data", error);
+    throw error;
+  }
+};
+
+export const saveRoadmapToUser = async (userId: string, roadmapId: string) => {
+  try {
+    await updateDoc(doc(db, 'users', userId), {
+      roadmaps: arrayUnion(roadmapId)
+    });
+    return true;
+  } catch (error) {
+    console.error("Error saving roadmap to user", error);
     throw error;
   }
 };
