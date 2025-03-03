@@ -1,0 +1,42 @@
+Warning: React does not recognize the &#x60;defaultZoom&#x60; prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase &#x60;defaultzoom&#x60; instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+    at div
+    at https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/reactflow.js?v=fe2d7892:7233:50
+    at div
+    at RoadmapFlow (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/src/components/RoadmapFlow.tsx:40:74)
+    at div
+    at div
+    at div
+    at Home (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/src/App.tsx:34:42)
+    at RenderedRoute (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=fe2d7892:5374:26)
+    at Routes (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=fe2d7892:6104:3)
+    at main
+    at Router (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=fe2d7892:6047:13)
+    at BrowserRouter (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=fe2d7892:8214:3)
+    at div
+    at div
+    at AuthProvider (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/src/store/authContext.tsx:31:32)
+    at App (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/src/App.tsx:94:26)
+setSelectedTopicForNotes is not a function
+setSelectedTopicForNotes is not a function
+Generating notes for new topic: Design Basics
+Generating notes for topic: Design Basics
+Generating AI notes for topic: Design Basics (hkh4x7dersm)
+Generating notes for cleaned topic: Design Basics
+Error saving roadmap: 
+_FirebaseError {code: "permission-denied", customData: undefined, name: "FirebaseError", toString: ƒ}
+code: "permission-denied"
+customData: undefined
+name: "FirebaseError"
+toString: ƒ () => `${this.name}: [code=${this.code}]: ${this.message}`
+message: "Missing or insufficient permissions."
+stack: "FirebaseError: Missing or insufficient permissions."
+get stack: ƒ ()
+set stack: ƒ ()
+[[Prototype]]: Object
+constructor: ƒ class _FirebaseError extends Error {↵ constructor(code, message, customData) {↵ super(message);↵ this.code = code;↵ this.customData = customData;↵ this.name = ERROR_NAME;↵ Object.setPrototypeOf(this, _FirebaseError.prototype);↵ if (Error.captureStackTrace) {↵ Error.captureStackTrace(this, ErrorFactory.prototype.create);↵ }↵ }↵}
+[[Prototype]]: Object
+
+at t.value (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://f574449b-0133-4cde-9db6-8fa3038b0e83-00-1h5oztfuupr21.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
