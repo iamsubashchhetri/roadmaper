@@ -2,22 +2,10 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow users to read/write their own data
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-      
-      match /savedRoadmaps/{roadmapId} {
-        allow read, write: if request.auth != null && request.auth.uid == userId;
-      }
-      
-      match /searchHistory/{searchId} {
-        allow read, write: if request.auth != null && request.auth.uid == userId;
-      }
-    }
-    
-    // Allow authenticated users to read/write roadmaps
-    match /roadmaps/{roadmapId} {
-      allow read, write: if request.auth != null;
+    // For development only - allows all access
+    // WARNING: Change this before going to production!
+    match /{document=**} {
+      allow read, write: if true;
     }
   }
 }

@@ -116,12 +116,28 @@ export const getUserData = async (userId: string) => {
 
 export const saveRoadmapToUser = async (userId: string, roadmapId: string) => {
   try {
-    await updateDoc(doc(db, 'users', userId), {
-      roadmaps: arrayUnion(roadmapId)
-    });
+    // First check if the user document exists
+    const userRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userRef);
+    
+    if (userDoc.exists()) {
+      await updateDoc(userRef, {
+        roadmaps: arrayUnion(roadmapId)
+      });
+    } else {
+      // Create the user document if it doesn't exist
+      await setDoc(userRef, {
+        roadmaps: [roadmapId],
+        createdAt: new Date()
+      });
+    }
     return true;
   } catch (error) {
     console.error("Error saving roadmap to user", error);
+    // Show more detailed error information
+    if (error.code === "permission-denied") {
+      console.error("Permission denied. Check Firebase security rules.");
+    }
     throw error;
   }
 };
