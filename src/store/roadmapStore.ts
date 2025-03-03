@@ -44,6 +44,8 @@ interface RoadmapStore {
 }
 
 import { saveRoadmap as saveRoadmapToFirebase, saveSearch as saveSearchToFirebase, getUserData } from '../services/firebase';
+import { db } from '../services/firebase';
+import { getDoc, doc, updateDoc, arrayUnion, Timestamp } from 'firebase/firestore';
 
 export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
   roadmaps: [],
