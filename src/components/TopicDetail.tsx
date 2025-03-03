@@ -178,4 +178,4 @@ const TopicDetail: React.FC = () => {
   );
 };
 
-export default TopicDetail;t TopicDetail;
+export default TopicDetail;
