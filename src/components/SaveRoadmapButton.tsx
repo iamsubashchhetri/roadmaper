@@ -29,6 +29,18 @@ const SaveRoadmapButton: React.FC<SaveRoadmapButtonProps> = ({ roadmapId }) => {
 
     setIsLoading(true);
     try {
+      // Create the collections and documents with proper structure
+      const roadmapsRef = doc(db, 'roadmaps', roadmapId);
+      
+      // Save the roadmap content first
+      await setDoc(roadmapsRef, {
+        ...currentRoadmap,
+        createdBy: currentUser.uid,
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now()
+      }, { merge: true });
+      
+      // Now save the reference to the user
       const userRef = doc(db, 'users', currentUser.uid);
       // Check if user document exists
       const userDoc = await getDoc(userRef);

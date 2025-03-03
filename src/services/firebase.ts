@@ -1,7 +1,7 @@
 // Import the Firebase services
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, signOut, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion, Timestamp } from 'firebase/firestore';
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -46,7 +46,7 @@ export const signInWithGoogle = async () => {
     return user;
   } catch (error) {
     console.error("Error signing in with Google", error);
-    
+
     // More detailed error logging for domain issues
     if (error.code === 'auth/unauthorized-domain') {
       console.error("Domain authorization error - Make sure to add this domain to Firebase Console:", {
@@ -54,7 +54,7 @@ export const signInWithGoogle = async () => {
         fullOrigin: window.location.origin
       });
     }
-    
+
     throw error;
   }
 };
@@ -68,7 +68,7 @@ export const saveSearch = async (userId: string, searchQuery: string) => {
       query: searchQuery,
       timestamp: new Date()
     };
-    
+
     await updateDoc(doc(db, 'users', userId), {
       searchHistory: arrayUnion(searchData)
     });
@@ -82,7 +82,7 @@ export const saveRoadmap = async (userId: string, roadmap: any) => {
   try {
     const userRef = doc(db, 'users', userId);
     const userSnapshot = await getDoc(userRef);
-    
+
     if (userSnapshot.exists()) {
       // Update existing user document
       await updateDoc(userRef, {
@@ -119,7 +119,7 @@ export const saveRoadmapToUser = async (userId: string, roadmapId: string) => {
     // First check if the user document exists
     const userRef = doc(db, 'users', userId);
     const userDoc = await getDoc(userRef);
-    
+
     if (userDoc.exists()) {
       await updateDoc(userRef, {
         roadmaps: arrayUnion(roadmapId)
