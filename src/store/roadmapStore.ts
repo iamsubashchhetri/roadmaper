@@ -25,6 +25,7 @@ interface RoadmapStore {
   isDarkMode: boolean;
   searchHistory: Array<{query: string, timestamp: Date}>;
   savedRoadmaps: Roadmap[];
+  searchParams: {role?: string} | null; // Added searchParams
 
   // Actions
   generateRoadmap: (request: RoadmapGenerationRequest) => Promise<void>;
@@ -38,7 +39,7 @@ interface RoadmapStore {
   saveRoadmap: (roadmap: Roadmap, userId: string) => Promise<void>;
   loadUserRoadmaps: (userId: string) => Promise<void>;
   loadSearchHistory: (userId: string) => Promise<void>;
-  saveSearch: (query: string, userId: string) => Promise<void>;
+  saveSearch: (query: string, userId: string, searchParams?: {role?: string}) => Promise<void>; // Added searchParams
 }
 
 import { saveRoadmap as saveRoadmapToFirebase, saveSearch as saveSearchToFirebase, getUserData } from '../services/firebase';
@@ -55,6 +56,7 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
   isDarkMode: false,
   searchHistory: [],
   savedRoadmaps: [],
+  searchParams: null, // Initialize searchParams
 
   generateRoadmap: async (request: RoadmapGenerationRequest) => {
     try {
@@ -78,10 +80,16 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
       throw error;
     }
   },
-  
+
   saveRoadmap: async (roadmap: Roadmap, userId: string) => {
     try {
-      await saveRoadmapToFirebase(userId, roadmap);
+      const state = get();
+      const roadmapId = roadmap.id;
+      await saveRoadmapToFirebase(userId, {
+        id: roadmapId,
+        title: `Roadmap for ${state.searchParams?.role || state.currentRoadmap?.title?.replace(' Roadmap', '') || 'Unknown'}`,
+        savedAt: new Date() // Use Date instead of Timestamp
+      });
       set(state => ({
         savedRoadmaps: [...state.savedRoadmaps, roadmap]
       }));
@@ -92,7 +100,7 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
       });
     }
   },
-  
+
   loadUserRoadmaps: async (userId: string) => {
     try {
       const userData = await getUserData(userId);
@@ -108,7 +116,7 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
       });
     }
   },
-  
+
   loadSearchHistory: async (userId: string) => {
     try {
       const userData = await getUserData(userId);
@@ -121,8 +129,8 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
       console.error('Error loading search history:', error);
     }
   },
-  
-  saveSearch: async (query: string, userId: string) => {
+
+  saveSearch: async (query: string, userId: string, searchParams?: {role?: string}) => {
     try {
       await saveSearchToFirebase(userId, query);
       const searchData = {
@@ -130,7 +138,8 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
         timestamp: new Date()
       };
       set(state => ({
-        searchHistory: [...state.searchHistory, searchData]
+        searchHistory: [...state.searchHistory, searchData],
+        searchParams: searchParams // Update searchParams
       }));
     } catch (error) {
       console.error('Error saving search:', error);

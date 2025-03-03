@@ -49,7 +49,7 @@ const SaveRoadmapButton: React.FC<SaveRoadmapButtonProps> = ({ roadmapId }) => {
         await updateDoc(userRef, {
           savedRoadmaps: arrayUnion({
             id: roadmapId,
-            title: `Roadmap for ${currentRoadmap?.role || currentRoadmap?.topic || 'Unknown'}`,
+            title: `Roadmap for ${currentRoadmap?.title?.split(' Roadmap')[0] || 'Unknown'}`,
             savedAt: Timestamp.now()
           })
         });
@@ -58,7 +58,7 @@ const SaveRoadmapButton: React.FC<SaveRoadmapButtonProps> = ({ roadmapId }) => {
         await setDoc(userRef, {
           savedRoadmaps: [{
             id: roadmapId,
-            title: `Roadmap for ${currentRoadmap?.role || currentRoadmap?.topic || 'Unknown'}`,
+            title: `Roadmap for ${currentRoadmap?.title?.split(' Roadmap')[0] || 'Unknown'}`,
             savedAt: Timestamp.now()
           }],
           email: currentUser.email,
@@ -75,7 +75,7 @@ const SaveRoadmapButton: React.FC<SaveRoadmapButtonProps> = ({ roadmapId }) => {
 
     } catch (error) {
       console.error('Error saving roadmap:', error);
-      
+
       // Specific handling for permission errors
       if (error.code === 'permission-denied') {
         alert('Failed to save roadmap: Firebase permission denied. Your Firestore rules need to be deployed.\nRun: npx firebase deploy --only firestore:rules');
