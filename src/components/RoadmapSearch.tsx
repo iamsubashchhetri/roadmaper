@@ -7,14 +7,28 @@ const RoadmapSearch: React.FC = () => {
   const { generateNewRoadmap, isGenerating, searchQuery, setSearchQuery } = useRoadmapStore();
   const [level, setLevel] = useState<'beginner' | 'intermediate' | 'advanced'>('intermediate');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { currentUser } = useAuth();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       const request: RoadmapGenerationRequest = {
         role: searchQuery,
-        level
+        level,
+        language: 'english'
       };
-      generateNewRoadmap(request);
+      
+      try {
+        // Generate the roadmap
+        await generateNewRoadmap(request);
+        
+        // Save the search if user is logged in
+        if (currentUser) {
+          await useRoadmapStore.getState().saveSearch(searchQuery, currentUser.uid);
+        }
+      } catch (error) {
+        console.error("Error with roadmap generation:", error);
+      }
     }
   };
 

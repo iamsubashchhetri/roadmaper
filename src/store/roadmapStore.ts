@@ -17,31 +17,44 @@ interface RoadmapStore {
   roadmaps: Roadmap[];
   currentRoadmap: Roadmap | null;
   selectedTopic: Topic | null;
+  selectedTopicForNotes: string | null;
   isLoading: boolean;
   errorMessage: string | null;
   language: Language;
   contentCache: ContentCache;
-  isDarkMode: boolean; // Added for dark mode
+  isDarkMode: boolean;
+  searchHistory: Array<{query: string, timestamp: Date}>;
+  savedRoadmaps: Roadmap[];
 
   // Actions
   generateRoadmap: (request: RoadmapGenerationRequest) => Promise<void>;
   setSelectedTopic: (topic: Topic | null) => void;
+  setSelectedTopicForNotes: (topicLabel: string | null) => void;
   setLanguage: (language: Language) => void;
   addRoadmap: (roadmap: Roadmap) => void;
   fetchTopicContent: (topic: Topic) => Promise<Topic>;
   setCurrentRoadmap: (roadmapId: string | null) => void;
-  toggleDarkMode: () => void; // Added for dark mode
+  toggleDarkMode: () => void;
+  saveRoadmap: (roadmap: Roadmap, userId: string) => Promise<void>;
+  loadUserRoadmaps: (userId: string) => Promise<void>;
+  loadSearchHistory: (userId: string) => Promise<void>;
+  saveSearch: (query: string, userId: string) => Promise<void>;
 }
+
+import { saveRoadmap as saveRoadmapToFirebase, saveSearch as saveSearchToFirebase, getUserData } from '../services/firebase';
 
 export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
   roadmaps: [],
   currentRoadmap: null,
   selectedTopic: null,
+  selectedTopicForNotes: null,
   isLoading: false,
   errorMessage: null,
   language: 'english',
   contentCache: {},
-  isDarkMode: false, // Added for dark mode
+  isDarkMode: false,
+  searchHistory: [],
+  savedRoadmaps: [],
 
   generateRoadmap: async (request: RoadmapGenerationRequest) => {
     try {
@@ -54,12 +67,73 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
         currentRoadmap: roadmap,
         isLoading: false
       }));
+
+      return roadmap;
     } catch (error) {
       console.error('Error generating roadmap:', error);
       set({ 
         isLoading: false, 
         errorMessage: error instanceof Error ? error.message : 'An unknown error occurred' 
       });
+      throw error;
+    }
+  },
+  
+  saveRoadmap: async (roadmap: Roadmap, userId: string) => {
+    try {
+      await saveRoadmapToFirebase(userId, roadmap);
+      set(state => ({
+        savedRoadmaps: [...state.savedRoadmaps, roadmap]
+      }));
+    } catch (error) {
+      console.error('Error saving roadmap:', error);
+      set({ 
+        errorMessage: error instanceof Error ? error.message : 'An error occurred while saving the roadmap' 
+      });
+    }
+  },
+  
+  loadUserRoadmaps: async (userId: string) => {
+    try {
+      const userData = await getUserData(userId);
+      if (userData && userData.savedRoadmaps) {
+        set({
+          savedRoadmaps: userData.savedRoadmaps
+        });
+      }
+    } catch (error) {
+      console.error('Error loading user roadmaps:', error);
+      set({ 
+        errorMessage: error instanceof Error ? error.message : 'An error occurred while loading your roadmaps' 
+      });
+    }
+  },
+  
+  loadSearchHistory: async (userId: string) => {
+    try {
+      const userData = await getUserData(userId);
+      if (userData && userData.searchHistory) {
+        set({
+          searchHistory: userData.searchHistory
+        });
+      }
+    } catch (error) {
+      console.error('Error loading search history:', error);
+    }
+  },
+  
+  saveSearch: async (query: string, userId: string) => {
+    try {
+      await saveSearchToFirebase(userId, query);
+      const searchData = {
+        query,
+        timestamp: new Date()
+      };
+      set(state => ({
+        searchHistory: [...state.searchHistory, searchData]
+      }));
+    } catch (error) {
+      console.error('Error saving search:', error);
     }
   },
 

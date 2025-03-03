@@ -908,21 +908,21 @@ button:focus {
     right: 10px;
     transform: scale(0.85);
   }
-  
+
   .react-flow__controls-mobile {
     display: flex;
     flex-direction: column;
   }
-  
+
   .react-flow__node {
     font-size: 0.8rem;
     padding: 6px !important;
   }
-  
+
   .react-flow__edge-path {
     stroke-width: 1.5;
   }
-  
+
   .roadmap-container {
     margin: 0 -1rem;
     width: calc(100% + 2rem);
@@ -959,4 +959,32 @@ button:focus {
 .dark .react-flow__node-custom:hover {
   border-color: #475569;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.floating-element {
+  transform: translateY(0);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Authentication related styles */
+.auth-card {
+  @apply bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-blue-100/50 dark:border-gray-700/50 overflow-hidden;
+  transition: all 0.3s ease;
+}
+
+.auth-card:hover {
+  @apply shadow-2xl border-blue-200/70 dark:border-indigo-700/70;
+  transform: translateY(-3px);
+}
+
+.auth-input {
+  @apply bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600/30 rounded-lg px-4 py-3 text-gray-700 dark:text-gray-200 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500/30 dark:focus:ring-indigo-400/30 focus:border-transparent transition-all duration-200;
+}
+
+.auth-button {
+  @apply bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-medium rounded-lg py-3 px-6 transition-all duration-200 flex items-center justify-center gap-2;
+}
+
+.auth-button:disabled {
+  @apply opacity-70 cursor-not-allowed from-gray-400 to-gray-500;
 }
