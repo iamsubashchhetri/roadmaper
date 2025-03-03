@@ -1,0 +1,24 @@
+
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        // Allow read/write access only to the authenticated user for their own data
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        "savedRoadmaps": {
+          ".read": "$uid === auth.uid",
+          ".write": "$uid === auth.uid"
+        },
+        "searchHistory": {
+          ".read": "$uid === auth.uid",
+          ".write": "$uid === auth.uid"
+        }
+      }
+    },
+    "roadmaps": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+}

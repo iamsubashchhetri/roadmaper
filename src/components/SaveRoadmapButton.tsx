@@ -30,6 +30,7 @@ const SaveRoadmapButton: React.FC<SaveRoadmapButtonProps> = ({ roadmapId }) => {
     setIsLoading(true);
     try {
       const userRef = doc(db, 'users', currentUser.uid);
+      // Check if user document exists
       const userDoc = await getDoc(userRef);
 
       if (userDoc.exists()) {
@@ -41,15 +42,29 @@ const SaveRoadmapButton: React.FC<SaveRoadmapButtonProps> = ({ roadmapId }) => {
             savedAt: Timestamp.now()
           })
         });
-
-        // Update local state
-        setIsSaved(true);
-
-        // Update the store
-        useRoadmapStore.getState().loadUserRoadmaps(currentUser.uid);
+      } else {
+        // Create new user document if it doesn't exist
+        await setDoc(userRef, {
+          savedRoadmaps: [{
+            id: roadmapId,
+            title: `Roadmap for ${currentRoadmap?.topic || 'Unknown'}`,
+            savedAt: Timestamp.now()
+          }],
+          email: currentUser.email,
+          displayName: currentUser.displayName,
+          createdAt: Timestamp.now()
+        });
       }
+
+      // Update local state
+      setIsSaved(true);
+
+      // Update the store
+      useRoadmapStore.getState().loadUserRoadmaps(currentUser.uid);
+      
     } catch (error) {
       console.error('Error saving roadmap:', error);
+      alert(`Failed to save roadmap: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsLoading(false);
     }
