@@ -1,0 +1,18 @@
+[vite] connecting...
+[vite] connected.
+Attempting to sign in with Google from domain: 6caf18b2-ead7-46c0-b345-710e2b308cb3-00-1hz8a576589xc.kirk.replit.dev
+Error signing in with Google 
+_FirebaseError {code: "auth/operation-not-allowed", customData: {…}, name: "FirebaseError"}
+code: "auth/operation-not-allowed"
+customData: Object
+name: "FirebaseError"
+message: "Firebase: Error (auth/operation-not-allowed)."
+stack: "FirebaseError: Firebase: Error (auth/operation-not-allowed).↵ at createErrorInternal (https://6caf18b2-ead7-46c0-b345-710e2b308cb3-00-1hz8a576589xc.kirk.replit.dev/node_modules/.vite/deps/firebase_auth.js?v=36f0402a:704:37)↵ at _createError (https://6caf18b2-ead7-46c0-b345-710e2b308cb3-00-1hz8a576589xc.kirk.replit.dev/node_modules/.vite/deps/firebase_auth.js?v=36f0402a:672:10)↵ at AuthEventManager.sendToConsumer (https://6caf18b2-ead7-46c0-b345-710e2b308cb3-00-1hz8a576589xc.kirk.replit.dev/node_modules/.vite/deps/firebase_auth.js?v=36f0402a:7138:24)↵ at https://6caf18b2-ead7-46c0-b345-710e2b308cb3-00-1hz8a576589xc.kirk.replit.dev/node_modules/.vite/deps/firebase_auth.js?v=36f0402a:7120:14↵ at Set.forEach (<anonymous>)↵ at AuthEventManager.onEvent (https://6caf18b2-ead7-46c0-b345-710e2b308cb3-00-1hz8a576589xc.kirk.replit.dev/node_modules/.vite/deps/firebase_auth.js?v=36f0402a:7117:20)↵ at _.qn.<anonymous> (https://6caf18b2-ead7-46c0-b345-710e2b308cb3-00-1hz8a576589xc.kirk.replit.dev/node_modules/.vite/deps/firebase_auth.js?v=36f0402a:7547:31)↵ at Mm (https://apis.google.com/_/scs/abc-static/_/js/k=gapi.lb.en.z-CF99wuLeU.O/m=gapi_iframes/rt=j/sv=1/d=1/ed=1/rs=AHpOoo8yJLmK2FeQzRT4hxPn9_NEJo9eCg/cb=gapi.loaded_0?le=scs:195:287)↵ at Object.<anonymous> (https://apis.google.com/_/scs/abc-static/_/js/k=gapi.lb.en.z-CF99wuLeU.O/m=gapi_iframes/rt=j/sv=1/d=1/ed=1/rs=AHpOoo8yJLmK2FeQzRT4hxPn9_NEJo9eCg/cb=gapi.loaded_0?le=scs:195:460)↵ at bl (https://apis.google.com/_/scs/abc-static/_/js/k=gapi.lb.en.z-CF99wuLeU.O/m=gapi_iframes/rt=j/sv=1/d=1/ed=1/rs=AHpOoo8yJLmK2FeQzRT4hxPn9_NEJo9eCg/cb=gapi.loaded_0?le=scs:174:307)"
+get stack: ƒ ()
+set stack: ƒ ()
+[[Prototype]]: Object
+
+at t.value (https://6caf18b2-ead7-46c0-b345-710e2b308cb3-00-1hz8a576589xc.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://6caf18b2-ead7-46c0-b345-710e2b308cb3-00-1hz8a576589xc.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://6caf18b2-ead7-46c0-b345-710e2b308cb3-00-1hz8a576589xc.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://6caf18b2-ead7-46c0-b345-710e2b308cb3-00-1hz8a576589xc.kirk.replit.de
