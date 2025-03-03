@@ -123,7 +123,7 @@ const TopicDetail: React.FC = () => {
             <p className="text-gray-700 dark:text-gray-300">
               {selectedTopic.data.description}
             </p>
-          </div>
+          </div>iv>
         )}
 
         {/* AI-Generated Notes section with language selector */}
