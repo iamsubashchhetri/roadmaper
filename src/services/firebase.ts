@@ -5,14 +5,13 @@ import { getAuth, onAuthStateChanged, signInWithPopup, signOut, GoogleAuthProvid
 import { getFirestore, collection, doc, setDoc, getDoc, updateDoc, arrayUnion, query, where, getDocs } from 'firebase/firestore';
 
 // Your Firebase configuration
-// Replace with your own Firebase config
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey: "AIzaSyAi5rSk9AhGt1HJAWWz-yoPlP4m-fvwWtM",
+  authDomain: "airoadmapgenerator-b3de9.firebaseapp.com",
+  projectId: "airoadmapgenerator-b3de9",
+  storageBucket: "airoadmapgenerator-b3de9.appspot.com",
+  messagingSenderId: "998119689866",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID // You need to add your app ID in the .env file
 };
 
 // Initialize Firebase
