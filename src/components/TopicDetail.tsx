@@ -123,7 +123,7 @@ const TopicDetail: React.FC = () => {
             <p className="text-gray-700 dark:text-gray-300">
               {selectedTopic.data.description}
             </p>
-          </div>iv>
+          </div>
         )}
 
         {/* AI-Generated Notes section with language selector */}
@@ -178,4 +178,4 @@ const TopicDetail: React.FC = () => {
   );
 };
 
-export default TopicDetail;
+export default TopicDetail;t TopicDetail;
