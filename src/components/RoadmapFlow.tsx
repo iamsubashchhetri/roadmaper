@@ -26,7 +26,7 @@ const nodeTypes: NodeTypes = {
 };
 
 const RoadmapFlow: React.FC = () => {
-  const { currentRoadmap, setSelectedTopic, setSelectedTopicForNotes } =
+  const { currentRoadmap, setSelectedTopic } =
     useRoadmapStore();
   const [selectedTopic, setSelectedTopicState] = useState<Node | null>(null); // Added state to track selected node
 
@@ -53,11 +53,11 @@ const RoadmapFlow: React.FC = () => {
         if (!selectedTopic || selectedTopic.id !== node.id) {
           setSelectedTopicState(node); // Update the state to track the selected node
           setSelectedTopic(node);
-          setSelectedTopicForNotes(node.data.label);
+          // setSelectedTopicForNotes(node.data.label);  Removed this line
         }
       }
     },
-    [setSelectedTopic, setSelectedTopicForNotes, selectedTopic],
+    [setSelectedTopic, selectedTopic],
   );
 
   if (!currentRoadmap) {
@@ -388,7 +388,7 @@ const RoadmapFlow: React.FC = () => {
           fitView
           minZoom={0.1}
           maxZoom={1.5}
-          defaultZoom={0.8}
+          defaultzoom={0.8}
           zoomOnScroll={true}
           zoomOnPinch={true}
           panOnScroll={true}
