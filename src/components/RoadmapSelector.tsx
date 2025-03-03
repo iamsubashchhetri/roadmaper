@@ -3,7 +3,7 @@ import { useRoadmapStore } from '../store/roadmapStore';
 import { MapPin, Code, Zap, BookOpen, Trash2 } from 'lucide-react';
 import { useAuth } from '../store/authContext';
 
-import { generateRoadmap, deleteRoadmap, loadRoadmap } from '../utils/roadmapGenerator'; // Added necessary imports
+import { generateRoadmap } from '../utils/roadmapGenerator'; // Fixed imports
 
 
 const RoadmapSelector: React.FC = () => {
@@ -33,9 +33,9 @@ const RoadmapSelector: React.FC = () => {
     try {
       // First set current roadmap to null to trigger loading state
       setCurrentRoadmap(null);
-
-      // Then load the roadmap
-      await loadRoadmap(id);
+      
+      // Then load the roadmap by ID
+      setCurrentRoadmap(id);
     } catch (error) {
       console.error('Error loading saved roadmap:', error);
     }
