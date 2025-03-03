@@ -24,6 +24,7 @@ const googleProvider = new GoogleAuthProvider();
 // Authentication functions
 export const signInWithGoogle = async () => {
   try {
+    console.log("Attempting to sign in with Google from domain:", window.location.hostname);
     const result = await signInWithPopup(auth, googleProvider);
 
     // Check if this is a new user
@@ -45,6 +46,15 @@ export const signInWithGoogle = async () => {
     return user;
   } catch (error) {
     console.error("Error signing in with Google", error);
+    
+    // More detailed error logging for domain issues
+    if (error.code === 'auth/unauthorized-domain') {
+      console.error("Domain authorization error - Make sure to add this domain to Firebase Console:", {
+        currentDomain: window.location.hostname,
+        fullOrigin: window.location.origin
+      });
+    }
+    
     throw error;
   }
 };
