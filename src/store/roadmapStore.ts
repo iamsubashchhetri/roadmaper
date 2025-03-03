@@ -40,9 +40,12 @@ interface RoadmapStore {
   loadUserRoadmaps: (userId: string) => Promise<void>;
   loadSearchHistory: (userId: string) => Promise<void>;
   saveSearch: (query: string, userId: string, searchParams?: {role?: string}) => Promise<void>; // Added searchParams
+  deleteRoadmap: (roadmapId: string, userId: string) => Promise<void>; // Added delete function
 }
 
 import { saveRoadmap as saveRoadmapToFirebase, saveSearch as saveSearchToFirebase, getUserData } from '../services/firebase';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../services/firebase';
 
 export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
   roadmaps: [],
@@ -127,6 +130,37 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
       }
     } catch (error) {
       console.error('Error loading search history:', error);
+    }
+  },
+
+  deleteRoadmap: async (roadmapId: string, userId: string) => {
+    try {
+      // Reference to the user document
+      const userRef = doc(db, 'users', userId);
+      const userDoc = await getDoc(userRef);
+      
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        // Filter out the roadmap with the specified ID
+        const updatedRoadmaps = userData.savedRoadmaps.filter(
+          (roadmap: any) => roadmap.id !== roadmapId
+        );
+        
+        // Update the user document with the filtered roadmaps
+        await updateDoc(userRef, {
+          savedRoadmaps: updatedRoadmaps
+        });
+        
+        // Update local state
+        set(state => ({
+          savedRoadmaps: state.savedRoadmaps.filter(roadmap => roadmap.id !== roadmapId)
+        }));
+      }
+    } catch (error) {
+      console.error('Error deleting roadmap:', error);
+      set({ 
+        errorMessage: error instanceof Error ? error.message : 'An error occurred while deleting the roadmap' 
+      });
     }
   },
 
