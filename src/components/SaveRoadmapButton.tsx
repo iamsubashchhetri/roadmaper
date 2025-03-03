@@ -49,7 +49,7 @@ const SaveRoadmapButton: React.FC<SaveRoadmapButtonProps> = ({ roadmapId }) => {
         await updateDoc(userRef, {
           savedRoadmaps: arrayUnion({
             id: roadmapId,
-            title: `Roadmap for ${currentRoadmap?.topic || 'Unknown'}`,
+            title: `Roadmap for ${currentRoadmap?.role || currentRoadmap?.topic || 'Unknown'}`,
             savedAt: Timestamp.now()
           })
         });
@@ -58,7 +58,7 @@ const SaveRoadmapButton: React.FC<SaveRoadmapButtonProps> = ({ roadmapId }) => {
         await setDoc(userRef, {
           savedRoadmaps: [{
             id: roadmapId,
-            title: `Roadmap for ${currentRoadmap?.topic || 'Unknown'}`,
+            title: `Roadmap for ${currentRoadmap?.role || currentRoadmap?.topic || 'Unknown'}`,
             savedAt: Timestamp.now()
           }],
           email: currentUser.email,
