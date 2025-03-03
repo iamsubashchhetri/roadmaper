@@ -3,6 +3,8 @@ import { useRoadmapStore } from '../store/roadmapStore';
 import { MapPin, Code, Zap, BookOpen } from 'lucide-react';
 import { useAuth } from '../store/authContext';
 
+import { generateRoadmap } from '../utils/roadmapGenerator';
+
 const RoadmapSelector: React.FC = () => {
   const { roadmaps, currentRoadmap, setCurrentRoadmap, deleteRoadmap } = useRoadmapStore();
   const { currentUser } = useAuth();
