@@ -26,6 +26,7 @@ interface RoadmapStore {
   searchHistory: Array<{query: string, timestamp: Date}>;
   savedRoadmaps: Roadmap[];
   searchParams: {role?: string} | null; // Added searchParams
+  notesByTopic: Record<string, string>; // Added notesByTopic
 
   // Actions
   generateRoadmap: (request: RoadmapGenerationRequest) => Promise<void>;
@@ -41,6 +42,7 @@ interface RoadmapStore {
   loadSearchHistory: (userId: string) => Promise<void>;
   saveSearch: (query: string, userId: string, searchParams?: {role?: string}) => Promise<void>; // Added searchParams
   deleteRoadmap: (roadmapId: string, userId: string) => Promise<void>; // Added deleteRoadmap
+  setNotes: (topicId: string, notes: string) => void; // Added setNotes
 }
 
 import { saveRoadmap as saveRoadmapToFirebase, saveSearch as saveSearchToFirebase, getUserData } from '../services/firebase';
@@ -60,6 +62,7 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
   searchHistory: [],
   savedRoadmaps: [],
   searchParams: null, // Initialize searchParams
+  notesByTopic: {}, // Initialize notesByTopic
 
   generateRoadmap: async (request: RoadmapGenerationRequest) => {
     try {
@@ -272,4 +275,9 @@ export const useRoadmapStore = create<RoadmapStore>((set, get) => ({
       throw error;
     }
   },
+  setNotes: (topicId, notes) => {
+    set(state => ({
+      notesByTopic: { ...state.notesByTopic, [topicId]: notes }
+    }));
+  }
 }));

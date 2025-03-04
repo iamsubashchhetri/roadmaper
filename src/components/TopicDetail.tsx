@@ -1,179 +1,188 @@
-import React, { useState, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { useRoadmapStore } from '../store/roadmapStore';
-import { Language } from '../types';
 
-const TopicDetail: React.FC = () => {
-  const { selectedTopic, language, setLanguage } = useRoadmapStore();
-  const [aiNotes, setAiNotes] = useState<string | null>(null);
-  const [isGeneratingAiNotes, setIsGeneratingAiNotes] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [previousTopic, setPreviousTopic] = useState<string | null>(null);
+import React, { useState, useEffect } from "react";
+import { useRoadmapStore } from "../store/roadmapStore";
+import { marked } from "marked";
+import { generateNotesWithGemini } from "../services/geminiService";
+import { Language } from "../types/language";
+import { Loader2 } from "lucide-react";
 
-  // Effect to generate notes when a new topic is selected
+const TopicDetail = () => {
+  const { selectedTopic, language, setLanguage, notesByTopic } = useRoadmapStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const [followUpQuestion, setFollowUpQuestion] = useState("");
+  const [followUpResponses, setFollowUpResponses] = useState<string[]>([]);
+  const [isFollowUpLoading, setIsFollowUpLoading] = useState(false);
+
   useEffect(() => {
-    if (selectedTopic && 
-        selectedTopic.data && 
-        selectedTopic.data.label && 
-        selectedTopic.data.label !== previousTopic) {
-      console.log("Generating notes for new topic:", selectedTopic.data.label);
-      generateAiNotes(selectedTopic.data.label);
-      setPreviousTopic(selectedTopic.data.label);
-    }
+    // Reset follow-up responses when topic changes
+    setFollowUpResponses([]);
+    setFollowUpQuestion("");
   }, [selectedTopic]);
 
-  const generateAiNotes = async (topicLabel: string | undefined) => {
-    if (!topicLabel || topicLabel.trim() === '') {
-      console.warn("Cannot generate notes: Topic label is undefined or empty");
-      setError("Please select a specific topic from the roadmap to generate notes.");
-      return;
+  const fetchNotes = async () => {
+    if (!selectedTopic) return;
+    
+    try {
+      setIsLoading(true);
+      const notes = await generateNotesWithGemini(selectedTopic, language);
+      useRoadmapStore.getState().setNotes(selectedTopic, notes);
+    } catch (error) {
+      console.error("Error generating notes:", error);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    console.log("Generating notes for topic:", topicLabel);
+  useEffect(() => {
+    if (selectedTopic && !notesByTopic[selectedTopic]) {
+      fetchNotes();
+    }
+  }, [selectedTopic, language]);
 
-    setIsGeneratingAiNotes(true);
-    setError(null);
-    setAiNotes(null); // Clear previous notes to ensure user sees new content
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLanguage = e.target.value as Language;
+    setLanguage(newLanguage);
+  };
+
+  const handleFollowUpSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!followUpQuestion.trim() || !selectedTopic) return;
 
     try {
-      // Import the generateNotesWithGemini function from geminiService
-      const { generateNotesWithGemini } = await import('../services/geminiService');
-
-      // Add a random string to ensure we're not getting cached results
-      const uniqueId = Math.random().toString(36).substring(2, 15);
-
-      console.log(`Generating AI notes for topic: ${topicLabel} (${uniqueId})`);
-
-      const aiGeneratedNotes = await generateNotesWithGemini(
-        topicLabel,
+      setIsFollowUpLoading(true);
+      
+      // Generate follow-up content based on the question and original topic
+      const response = await generateNotesWithGemini(
+        `${selectedTopic} - Specifically about: ${followUpQuestion}`, 
         language
       );
-
-      if (!aiGeneratedNotes || aiGeneratedNotes.trim() === '') {
-        throw new Error('Received empty notes from AI service');
-      }
-
-      setAiNotes(aiGeneratedNotes);
+      
+      // Add the new response to the list
+      setFollowUpResponses([...followUpResponses, response]);
+      
+      // Clear the question input
+      setFollowUpQuestion("");
     } catch (error) {
-      console.error("Error generating AI notes:", error);
-      setAiNotes("Error generating notes. Please try again later.");
-      setError("Failed to generate notes. Please try again.");
+      console.error("Error generating follow-up response:", error);
     } finally {
-      setIsGeneratingAiNotes(false);
+      setIsFollowUpLoading(false);
     }
   };
-
-  const handleLanguageChange = (newLanguage: Language) => {
-    if (language !== newLanguage) {
-      // First update the language in the store
-      setLanguage(newLanguage);
-
-      // Immediately re-generate notes for the same topic with the new language
-      if (selectedTopic && selectedTopic.data && selectedTopic.data.label) {
-        console.log("Regenerating notes for language change:", newLanguage);
-        // Force regeneration by clearing previous state
-        setAiNotes(null);
-        setIsGeneratingAiNotes(true);
-
-        // Use the new language directly in the API call to ensure correct language is used
-        import('../services/geminiService').then(({ generateNotesWithGemini }) => {
-          generateNotesWithGemini(selectedTopic.data.label, newLanguage)
-            .then(notes => {
-              setAiNotes(notes);
-              setPreviousTopic(selectedTopic.data.label); // Update previous topic
-            })
-            .catch(error => {
-              console.error("Error generating notes with new language:", error);
-              setError("Failed to generate notes in the selected language. Please try again.");
-            })
-            .finally(() => {
-              setIsGeneratingAiNotes(false);
-            });
-        });
-      }
-    }
-  };
-
-  const languages: { key: Language; label: string }[] = [
-    { key: "english", label: "English" },
-    { key: "spanish", label: "Español" },
-    { key: "french", label: "Français" },
-    { key: "nepali", label: "नेपाली" },
-  ];
 
   if (!selectedTopic) {
-    return null;
+    return (
+      <div className="bg-white/95 dark:bg-gray-800/95 rounded-xl shadow-lg p-6 h-full">
+        <p className="text-gray-500 dark:text-gray-400 text-center">
+          Select a topic from the roadmap to view detailed notes
+        </p>
+      </div>
+    );
   }
 
-  // Extract topic name even if data property is missing
-  const topicName = selectedTopic 
-    ? (selectedTopic.data?.label || selectedTopic.id || "Unknown Topic") 
-    : "No Topic Selected";
+  // Clean the topic string to remove any ID prefixes like "topic-1234567890"
+  const displayTopic = selectedTopic.replace(/^topic-\d+\s*/, "").trim();
 
   return (
-    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
-        {topicName}
-      </h2>
+    <div className="bg-white/95 dark:bg-gray-800/95 rounded-xl shadow-lg p-6 overflow-auto h-[calc(100vh-12rem)]">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
+          {displayTopic}
+        </h2>
+        <select
+          value={language}
+          onChange={handleLanguageChange}
+          className="px-3 py-1 rounded-md text-sm bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600"
+        >
+          <option value="english">English</option>
+          <option value="spanish">Spanish</option>
+          <option value="french">French</option>
+          <option value="german">German</option>
+          <option value="japanese">Japanese</option>
+          <option value="chinese">Chinese</option>
+        </select>
+      </div>
 
-      <div className="space-y-6">
-        {/* Topic details section */}
-        {selectedTopic.data && selectedTopic.data.description && (
-          <div className="mt-4 bg-gray-50 dark:bg-gray-700 p-4 rounded-md">
-            <p className="text-gray-700 dark:text-gray-300">
-              {selectedTopic.data.description}
+      <div className="topic-notes">
+        {isLoading ? (
+          <div className="flex justify-center items-center h-64">
+            <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+            <span className="ml-2 text-gray-600 dark:text-gray-400">
+              Generating comprehensive notes...
+            </span>
+          </div>
+        ) : notesByTopic[selectedTopic] ? (
+          <div
+            className="markdown-content prose prose-indigo dark:prose-invert max-w-none"
+            dangerouslySetInnerHTML={{
+              __html: marked(notesByTopic[selectedTopic]),
+            }}
+          />
+        ) : (
+          <div className="flex justify-center items-center h-64">
+            <p className="text-gray-500 dark:text-gray-400">
+              No notes available for this topic yet
             </p>
           </div>
         )}
-
-        {/* AI-Generated Notes section with language selector */}
-        {selectedTopic && selectedTopic.data && selectedTopic.data.label && (
-          <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow p-6 border border-gray-100 dark:border-gray-700">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-4 border-b pb-3 border-gray-200 dark:border-gray-700 gap-4">
-              <h3 className="text-lg md:text-xl font-semibold text-gray-800 dark:text-white text-center md:text-left w-full">
-                AI-Generated Learning Notes for: {selectedTopic.data.label || 'No Topic Selected'}
-              </h3>
-              <div className="flex items-center space-x-2 md:space-x-3">
-                <label htmlFor="language-select" className="text-sm md:text-base text-gray-700 dark:text-gray-300 font-medium">
-                  Language:
-                </label>
-                <select
-                  id="language-select"
-                  value={language}
-                  onChange={(e) => handleLanguageChange(e.target.value as Language)}
-                  className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-1 md:py-2 px-2 md:px-3 text-sm md:text-base focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                >
-                  {languages.map((lang) => (
-                    <option key={lang.key} value={lang.key}>
-                      {lang.label} + English Mix
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {isGeneratingAiNotes ? (
-              <div className="flex flex-col items-center justify-center py-12 bg-gray-50 dark:bg-gray-900 rounded-lg mx-auto max-w-4xl">
-                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-500 mb-6"></div>
-                <p className="text-gray-700 dark:text-gray-300 font-medium text-center text-lg">
-                  Generating in-depth learning notes for<br />
-                  <span className="text-indigo-600 dark:text-indigo-400 font-semibold text-xl">"{selectedTopic.data.label}"</span><br />
-                  in a mix of English and {language}...
-                </p>
-                <p className="text-sm text-gray-500 mt-3">
-                  This may take 15-30 seconds for detailed content
-                </p>
-              </div>
-            ) : aiNotes ? (
-              <div className="prose dark:prose-invert max-w-4xl mx-auto p-8 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 shadow-md">
-                <ReactMarkdown>{aiNotes}</ReactMarkdown>
-              </div>
-            ) : error ? (
-              <div className="text-red-500 text-center mx-auto max-w-4xl p-4">{error}</div>
-            ) : null}
-          </div>
-        )}
       </div>
+
+      {/* Follow-up responses section */}
+      {followUpResponses.length > 0 && (
+        <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
+          <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">
+            Follow-up Information
+          </h3>
+          {followUpResponses.map((response, index) => (
+            <div 
+              key={index} 
+              className="mb-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg"
+            >
+              <div
+                className="markdown-content prose prose-indigo dark:prose-invert max-w-none"
+                dangerouslySetInnerHTML={{
+                  __html: marked(response),
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Follow-up question form */}
+      {notesByTopic[selectedTopic] && (
+        <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
+          <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">
+            Ask a Follow-up Question
+          </h3>
+          <form onSubmit={handleFollowUpSubmit} className="flex flex-col space-y-3">
+            <textarea
+              value={followUpQuestion}
+              onChange={(e) => setFollowUpQuestion(e.target.value)}
+              placeholder="Ask a specific question about this topic..."
+              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+              rows={3}
+            />
+            <button
+              type="submit"
+              disabled={isFollowUpLoading || !followUpQuestion.trim()}
+              className={`px-4 py-2 bg-indigo-600 text-white rounded-lg flex items-center justify-center ${
+                isFollowUpLoading || !followUpQuestion.trim()
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-indigo-700"
+              }`}
+            >
+              {isFollowUpLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                  Generating...
+                </>
+              ) : (
+                "Submit Question"
+              )}
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
