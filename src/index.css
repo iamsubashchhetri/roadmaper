@@ -214,7 +214,7 @@ body {
 /* Add container for desktop centering */
 @media (min-width: 1024px) {
   .roadmap-container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
   }
 }
