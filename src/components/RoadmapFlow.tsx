@@ -73,7 +73,7 @@ const RoadmapFlow: React.FC = () => {
 
         <div className="relative w-full h-64 md:h-80 overflow-hidden mb-10 md:mb-12 flex justify-center items-center">
           {/* Central design element */}
-          <div className="absolute transform -translate-y-1/2">
+          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <div className="relative w-20 h-20 md:w-32 md:h-32 cursor-pointer transition-transform duration-300 hover:scale-110 floating-element">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 opacity-90 animate-pulse-slow"></div>
               <div className="absolute inset-1 rounded-full bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm flex items-center justify-center hover:shadow-lg hover:shadow-blue-200 dark:hover:shadow-indigo-900 transition-all duration-300 animate-float text-center">
