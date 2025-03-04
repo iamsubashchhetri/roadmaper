@@ -25,7 +25,7 @@ const nodeTypes: NodeTypes = {
   process: CustomNode, // Add the missing 'process' node type
 };
 
-export default function RoadmapFlow() {
+const RoadmapFlow: React.FC = () => {
   const { currentRoadmap, setSelectedTopic } =
     useRoadmapStore();
   const [selectedTopic, setSelectedTopicState] = useState<Node | null>(null); // Added state to track selected node
@@ -338,4 +338,4 @@ export default function RoadmapFlow() {
   );
 };
 
-// Export is handled in the component declaration
+export default RoadmapFlow;
