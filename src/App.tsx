@@ -12,6 +12,7 @@ import SignIn from './components/Auth/SignIn';
 import Profile from './components/Auth/Profile';
 import RequireAuth from './components/Auth/RequireAuth';
 import SaveRoadmapButton from './components/SaveRoadmapButton';
+import NotesApp from './components/Notes/NotesApp';
 import { UserIcon } from 'lucide-react';
 
 // Home page component
@@ -63,7 +64,14 @@ function App() {
                 AI Roadmap Generator
               </Link>
 
-              <nav>
+              <nav className="flex gap-3">
+                <Link 
+                  to="/notes"
+                  className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-sm hover:shadow transition-all"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                  <span>Notes</span>
+                </Link>
                 <Link 
                   to="/profile" 
                   className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-sm hover:shadow transition-all"
@@ -83,6 +91,14 @@ function App() {
                   element={
                     <RequireAuth>
                       <Profile />
+                    </RequireAuth>
+                  } 
+                />
+                <Route 
+                  path="/notes/*" 
+                  element={
+                    <RequireAuth>
+                      <NotesApp />
                     </RequireAuth>
                   } 
                 />
