@@ -71,10 +71,10 @@ const RoadmapFlow: React.FC = () => {
           <div className="h-1 w-32 md:w-48 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mt-4"></div>
         </div>
 
-        <div className="relative w-full h-64 md:h-80 overflow-hidden mb-10 md:mb-12 flex justify-center items-center">
+        <div className="relative w-full h-60 md:h-72 overflow-hidden mb-8 md:mb-10 flex justify-center items-center">
           {/* Central design element */}
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className="relative w-20 h-20 md:w-32 md:h-32 cursor-pointer transition-transform duration-300 hover:scale-110 floating-element">
+            <div className="relative w-20 h-20 md:w-28 md:h-28 cursor-pointer transition-transform duration-300 hover:scale-110 floating-element">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 opacity-90 animate-pulse-slow"></div>
               <div className="absolute inset-1 rounded-full bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm flex items-center justify-center hover:shadow-lg hover:shadow-blue-200 dark:hover:shadow-indigo-900 transition-all duration-300 animate-float text-center">
                 <svg
@@ -105,86 +105,7 @@ const RoadmapFlow: React.FC = () => {
             </div>
           </div>
 
-          {/* Floating elements - Mobile responsive */}
-          <div className="absolute left-[5%] md:left-[12%] top-[15%] animate-float-slow floating-element">
-            <div className="relative w-16 h-16 md:w-24 md:h-24">
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 opacity-70 blur"></div>
-              <div className="absolute inset-1 rounded-xl bg-white dark:bg-gray-800 backdrop-blur-sm flex items-center justify-center">
-                <svg
-                  className="w-8 h-8 md:w-10 md:h-12 text-cyan-500"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 6.25278V19.2528M12 6.25278C10.8321 5.47686 9.24649 5 7.5 5C5.75351 5 4.16789 5.47686 3 6.25278V19.2528C4.16789 18.4769 5.75351 18 7.5 18C9.24649 18 10.8321 18.4769 12 19.2528M12 6.25278C13.1679 5.47686 14.7535 5 16.5 5C18.2465 5 19.8321 5.47686 21 6.25278V19.2528C19.8321 18.4769 18.2465 18 16.5 18C14.7535 18 13.1679 18.4769 12 19.2528"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute right-[8%] md:right-[15%] top-[20%] md:top-[15%] animate-float-medium floating-element">
-            <div className="relative w-14 h-14 md:w-20 md:h-20">
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 opacity-70 blur"></div>
-              <div className="absolute inset-1 rounded-xl bg-white dark:bg-gray-800 backdrop-blur-sm flex items-center justify-center">
-                <svg
-                  className="w-7 h-7 md:w-10 md:h-10 text-violet-500"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M20.25 6.75H3.75C3.33579 6.75 3 7.08579 3 7.5V18C3 18.4142 3.33579 18.75 3.75 18.75H20.25C20.6642 18.75 21 18.4142 21 18V7.5C21 7.08579 20.6642 6.75 20.25 6.75Z"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M7.5 11.25L10.5 14.25L16.5 8.25"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M8.15997 6.75V3.75C8.15997 3.55109 8.23902 3.36032 8.37967 3.21967C8.52032 3.07902 8.71107 3 8.90997 3H15.09C15.2889 3 15.4796 3.07902 15.6203 3.21967C15.7609 3.36032 15.84 3.55109 15.84 3.75V6.75"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute left-[8%] md:left-[18%] bottom-[2%] md:bottom-[1%] animate-float-medium floating-element">
-            <div className="relative w-20 h-20 md:w-28 md:h-28">
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 opacity-70 blur"></div>
-              <div className="absolute inset-1 rounded-xl bg-white dark:bg-gray-800 backdrop-blur-sm flex items-center justify-center">
-                <svg
-                  className="w-10 h-10 md:w-14 md:h-14 text-indigo-500"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7.5 4.5H6.75C5.50736 4.5 4.5 5.50736 4.5 6.75V17.25C4.5 18.4926 5.50736 19.5 6.75 19.5H17.25C18.4926 19.5 19.5 18.4926 19.5 17.25V6.75C19.5 5.50736 18.4926 4.5 17.25 4.5H16.5M7.5 4.5V3.75C7.5 2.50736 8.50736 1.5 9.75 1.5H14.25C15.4926 1.5 16.5 2.50736 16.5 3.75V4.5M7.5 4.5H16.5M9 12L11.25 14.25L15.75 9.75"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
+          {/* Center icon only - removed extra floating elements */}
         </div>
 
         <div className="text-center mt-8 mb-6 md:mb-8 px-4">
