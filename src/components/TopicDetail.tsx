@@ -107,13 +107,14 @@ Begin by familiarizing yourself with the fundamentals...`;
                 {item.type === "question" && (
                   <div className="font-medium text-indigo-600 dark:text-indigo-400 mb-1">Your question:</div>
                 )}
-                <ReactMarkdown 
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeHighlight]}
-                  className="markdown-content"
-                >
-                  {item.content}
-                </ReactMarkdown>
+                <div className="markdown-content">
+                  <ReactMarkdown 
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeHighlight]}
+                  >
+                    {item.content}
+                  </ReactMarkdown>
+                </div>
               </div>
             ))}
           </div>
