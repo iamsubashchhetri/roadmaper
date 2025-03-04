@@ -60,24 +60,24 @@ function App() {
         <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-indigo-950 dark:to-gray-800 p-3 sm:p-4 md:p-8 bg-pattern">
           <Router>
             <header className="w-full max-w-7xl mx-auto mb-6 flex justify-between items-center">
-              <Link to="/" className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+              <Link to="/" className="text-lg sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400">
                 AI Roadmap Generator
               </Link>
 
-              <nav className="flex gap-3">
+              <nav className="flex gap-2 sm:gap-3">
                 <Link 
                   to="/notes"
-                  className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-sm hover:shadow transition-all"
+                  className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-sm hover:shadow transition-all text-sm sm:text-base"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                   <span>Notes</span>
                 </Link>
                 <Link 
                   to="/profile" 
-                  className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-sm hover:shadow transition-all"
+                  className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 bg-white/80 dark:bg-gray-800/80 rounded-lg shadow-sm hover:shadow transition-all text-sm sm:text-base"
                 >
-                  <UserIcon size={18} />
-                  <span>My Account</span>
+                  <UserIcon size={16} />
+                  <span>Account</span>
                 </Link>
               </nav>
             </header>
