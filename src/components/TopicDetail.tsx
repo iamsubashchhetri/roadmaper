@@ -2,76 +2,89 @@
 import React, { useState, useEffect } from "react";
 import { useRoadmapStore } from "../store/roadmapStore";
 import { marked } from "marked";
-import { generateNotesWithGemini } from "../services/geminiService";
 import { Language } from "../types/language";
-import { Loader2 } from "lucide-react";
+import { Loader2, Send } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 
-const TopicDetail = () => {
-  const { selectedTopic, language, setLanguage, notesByTopic } = useRoadmapStore();
-  const [isLoading, setIsLoading] = useState(false);
-  const [followUpQuestion, setFollowUpQuestion] = useState("");
-  const [followUpResponses, setFollowUpResponses] = useState<string[]>([]);
-  const [isFollowUpLoading, setIsFollowUpLoading] = useState(false);
+const TopicDetail: React.FC = () => {
+  const { selectedTopic, selectedTopicLabel, language, setLanguage } = useRoadmapStore();
+  const [content, setContent] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [followUpQuestion, setFollowUpQuestion] = useState<string>("");
+  const [conversations, setConversations] = useState<{ type: "note" | "question" | "answer", content: string }[]>([]);
 
   useEffect(() => {
-    // Reset follow-up responses when topic changes
-    setFollowUpResponses([]);
-    setFollowUpQuestion("");
-  }, [selectedTopic]);
+    if (selectedTopic) {
+      generateNotes(selectedTopic);
+    }
+  }, [selectedTopic, language]);
 
-  const fetchNotes = async () => {
-    if (!selectedTopic) return;
-    
+  const generateNotes = async (topic: string) => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      const notes = await generateNotesWithGemini(selectedTopic, language);
-      useRoadmapStore.getState().setNotes(selectedTopic, notes);
+      // This is a placeholder - replace with your actual implementation
+      // const notes = await generateNotesWithGemini(topic, language);
+      
+      // Placeholder for demo
+      const notes = `# ${selectedTopicLabel || topic}
+      
+Here are some key points about this topic:
+
+- This is an important concept in the field
+- Understanding this will help you master related topics
+- Practice is essential for mastering this skill
+
+## Getting Started
+
+Begin by familiarizing yourself with the fundamentals...`;
+      
+      setTimeout(() => {
+        setContent(notes);
+        setConversations([{ type: "note", content: notes }]);
+        setIsLoading(false);
+      }, 1000);
     } catch (error) {
       console.error("Error generating notes:", error);
-    } finally {
+      setContent("Failed to generate notes. Please try again later.");
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (selectedTopic && !notesByTopic[selectedTopic]) {
-      fetchNotes();
-    }
-  }, [selectedTopic, language]);
-
-  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLanguage = e.target.value as Language;
-    setLanguage(newLanguage);
-  };
-
-  const handleFollowUpSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!followUpQuestion.trim() || !selectedTopic) return;
-
+  const handleFollowUpQuestion = async () => {
+    if (!followUpQuestion.trim()) return;
+    
+    const question = followUpQuestion.trim();
+    setConversations([...conversations, { type: "question", content: question }]);
+    setFollowUpQuestion("");
+    setIsLoading(true);
+    
     try {
-      setIsFollowUpLoading(true);
+      // This is a placeholder - replace with your actual implementation
+      // const answer = await generateAnswerWithGemini(question, selectedTopic, language);
       
-      // Generate follow-up content based on the question and original topic
-      const response = await generateNotesWithGemini(
-        `${selectedTopic} - Specifically about: ${followUpQuestion}`, 
-        language
-      );
+      // Placeholder for demo
+      const answer = `Here's additional information on your question about ${selectedTopicLabel || selectedTopic}:
+
+1. This relates to the core concepts we discussed earlier
+2. Many experienced professionals recommend focusing on practical applications
+3. You might want to look into related areas as well for a comprehensive understanding`;
       
-      // Add the new response to the list
-      setFollowUpResponses([...followUpResponses, response]);
-      
-      // Clear the question input
-      setFollowUpQuestion("");
+      setTimeout(() => {
+        setConversations([...conversations, { type: "question", content: question }, { type: "answer", content: answer }]);
+        setIsLoading(false);
+      }, 1000);
     } catch (error) {
-      console.error("Error generating follow-up response:", error);
-    } finally {
-      setIsFollowUpLoading(false);
+      console.error("Error generating answer:", error);
+      setConversations([...conversations, { type: "question", content: question }, { type: "answer", content: "Failed to generate an answer. Please try again later." }]);
+      setIsLoading(false);
     }
   };
 
   if (!selectedTopic) {
     return (
-      <div className="bg-white/95 dark:bg-gray-800/95 rounded-xl shadow-lg p-6 h-full">
+      <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
         <p className="text-gray-500 dark:text-gray-400 text-center">
           Select a topic from the roadmap to view detailed notes
         </p>
@@ -79,110 +92,84 @@ const TopicDetail = () => {
     );
   }
 
-  // Clean the topic string to remove any ID prefixes like "topic-1234567890"
-  const displayTopic = selectedTopic.replace(/^topic-\d+\s*/, "").trim();
-
   return (
-    <div className="bg-white/95 dark:bg-gray-800/95 rounded-xl shadow-lg p-6 overflow-auto h-[calc(100vh-12rem)]">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
-          {displayTopic}
-        </h2>
-        <select
-          value={language}
-          onChange={handleLanguageChange}
-          className="px-3 py-1 rounded-md text-sm bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600"
-        >
-          <option value="english">English</option>
-          <option value="spanish">Spanish</option>
-          <option value="french">French</option>
-          <option value="german">German</option>
-          <option value="japanese">Japanese</option>
-          <option value="chinese">Chinese</option>
-        </select>
-      </div>
-
-      <div className="topic-notes">
-        {isLoading ? (
-          <div className="flex justify-center items-center h-64">
-            <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
-            <span className="ml-2 text-gray-600 dark:text-gray-400">
-              Generating comprehensive notes...
-            </span>
+    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-auto topic-notes">
+      {isLoading && conversations.length === 0 ? (
+        <div className="flex justify-center items-center h-64">
+          <Loader2 className="h-8 w-8 animate-spin text-indigo-500" />
+          <span className="ml-2 text-gray-600 dark:text-gray-400">Generating notes...</span>
+        </div>
+      ) : (
+        <>
+          <div className="prose dark:prose-invert w-full max-w-none mb-6">
+            {conversations.map((item, index) => (
+              <div key={index} className={`mb-4 ${item.type === "question" ? "bg-indigo-50 dark:bg-indigo-900/30 p-3 rounded-lg" : ""}`}>
+                {item.type === "question" && (
+                  <div className="font-medium text-indigo-600 dark:text-indigo-400 mb-1">Your question:</div>
+                )}
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeHighlight]}
+                  className="markdown-content"
+                >
+                  {item.content}
+                </ReactMarkdown>
+              </div>
+            ))}
           </div>
-        ) : notesByTopic[selectedTopic] ? (
-          <div
-            className="markdown-content prose prose-indigo dark:prose-invert max-w-none"
-            dangerouslySetInnerHTML={{
-              __html: marked(notesByTopic[selectedTopic]),
-            }}
-          />
-        ) : (
-          <div className="flex justify-center items-center h-64">
-            <p className="text-gray-500 dark:text-gray-400">
-              No notes available for this topic yet
-            </p>
-          </div>
-        )}
-      </div>
-
-      {/* Follow-up responses section */}
-      {followUpResponses.length > 0 && (
-        <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
-          <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">
-            Follow-up Information
-          </h3>
-          {followUpResponses.map((response, index) => (
-            <div 
-              key={index} 
-              className="mb-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg"
-            >
-              <div
-                className="markdown-content prose prose-indigo dark:prose-invert max-w-none"
-                dangerouslySetInnerHTML={{
-                  __html: marked(response),
-                }}
+          
+          <div className="mt-6 border-t dark:border-gray-700 pt-4">
+            <div className="flex items-center">
+              <input
+                type="text"
+                value={followUpQuestion}
+                onChange={(e) => setFollowUpQuestion(e.target.value)}
+                placeholder="Ask a follow-up question about this topic..."
+                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-l-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+                onKeyDown={(e) => e.key === 'Enter' && handleFollowUpQuestion()}
+                disabled={isLoading}
               />
+              <button
+                onClick={handleFollowUpQuestion}
+                disabled={isLoading || !followUpQuestion.trim()}
+                className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-r-md disabled:opacity-50"
+              >
+                {isLoading ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <Send className="h-5 w-5" />
+                )}
+              </button>
             </div>
-          ))}
-        </div>
+          </div>
+        </>
       )}
-
-      {/* Follow-up question form */}
-      {notesByTopic[selectedTopic] && (
-        <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
-          <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">
-            Ask a Follow-up Question
-          </h3>
-          <form onSubmit={handleFollowUpSubmit} className="flex flex-col space-y-3">
-            <textarea
-              value={followUpQuestion}
-              onChange={(e) => setFollowUpQuestion(e.target.value)}
-              placeholder="Ask a specific question about this topic..."
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-              rows={3}
-            />
-            <button
-              type="submit"
-              disabled={isFollowUpLoading || !followUpQuestion.trim()}
-              className={`px-4 py-2 bg-indigo-600 text-white rounded-lg flex items-center justify-center ${
-                isFollowUpLoading || !followUpQuestion.trim()
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-indigo-700"
-              }`}
-            >
-              {isFollowUpLoading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                  Generating...
-                </>
-              ) : (
-                "Submit Question"
-              )}
-            </button>
-          </form>
+      
+      <div className="mt-6 flex justify-between items-center">
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+          Language: 
+          <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value as Language)}
+            className="ml-2 bg-gray-100 dark:bg-gray-700 border-none rounded p-1"
+            disabled={isLoading}
+          >
+            <option value="english">English</option>
+            <option value="spanish">Spanish</option>
+            <option value="french">French</option>
+            <option value="german">German</option>
+            <option value="chinese">Chinese</option>
+            <option value="japanese">Japanese</option>
+            <option value="korean">Korean</option>
+            <option value="arabic">Arabic</option>
+            <option value="russian">Russian</option>
+            <option value="portuguese">Portuguese</option>
+            <option value="italian">Italian</option>
+            <option value="dutch">Dutch</option>
+            <option value="hindi">Hindi</option>
+          </select>
         </div>
-      )}
+      </div>
     </div>
   );
 };
