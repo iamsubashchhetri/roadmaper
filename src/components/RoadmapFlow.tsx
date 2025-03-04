@@ -62,7 +62,7 @@ const RoadmapFlow: React.FC = () => {
 
   if (!currentRoadmap) {
     return (
-      <div className="w-full max-w-4xl mx-auto text-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl border border-blue-100/50 dark:border-indigo-800/50">
+      <div className="w-full max-w-4xl mx-auto text-center flex flex-col items-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl border border-blue-100/50 dark:border-indigo-800/50">
         {/* Main title at the top center */}
         <div className="w-full text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent animate-gradient-x tracking-tight">
@@ -71,9 +71,9 @@ const RoadmapFlow: React.FC = () => {
           <div className="h-1 w-32 md:w-48 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mt-4"></div>
         </div>
 
-        <div className="relative w-full h-64 md:h-80 overflow-hidden mb-10 md:mb-12">
+        <div className="relative w-full h-64 md:h-80 overflow-hidden mb-10 md:mb-12 flex justify-center items-center">
           {/* Central design element */}
-          <div className="absolute top-1/2 left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute transform -translate-y-1/2">
             <div className="relative w-20 h-20 md:w-32 md:h-32 cursor-pointer transition-transform duration-300 hover:scale-110 floating-element">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 opacity-90 animate-pulse-slow"></div>
               <div className="absolute inset-1 rounded-full bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm flex items-center justify-center hover:shadow-lg hover:shadow-blue-200 dark:hover:shadow-indigo-900 transition-all duration-300 animate-float text-center">
