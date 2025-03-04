@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useRoadmapStore } from "../store/roadmapStore";
 import ReactMarkdown from "react-markdown";
@@ -36,11 +35,11 @@ const TopicDetail: React.FC = () => {
       // Generate new notes using Gemini API
       const topicLabel = selectedTopic.data.label;
       const result = await fetchTopicContent(selectedTopic);
-      
+
       if (result && result.content) {
         // Store notes in the store
         setNotes(selectedTopic.id, result.content);
-        
+
         // Update local state
         setConversations([{ type: "note", content: result.content }]);
       } else {
@@ -62,7 +61,7 @@ const TopicDetail: React.FC = () => {
 
     // Add user question to conversations
     setConversations([...conversations, { type: "question", content: followUpQuestion }]);
-    
+
     const question = followUpQuestion;
     setFollowUpQuestion(""); // Clear input
     setIsLoading(true);
@@ -71,13 +70,13 @@ const TopicDetail: React.FC = () => {
       // Here you would call your AI service to get an answer
       // For example:
       // const answer = await generateAnswerWithGemini(selectedTopic.data.label, question, language);
-      
+
       // Placeholder for demo
       const answer = `Here's more information about "${selectedTopic?.data?.label}" related to your question: "${question}"\n\n` +
         "- Additional point 1\n" +
         "- Additional point 2\n" +
         "- Additional point 3";
-      
+
       // Add AI answer to conversations
       setConversations(prev => [...prev, { type: "answer", content: answer }]);
     } catch (error) {
@@ -106,7 +105,7 @@ const TopicDetail: React.FC = () => {
       <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">
         {selectedTopic.data.label}
       </h2>
-      
+
       {isLoading ? (
         <div className="flex justify-center items-center py-12">
           <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
@@ -136,7 +135,7 @@ const TopicDetail: React.FC = () => {
               </div>
             </div>
           ))}
-          
+
           <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
             <h3 className="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">
               Ask a follow-up question

@@ -12,29 +12,105 @@ export const languageInstructions: Record<Language, string> = {
 
 export const generateNotesWithGemini = async (topic: string, language: Language): Promise<string> => {
   try {
-    // Here you would make an actual API call to Gemini
-    // For demo purposes, we'll create some structured content
+    const prompt = `Generate comprehensive, detailed learning notes about "${topic}". 
+    
+    The notes should include:
+    1. A thorough explanation of what "${topic}" is
+    2. Core concepts and principles
+    3. Practical examples and code snippets where applicable
+    4. Best practices and common pitfalls
+    5. How it relates to other concepts in the field
+    6. Real-world applications
+    7. Learning resources (books, courses, documentation)
+    
+    Format the response as markdown with proper headings, lists, code blocks, and emphasis where appropriate.
+    Make the content educational, detailed, and actionable for someone who wants to truly master this topic.`;
 
-    return `# ${topic}
+    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              {
+                text: prompt,
+              },
+            ],
+          },
+        ],
+      }),
+    });
 
-## Overview
-${topic} is a critical concept in modern development. Understanding this topic thoroughly will help you build more robust applications.
+    const data = await response.json();
+    
+    if (data.error) {
+      console.error('Gemini API error:', data.error);
+      // Return fallback content if there's an error
+      return `# ${topic}\n\n## Error Generating Content\nWe couldn't generate detailed notes for this topic right now. Please try again later.`;
+    }
 
-## Key Points
-- ${topic} provides essential functionality for application development
-- Learning ${topic} thoroughly will improve your overall skills
-- Best practices for ${topic} include proper structuring and optimization
-
-## Next Steps
-After mastering ${topic}, you should explore related concepts to deepen your knowledge.
-
-## Resources
-- Official documentation for ${topic}
-- Community guides and tutorials
-- Practice exercises to reinforce learning
-`;
+    try {
+      const content = data.candidates[0].content.parts[0].text;
+      return content;
+    } catch (parseError) {
+      console.error('Error parsing Gemini response:', parseError);
+      return `# ${topic}\n\n## Error Processing Content\nWe encountered an error while processing the content. Please try again later.`;
+    }
   } catch (error) {
     console.error("Error generating notes with Gemini:", error);
+    throw error;
+  }
+};
+
+export const generateFollowUpResponse = async (topic: string, previousContent: string, question: string): Promise<string> => {
+  try {
+    const prompt = `Based on the following topic "${topic}" and previous content:
+    
+    ${previousContent.substring(0, 1000)}... 
+    
+    User question: "${question}"
+    
+    Please provide a detailed, educational answer to this specific question. 
+    Include examples, code snippets (if relevant), and explanations that would help someone understand this concept thoroughly.
+    Format your response as markdown with proper headings, lists, and code blocks where appropriate.`;
+
+    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              {
+                text: prompt,
+              },
+            ],
+          },
+        ],
+      }),
+    });
+
+    const data = await response.json();
+    
+    if (data.error) {
+      console.error('Gemini API error:', data.error);
+      return `## Error Generating Response\nWe couldn't generate a response for your question right now. Please try again later.`;
+    }
+
+    try {
+      const content = data.candidates[0].content.parts[0].text;
+      return content;
+    } catch (parseError) {
+      console.error('Error parsing Gemini response:', parseError);
+      return `## Error Processing Response\nWe encountered an error while processing the response. Please try again later.`;
+    }
+  } catch (error) {
+    console.error("Error generating follow-up response with Gemini:", error);
     throw error;
   }
 };
