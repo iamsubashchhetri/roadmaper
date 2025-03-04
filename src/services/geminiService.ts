@@ -67,15 +67,23 @@ export const generateNotesWithGemini = async (topic: string, language: Language)
 
 export const generateFollowUpResponse = async (topic: string, previousContent: string, question: string): Promise<string> => {
   try {
-    const prompt = `Based on the following topic "${topic}" and previous content:
+    const prompt = `You are an expert educator helping someone learn about "${topic}".
     
-    ${previousContent.substring(0, 1000)}... 
+    Context from previous content:
+    ${previousContent.substring(0, 1500)}
     
     User question: "${question}"
     
-    Please provide a detailed, educational answer to this specific question. 
-    Include examples, code snippets (if relevant), and explanations that would help someone understand this concept thoroughly.
-    Format your response as markdown with proper headings, lists, and code blocks where appropriate.`;
+    Please provide a comprehensive, educational answer to this specific question about ${topic}.
+    Focus specifically on addressing the question, not on summarizing the topic generally.
+    
+    Include:
+    - Clear explanations of concepts
+    - Practical examples or code snippets (if relevant)
+    - Visual explanations using text diagrams if applicable
+    - Comparisons to related concepts if helpful
+    
+    Format your response in well-structured markdown with proper headings, lists, and code blocks.`;
 
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
@@ -92,6 +100,10 @@ export const generateFollowUpResponse = async (topic: string, previousContent: s
             ],
           },
         ],
+        generationConfig: {
+          temperature: 0.2,
+          maxOutputTokens: 2048,
+        }
       }),
     });
 

@@ -67,15 +67,19 @@ const TopicDetail: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Here you would call your AI service to get an answer
-      // For example:
-      // const answer = await generateAnswerWithGemini(selectedTopic.data.label, question, language);
+      // Get the previous content to provide context for the follow-up question
+      const previousContent = conversations.length > 0 
+        ? conversations.filter(conv => conv.type === "note" || conv.type === "answer")
+          .map(conv => conv.content)
+          .join("\n\n")
+        : "";
 
-      // Placeholder for demo
-      const answer = `Here's more information about "${selectedTopic?.data?.label}" related to your question: "${question}"\n\n` +
-        "- Additional point 1\n" +
-        "- Additional point 2\n" +
-        "- Additional point 3";
+      // Call the Gemini API to generate an answer using the service
+      const answer = await generateFollowUpResponse(
+        selectedTopic.data.label, 
+        previousContent,
+        question
+      );
 
       // Add AI answer to conversations
       setConversations(prev => [...prev, { type: "answer", content: answer }]);
