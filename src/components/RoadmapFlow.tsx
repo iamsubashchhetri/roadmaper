@@ -62,7 +62,7 @@ const RoadmapFlow: React.FC = () => {
 
   if (!currentRoadmap) {
     return (
-      <div className="flex flex-col items-center justify-center w-full">
+      <div className="flex flex-col items-center justify-center w-full max-w-screen-xl mx-auto px-4">
         {/* Main title section */}
         <div className="w-full max-w-4xl mx-auto text-center bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm p-6 sm:p-8 md:p-10 rounded-2xl shadow-xl border border-blue-100/50 dark:border-indigo-800/50 mb-10">
           <div className="w-full text-center mb-8">
