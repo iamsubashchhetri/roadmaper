@@ -78,14 +78,24 @@ const TopicDetail: React.FC = () => {
       );
 
       if (conversations.length > 0) {
-        const updatedContent = `${conversations[0].content}\n\n## Your question: ${question}\n\n${answer}`;
-        setConversations([{ type: "note", content: updatedContent }]);
+        setConversations([
+          ...conversations,
+          { type: "question", content: question },
+          { type: "answer", content: answer }
+        ]);
+      } else {
+        setConversations([{ type: "note", content: previousContent }, { type: "question", content: question }, { type: "answer", content: answer }]);
       }
     } catch (error) {
       console.error("Error generating answer:", error);
       if (conversations.length > 0) {
-        const updatedContent = `${conversations[0].content}\n\n## Your question: ${question}\n\n**Error:** Failed to generate an answer. Please try again later.`;
-        setConversations([{ type: "note", content: updatedContent }]);
+        setConversations([
+          ...conversations,
+          { type: "question", content: question },
+          { type: "answer", content: "**Error:** Failed to generate an answer. Please try again later." }
+        ]);
+      } else {
+          setConversations([{ type: "note", content: previousContent }, { type: "question", content: question }, { type: "answer", content: "**Error:** Failed to generate an answer. Please try again later." }]);
       }
     } finally {
       setIsLoading(false);
@@ -135,69 +145,75 @@ const TopicDetail: React.FC = () => {
         {selectedTopic.data.label}
       </h2>
 
-      {isLoading ? (
-        <div className="flex justify-center items-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
-          <span className="ml-2 text-gray-600 dark:text-gray-400">Generating content...</span>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {conversations.map((item, index) => (
-            <div 
-              key={index} 
-              className={`p-4 rounded-lg ${
-                item.type === "question" 
-                  ? "bg-blue-50 dark:bg-blue-900/20" 
-                  : "bg-gray-50 dark:bg-gray-700/30"
-              }`}
-            >
-              <div className="flex justify-between items-center mb-2"> 
-                {item.type === "question" && (
-                  <div className="font-medium text-indigo-600 dark:text-indigo-400 mb-1">Your question:</div>
-                )}
-                <button onClick={() => copyToClipboard(item.content, "Content copied to clipboard!")} className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"> 
-                  <Copy className="h-4 w-4"/>
-                </button>
-              </div>
-              <div className="markdown-content relative"> {/*Added relative for button*/}
+      <div className="space-y-6">
+        {conversations.map((item, index) => (
+          <div 
+            key={index} 
+            className={`p-4 rounded-lg ${
+              item.type === "question" 
+                ? "bg-blue-50 dark:bg-blue-900/20" 
+                : "bg-gray-50 dark:bg-gray-700/30"
+            }`}
+          >
+            <div className="flex justify-between items-center mb-2"> 
+              {item.type === "question" && (
+                <div className="font-medium text-indigo-600 dark:text-indigo-400 mb-1">Your question:</div>
+              )}
+              <button onClick={() => copyToClipboard(item.content, "Content copied to clipboard!")} className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"> 
+                <Copy className="h-4 w-4"/>
+              </button>
+            </div>
+            <div className={`prose prose-blue dark:prose-invert max-w-none ${item.type === "question" ? "mt-4 font-semibold text-blue-600 dark:text-blue-400" : ""}`}>
+              {item.type === "question" ? (
+                <div className="flex items-start">
+                  <span className="inline-block mr-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 p-1 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                      <line x1="12" y1="17" x2="12" y2="17"></line>
+                    </svg>
+                  </span>
+                  <p className="mt-0">{item.content}</p>
+                </div>
+              ) : (
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeHighlight]}
                 >
                   {item.content}
                 </ReactMarkdown>
-              </div>
-            </div>
-          ))}
-
-          <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <h3 className="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">
-              Ask a follow-up question
-            </h3>
-            <div className="flex space-x-2">
-              <input
-                type="text"
-                value={followUpQuestion}
-                onChange={(e) => setFollowUpQuestion(e.target.value)}
-                placeholder="Type your question here..."
-                className="flex-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200"
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    handleFollowUpQuestion();
-                  }
-                }}
-              />
-              <button
-                onClick={handleFollowUpQuestion}
-                disabled={isLoading || !followUpQuestion.trim()}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Ask
-              </button>
+              )}
             </div>
           </div>
+        ))}
+
+        <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <h3 className="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">
+            Ask a follow-up question
+          </h3>
+          <div className="flex space-x-2">
+            <input
+              type="text"
+              value={followUpQuestion}
+              onChange={(e) => setFollowUpQuestion(e.target.value)}
+              placeholder="Type your question here..."
+              className="flex-1 p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleFollowUpQuestion();
+                }
+              }}
+            />
+            <button
+              onClick={handleFollowUpQuestion}
+              disabled={isLoading || !followUpQuestion.trim()}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Ask
+            </button>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
