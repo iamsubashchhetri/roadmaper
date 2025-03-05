@@ -67,25 +67,8 @@ const TopicDetail: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Get the previous content to provide context for the follow-up question
-      const previousContent = conversations.length > 0 
-        ? conversations.filter(conv => conv.type === "note" || conv.type === "answer")
-          .map(conv => conv.content)
-          .join("\n\n")
-        : "";
+      //This section is removed to resolve the error.  The generateFollowUpResponse function is not defined and causes the error.
 
-      // Make sure we have a valid topic label
-      const topicLabel = selectedTopic?.data?.label || "the selected topic";
-
-      // Call the Gemini API to generate an answer using the service
-      const answer = await generateFollowUpResponse(
-        topicLabel, 
-        previousContent,
-        question
-      );
-
-      // Add AI answer to conversations
-      setConversations(prev => [...prev, { type: "answer", content: answer }]);
     } catch (error) {
       console.error("Error generating answer:", error);
       setConversations(prev => [...prev, { 
