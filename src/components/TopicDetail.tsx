@@ -6,7 +6,8 @@ import rehypeHighlight from "rehype-highlight";
 import { generateNotesWithGemini } from "../services/geminiService";
 import { Loader2 } from "lucide-react";
 import EmptyStateAnimation from './EmptyStateAnimation';
-import ProjectFeatureShowcase from "./ProjectFeatureShowcase"; // Replaced CommunitySection
+import ProjectFeatureShowcase from "./ProjectFeatureShowcase"; 
+import AIFeatureShowcase from "./AIFeatureShowcase"; 
 
 const TopicDetail: React.FC = () => {
   const { selectedTopic, language, fetchTopicContent, setNotes, notesByTopic } = useRoadmapStore();
@@ -119,6 +120,9 @@ const TopicDetail: React.FC = () => {
             {/* Import and use the ProjectFeatureShowcase component */}
             <div className="w-full max-w-4xl">
               <ProjectFeatureShowcase />
+              <div className="mt-8"> 
+                <AIFeatureShowcase />
+              </div>
             </div>
           </div>
         </div>
