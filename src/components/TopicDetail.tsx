@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import { generateNotesWithGemini } from "../services/geminiService";
 import { Loader2 } from "lucide-react";
+import EmptyStateAnimation from './EmptyStateAnimation';
 
 const TopicDetail: React.FC = () => {
   const { selectedTopic, language, fetchTopicContent, setNotes, notesByTopic } = useRoadmapStore();
@@ -58,7 +59,7 @@ const TopicDetail: React.FC = () => {
 
   const handleFollowUpQuestion = async () => {
     if (!followUpQuestion.trim() || !selectedTopic) return;
-    
+
     const question = followUpQuestion;
     setFollowUpQuestion(""); // Clear input
     setIsLoading(true);
@@ -71,10 +72,10 @@ const TopicDetail: React.FC = () => {
 
       // Make sure we have a valid topic label
       const topicLabel = selectedTopic?.data?.label || "the selected topic";
-      
+
       // Import the function from geminiService
       const { generateFollowUpResponse } = await import('../services/geminiService');
-      
+
       // Call the Gemini API to generate an answer
       const answer = await generateFollowUpResponse(
         topicLabel, 
@@ -86,7 +87,7 @@ const TopicDetail: React.FC = () => {
       if (conversations.length > 0) {
         // Create the updated content by appending Q&A to the existing note
         const updatedContent = `${conversations[0].content}\n\n## Your question: ${question}\n\n${answer}`;
-        
+
         // Update the existing note with the appended content
         setConversations([{ type: "note", content: updatedContent }]);
       }
@@ -105,9 +106,10 @@ const TopicDetail: React.FC = () => {
   if (!selectedTopic) {
     return (
       <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-        <p className="text-gray-500 dark:text-gray-400 text-center">
+        <p className="text-gray-500 dark:text-gray-400 text-center mb-4">
           Select a topic from the roadmap to view detailed notes
         </p>
+        <EmptyStateAnimation />
       </div>
     );
   }
