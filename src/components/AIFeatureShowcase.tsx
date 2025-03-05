@@ -71,10 +71,10 @@ const AIFeatureShowcase: React.FC = () => {
               className="animation-on-scroll opacity-0 translate-y-10 transition-all duration-1000"
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border border-blue-100 dark:border-blue-900 h-full text-center transform transition-all hover:-translate-y-1 hover:shadow-lg">
-                <div className="text-xl mb-2 animate-bounce-slow">{feature.icon}</div>
-                <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-1 text-xs">{feature.title}</h3>
-                <p className="text-xs text-gray-600 dark:text-gray-400">{feature.description}</p>
+              <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-blue-100 dark:border-blue-900 h-full text-center transform transition-all hover:-translate-y-1 hover:shadow-lg">
+                <div className="text-xl mb-1 animate-bounce-slow">{feature.icon}</div>
+                <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-0.5 text-[10px]">{feature.title}</h3>
+                <p className="text-[9px] text-gray-600 dark:text-gray-400">{feature.description}</p>
               </div>
             </div>
           ))}
