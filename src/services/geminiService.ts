@@ -67,14 +67,19 @@ export const generateNotesWithGemini = async (topic: string, language: Language)
 
 export const generateFollowUpResponse = async (topic: string, previousContent: string, question: string): Promise<string> => {
   try {
-    const prompt = `You are an expert educator helping someone learn about "${topic}".
+    // Make sure we have valid inputs to prevent ReferenceError
+    const sanitizedTopic = topic || "the topic";
+    const sanitizedPrevContent = previousContent || "";
+    const sanitizedQuestion = question || "";
+
+    const prompt = `You are an expert educator helping someone learn about "${sanitizedTopic}".
     
     Context from previous content:
-    ${previousContent.substring(0, 1500)}
+    ${sanitizedPrevContent.substring(0, 1500)}
     
-    User question: "${question}"
+    User question: "${sanitizedQuestion}"
     
-    Please provide a comprehensive, educational answer to this specific question about ${topic}.
+    Please provide a comprehensive, educational answer to this specific question about ${sanitizedTopic}.
     Focus specifically on addressing the question, not on summarizing the topic generally.
     
     Include:
@@ -115,15 +120,18 @@ export const generateFollowUpResponse = async (topic: string, previousContent: s
     }
 
     try {
+      if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts) {
+        throw new Error('Invalid response structure');
+      }
       const content = data.candidates[0].content.parts[0].text;
-      return content;
+      return content || "No content was returned from the API.";
     } catch (parseError) {
-      console.error('Error parsing Gemini response:', parseError);
+      console.error('Error parsing Gemini response:', parseError, data);
       return `## Error Processing Response\nWe encountered an error while processing the response. Please try again later.`;
     }
   } catch (error) {
     console.error("Error generating follow-up response with Gemini:", error);
-    throw error;
+    return `## Error\nAn error occurred while generating a response. Please try again later.`;
   }
 };
 

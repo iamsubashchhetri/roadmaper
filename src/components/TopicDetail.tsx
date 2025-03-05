@@ -74,9 +74,12 @@ const TopicDetail: React.FC = () => {
           .join("\n\n")
         : "";
 
+      // Make sure we have a valid topic label
+      const topicLabel = selectedTopic?.data?.label || "the selected topic";
+
       // Call the Gemini API to generate an answer using the service
       const answer = await generateFollowUpResponse(
-        selectedTopic.data.label, 
+        topicLabel, 
         previousContent,
         question
       );
