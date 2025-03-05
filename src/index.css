@@ -35,6 +35,10 @@
   }
 }
 
+.animate-bounce-slow {
+  animation: bounce-slow 4s infinite;
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
