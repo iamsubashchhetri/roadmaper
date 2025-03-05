@@ -60,7 +60,7 @@ const AIFeatureShowcase: React.FC = () => {
         </div>
 
         {/* Feature Cards - 3 cards in a grid */}
-        <div className="grid grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-3 gap-4 mb-6">
           {[
             { title: "AI-Powered", icon: "🧠", description: "Smart recommendations based on your progress" },
             { title: "Personalized", icon: "👤", description: "Tailored learning paths for your goals" },
@@ -71,20 +71,13 @@ const AIFeatureShowcase: React.FC = () => {
               className="animation-on-scroll opacity-0 translate-y-10 transition-all duration-1000"
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-blue-100 dark:border-blue-900 h-full text-center transform transition-all hover:-translate-y-1 hover:shadow-lg">
-                <div className="text-3xl mb-3 animate-bounce-slow">{feature.icon}</div>
-                <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">{feature.title}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{feature.description}</p>
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border border-blue-100 dark:border-blue-900 h-full text-center transform transition-all hover:-translate-y-1 hover:shadow-lg">
+                <div className="text-xl mb-2 animate-bounce-slow">{feature.icon}</div>
+                <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-1 text-xs">{feature.title}</h3>
+                <p className="text-xs text-gray-600 dark:text-gray-400">{feature.description}</p>
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Empty spacing div */}
-        <div className="animation-on-scroll opacity-0 translate-y-10 transition-all duration-1000 mt-6">
-          <div className="relative bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-indigo-900/40 p-6 rounded-xl shadow-md">
-            {/* Content removed as requested */}
-          </div>
         </div>
       </div>
     </div>
