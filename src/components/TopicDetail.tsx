@@ -12,6 +12,7 @@ import AIFeatureShowcase from "./AIFeatureShowcase";
 const TopicDetail: React.FC = () => {
   const { selectedTopic, language, fetchTopicContent, setNotes, notesByTopic } = useRoadmapStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(false); // Added initial loading state
   const [followUpQuestion, setFollowUpQuestion] = useState<string>("");
   const [conversations, setConversations] = useState<{ type: "note" | "question" | "answer", content: string }[]>([]);
   const [showToast, setShowToast] = useState(false); // Added toast state
@@ -19,7 +20,11 @@ const TopicDetail: React.FC = () => {
 
   useEffect(() => {
     if (selectedTopic) {
-      generateNotes();
+      setIsInitialLoading(true); // Set initial loading state to true
+      generateNotes()
+        .finally(() => {
+          setIsInitialLoading(false); // Reset initial loading state after notes are generated
+        });
     }
   }, [selectedTopic, language]);
 
@@ -139,6 +144,14 @@ const TopicDetail: React.FC = () => {
       {showToast && (
         <div className="absolute top-4 right-4 bg-green-500 text-white p-2 rounded shadow-md">
           Content copied to clipboard!
+        </div>
+      )}
+      {isInitialLoading && ( // Added loading indicator
+        <div className="absolute inset-0 flex items-center justify-center bg-white/80 dark:bg-gray-800/80 z-10 rounded-xl">
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-12 border-4 border-t-indigo-600 border-r-transparent border-b-indigo-600 border-l-transparent rounded-full animate-spin"></div>
+            <p className="mt-4 text-gray-700 dark:text-gray-300">Generating notes...</p>
+          </div>
         </div>
       )}
       <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">
