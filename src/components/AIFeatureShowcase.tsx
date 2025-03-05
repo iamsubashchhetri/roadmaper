@@ -80,14 +80,10 @@ const AIFeatureShowcase: React.FC = () => {
           ))}
         </div>
 
-        {/* Simple CTA Section */}
+        {/* Empty spacing div */}
         <div className="animation-on-scroll opacity-0 translate-y-10 transition-all duration-1000 mt-6">
           <div className="relative bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-indigo-900/40 p-6 rounded-xl shadow-md">
-            <div className="flex justify-center">
-              <button className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-lg">
-                Create Your Roadmap
-              </button>
-            </div>
+            {/* Content removed as requested */}
           </div>
         </div>
       </div>
