@@ -6,6 +6,7 @@ import rehypeHighlight from "rehype-highlight";
 import { generateNotesWithGemini } from "../services/geminiService";
 import { Loader2 } from "lucide-react";
 import EmptyStateAnimation from './EmptyStateAnimation';
+import CommunitySection from "./CommunitySection"; // Added import for CommunitySection
 
 const TopicDetail: React.FC = () => {
   const { selectedTopic, language, fetchTopicContent, setNotes, notesByTopic } = useRoadmapStore();
@@ -105,11 +106,22 @@ const TopicDetail: React.FC = () => {
 
   if (!selectedTopic) {
     return (
-      <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-        <p className="text-gray-500 dark:text-gray-400 text-center mb-4">
-          Select a topic from the roadmap to view detailed notes
-        </p>
-        <EmptyStateAnimation />
+      <div className="flex-1 p-4">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg h-calc-100vh-8rem overflow-y-auto p-6">
+          <div className="flex flex-col items-center justify-center h-full">
+            <div className="text-center mb-8">
+              <p className="text-xl text-gray-600 dark:text-gray-300 font-medium mb-4">
+                Select a topic from the roadmap to view detailed notes
+              </p>
+              <div className="w-40 h-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto"></div>
+            </div>
+
+            {/* Import and use the CommunitySection component */}
+            <div className="w-full max-w-4xl">
+              <CommunitySection />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
