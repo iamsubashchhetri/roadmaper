@@ -374,7 +374,7 @@ const RoadmapFlow: React.FC = () => {
   }
 
   return (
-    <div className="roadmap-container h-[50vh] md:h-[70vh]">
+    <div className="roadmap-container h-[40vh] md:h-[50vh]">
       {currentRoadmap ? (
         <ReactFlow
           nodes={nodes}

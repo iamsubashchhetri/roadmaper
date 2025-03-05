@@ -45,11 +45,11 @@ const Home = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="col-span-1 md:col-span-2">
+      <div className="flex flex-col gap-6">
+        <div className="w-full">
           <RoadmapFlow />
         </div>
-        <div className="col-span-1">
+        <div className="w-full">
           <TopicDetail />
         </div>
       </div>
