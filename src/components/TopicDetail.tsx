@@ -58,23 +58,45 @@ const TopicDetail: React.FC = () => {
 
   const handleFollowUpQuestion = async () => {
     if (!followUpQuestion.trim() || !selectedTopic) return;
-
-    // Add user question to conversations
-    setConversations([...conversations, { type: "question", content: followUpQuestion }]);
-
+    
     const question = followUpQuestion;
     setFollowUpQuestion(""); // Clear input
     setIsLoading(true);
 
     try {
-      //This section is removed to resolve the error.  The generateFollowUpResponse function is not defined and causes the error.
+      // Get the previous content to provide context for the follow-up question
+      const previousContent = conversations.length > 0 
+        ? conversations[0].content 
+        : "";
 
+      // Make sure we have a valid topic label
+      const topicLabel = selectedTopic?.data?.label || "the selected topic";
+      
+      // Import the function from geminiService
+      const { generateFollowUpResponse } = await import('../services/geminiService');
+      
+      // Call the Gemini API to generate an answer
+      const answer = await generateFollowUpResponse(
+        topicLabel, 
+        previousContent,
+        question
+      );
+
+      // Append the answer to the existing note content with a new section for the Q&A
+      if (conversations.length > 0) {
+        // Create the updated content by appending Q&A to the existing note
+        const updatedContent = `${conversations[0].content}\n\n## Your question: ${question}\n\n${answer}`;
+        
+        // Update the existing note with the appended content
+        setConversations([{ type: "note", content: updatedContent }]);
+      }
     } catch (error) {
       console.error("Error generating answer:", error);
-      setConversations(prev => [...prev, { 
-        type: "answer", 
-        content: "Failed to generate an answer. Please try again later." 
-      }]);
+      // Keep the original note but add an error message
+      if (conversations.length > 0) {
+        const updatedContent = `${conversations[0].content}\n\n## Your question: ${question}\n\n**Error:** Failed to generate an answer. Please try again later.`;
+        setConversations([{ type: "note", content: updatedContent }]);
+      }
     } finally {
       setIsLoading(false);
     }
