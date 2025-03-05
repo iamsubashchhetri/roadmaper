@@ -634,6 +634,69 @@ button:focus {
   background-color: #1f2937;
 }
 
+/* Code block styles */
+.code-block-container {
+  position: relative;
+  margin-bottom: 1.2rem;
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+
+.code-language-tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  border-bottom-left-radius: 0.375rem;
+  z-index: 10;
+}
+
+.code-block {
+  background-color: #f3f4f6;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  position: relative;
+}
+
+.dark .code-block {
+  background-color: #1f2937;
+}
+
+.copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.copy-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #4f46e5;
+}
+
+.dark .copy-button {
+  color: #9ca3af;
+}
+
+.dark .copy-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #a5b4fc;
+}
+
 .markdown-content code {
   background-color: #f3f4f6;
   padding: 0.2rem 0.4rem;
