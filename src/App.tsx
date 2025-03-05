@@ -20,6 +20,8 @@ import RequireAuth from "./components/Auth/RequireAuth";
 import SaveRoadmapButton from "./components/SaveRoadmapButton";
 import NotesApp from "./components/Notes/NotesApp";
 import { UserIcon } from "lucide-react";
+import Toast from "./components/Toast";
+import { useToastStore } from "./store/toastStore";
 
 // Home page component
 const Home = () => {
@@ -59,6 +61,7 @@ const Home = () => {
 
 function App() {
   const { isDarkMode } = useRoadmapStore();
+  const { isVisible, message, hideToast } = useToastStore();
 
   return (
     <AuthProvider>
@@ -127,7 +130,11 @@ function App() {
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </main>
-
+            <Toast 
+              message={message}
+              isVisible={isVisible}
+              onClose={hideToast}
+            />
             <Footer />
           </Router>
         </div>

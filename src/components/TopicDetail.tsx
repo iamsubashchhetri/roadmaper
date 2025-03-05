@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import { generateNotesWithGemini } from "../services/geminiService";
-import { Loader2, Copy } from "lucide-react"; // Added Copy icon import
+import { Loader2, Copy } from "lucide-react"; 
 import EmptyStateAnimation from './EmptyStateAnimation';
 import ProjectFeatureShowcase from "./ProjectFeatureShowcase"; 
 import AIFeatureShowcase from "./AIFeatureShowcase"; 
@@ -14,6 +14,8 @@ const TopicDetail: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [followUpQuestion, setFollowUpQuestion] = useState<string>("");
   const [conversations, setConversations] = useState<{ type: "note" | "question" | "answer", content: string }[]>([]);
+  const [showToast, setShowToast] = useState(false); // Added toast state
+
 
   useEffect(() => {
     if (selectedTopic) {
@@ -28,22 +30,17 @@ const TopicDetail: React.FC = () => {
 
     setIsLoading(true);
     try {
-      // Check if we already have notes for this topic
       if (notesByTopic[selectedTopic.id]) {
         setConversations([{ type: "note", content: notesByTopic[selectedTopic.id] }]);
         setIsLoading(false);
         return;
       }
 
-      // Generate new notes using Gemini API
       const topicLabel = selectedTopic.data.label;
       const result = await fetchTopicContent(selectedTopic);
 
       if (result && result.content) {
-        // Store notes in the store
         setNotes(selectedTopic.id, result.content);
-
-        // Update local state
         setConversations([{ type: "note", content: result.content }]);
       } else {
         throw new Error("Failed to fetch topic content");
@@ -63,39 +60,29 @@ const TopicDetail: React.FC = () => {
     if (!followUpQuestion.trim() || !selectedTopic) return;
 
     const question = followUpQuestion;
-    setFollowUpQuestion(""); // Clear input
+    setFollowUpQuestion(""); 
     setIsLoading(true);
 
     try {
-      // Get the previous content to provide context for the follow-up question
       const previousContent = conversations.length > 0 
         ? conversations[0].content 
         : "";
 
-      // Make sure we have a valid topic label
       const topicLabel = selectedTopic?.data?.label || "the selected topic";
-
-      // Import the function from geminiService
       const { generateFollowUpResponse } = await import('../services/geminiService');
 
-      // Call the Gemini API to generate an answer
       const answer = await generateFollowUpResponse(
         topicLabel, 
         previousContent,
         question
       );
 
-      // Append the answer to the existing note content with a new section for the Q&A
       if (conversations.length > 0) {
-        // Create the updated content by appending Q&A to the existing note
         const updatedContent = `${conversations[0].content}\n\n## Your question: ${question}\n\n${answer}`;
-
-        // Update the existing note with the appended content
         setConversations([{ type: "note", content: updatedContent }]);
       }
     } catch (error) {
       console.error("Error generating answer:", error);
-      // Keep the original note but add an error message
       if (conversations.length > 0) {
         const updatedContent = `${conversations[0].content}\n\n## Your question: ${question}\n\n**Error:** Failed to generate an answer. Please try again later.`;
         setConversations([{ type: "note", content: updatedContent }]);
@@ -103,6 +90,15 @@ const TopicDetail: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const copyToClipboard = (text: string, message: string) => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        setShowToast(true); // Show toast on successful copy
+        setTimeout(() => setShowToast(false), 3000); // Hide toast after 3 seconds
+      })
+      .catch(err => console.error("Failed to copy: ", err));
   };
 
   if (!selectedTopic) {
@@ -116,8 +112,6 @@ const TopicDetail: React.FC = () => {
               </p>
               <div className="w-40 h-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto"></div>
             </div>
-
-            {/* Import and use the ProjectFeatureShowcase component */}
             <div className="w-full max-w-4xl">
               <ProjectFeatureShowcase />
               <div className="mt-8"> 
@@ -131,7 +125,12 @@ const TopicDetail: React.FC = () => {
   }
 
   return (
-    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md relative"> {/* Added relative for toast */}
+      {showToast && (
+        <div className="absolute top-4 right-4 bg-green-500 text-white p-2 rounded shadow-md">
+          Content copied to clipboard!
+        </div>
+      )}
       <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">
         {selectedTopic.data.label}
       </h2>
@@ -152,15 +151,15 @@ const TopicDetail: React.FC = () => {
                   : "bg-gray-50 dark:bg-gray-700/30"
               }`}
             >
-              <div className="flex justify-between items-center mb-2"> {/* Added flexbox for button */}
+              <div className="flex justify-between items-center mb-2"> 
                 {item.type === "question" && (
                   <div className="font-medium text-indigo-600 dark:text-indigo-400 mb-1">Your question:</div>
                 )}
-                <button onClick={() => navigator.clipboard.writeText(item.content)} className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"> {/* Copy button */}
+                <button onClick={() => copyToClipboard(item.content, "Content copied to clipboard!")} className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"> 
                   <Copy className="h-4 w-4"/>
                 </button>
               </div>
-              <div className="markdown-content">
+              <div className="markdown-content relative"> {/*Added relative for button*/}
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeHighlight]}
