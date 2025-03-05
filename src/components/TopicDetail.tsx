@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import { generateNotesWithGemini } from "../services/geminiService";
-import { Loader2 } from "lucide-react";
+import { Loader2, Copy } from "lucide-react"; // Added Copy icon import
 import EmptyStateAnimation from './EmptyStateAnimation';
 import ProjectFeatureShowcase from "./ProjectFeatureShowcase"; 
 import AIFeatureShowcase from "./AIFeatureShowcase"; 
@@ -152,9 +152,14 @@ const TopicDetail: React.FC = () => {
                   : "bg-gray-50 dark:bg-gray-700/30"
               }`}
             >
-              {item.type === "question" && (
-                <div className="font-medium text-indigo-600 dark:text-indigo-400 mb-1">Your question:</div>
-              )}
+              <div className="flex justify-between items-center mb-2"> {/* Added flexbox for button */}
+                {item.type === "question" && (
+                  <div className="font-medium text-indigo-600 dark:text-indigo-400 mb-1">Your question:</div>
+                )}
+                <button onClick={() => navigator.clipboard.writeText(item.content)} className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"> {/* Copy button */}
+                  <Copy className="h-4 w-4"/>
+                </button>
+              </div>
               <div className="markdown-content">
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm]}
