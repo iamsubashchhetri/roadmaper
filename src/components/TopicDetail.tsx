@@ -9,33 +9,6 @@ import EmptyStateAnimation from './EmptyStateAnimation';
 import ProjectFeatureShowcase from "./ProjectFeatureShowcase"; 
 import AIFeatureShowcase from "./AIFeatureShowcase"; 
 
-const CodeBlock: React.FC<{ code: string; language?: string }> = ({ code, language }) => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
-
-  return (
-    <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-md overflow-x-auto">
-      <div className="flex justify-between items-center mb-2">
-        <span className={`text-sm font-mono text-gray-600 dark:text-gray-400`}>
-          {language ? `${language}` : "Code"}
-        </span>
-        <button onClick={handleCopy} className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600">
-          <Copy className="h-4 w-4" />
-          {copied && <span className="ml-1 text-xs">Copied!</span>}
-        </button>
-      </div>
-      <pre className="text-sm font-mono whitespace-pre-wrap text-gray-800 dark:text-gray-200">
-        <code>{code}</code>
-      </pre>
-    </div>
-  );
-};
-
 const TopicDetail: React.FC = () => {
   const { selectedTopic, language, fetchTopicContent, setNotes, notesByTopic } = useRoadmapStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -128,47 +101,6 @@ const TopicDetail: React.FC = () => {
       .catch(err => console.error("Failed to copy: ", err));
   };
 
-  // Function to process content and wrap code blocks with our CodeBlock component
-  const processContent = (content: string) => {
-    // Simple regex to detect code blocks (this is a basic implementation)
-    const codeBlockRegex = /```([a-z]*)\n([\s\S]*?)```/g;
-
-    // Split content by code blocks
-    const parts = content.split(codeBlockRegex);
-
-    if (parts.length === 1) {
-      // No code blocks found
-      return <p>{content}</p>;
-    }
-
-    const elements: JSX.Element[] = [];
-    let i = 0;
-
-    while (i < parts.length) {
-      if (i % 3 === 0) {
-        // Regular text
-        if (parts[i]) {
-          elements.push(<p key={`text-${i}`}>{parts[i]}</p>);
-        }
-      } else if (i % 3 === 1) {
-        // Language identifier (might be empty)
-        const language = parts[i];
-        const code = parts[i + 1];
-        elements.push(
-          <CodeBlock 
-            key={`code-${i}`} 
-            code={code} 
-            language={language || undefined} 
-          />
-        );
-        i++; // Skip the code part as we've already used it
-      }
-      i++;
-    }
-
-    return <>{elements}</>;
-  };
-
   if (!selectedTopic) {
     return (
       <div className="flex-1 p-4">
@@ -231,9 +163,6 @@ const TopicDetail: React.FC = () => {
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeHighlight]}
-                  components={{
-                    p: processContent
-                  }}
                 >
                   {item.content}
                 </ReactMarkdown>

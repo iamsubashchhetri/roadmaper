@@ -22,7 +22,6 @@ import NotesApp from "./components/Notes/NotesApp";
 import { UserIcon } from "lucide-react";
 import Toast from "./components/Toast";
 import { useToastStore } from "./store/toastStore";
-import CodeBlock from './components/CodeBlock'; // Added import for CodeBlock component
 
 // Home page component
 const Home = () => {
